@@ -13,7 +13,7 @@ class Client:
     async def __aenter__(self):
         try:
             print(f"Signing in as: {self._username} ... ")
-            self._client = TelegramClient("session", self._api_id, self._api_hash)
+            self._client = TelegramClient(self._username, self._api_id, self._api_hash)
             await self._client.start(self._phone_number)
             print("Signed in successfully!")
             return self._client
