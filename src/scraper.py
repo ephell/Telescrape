@@ -26,6 +26,9 @@ class Scraper:
         ):
         self._active_in_last_days = active_in_last_days
         self._client = client
+        self._scraped_data_dir_path = os.path.join(os.getcwd(), "scraped_data_dir")
+        if not os.path.exists(self._scraped_data_dir_path):
+            os.mkdir(self._scraped_data_dir_path)
 
     async def scrape(self):
         entity = await self._get_entity_to_scrape()
@@ -135,10 +138,9 @@ class Scraper:
             return
         
         title_no_illegal_chars = re.sub(r'[<>:"/\\|?*]', '_', scraped_entity_title)
-        # file_path = f"{os.path.join(sub_dir_path, title_no_illegal_chars)}.csv"
-
+        file_path = os.path.join(self._scraped_data_dir_path, title_no_illegal_chars + ".csv")
         with open(
-            file=title_no_illegal_chars,
+            file=file_path,
             mode="w", 
             newline="", 
             encoding="utf-8"
@@ -149,3 +151,4 @@ class Scraper:
             for user in users_data:
                 writer.writerow(user.values())
             print(f"Finished writing '{scraped_entity_title}' user data.")
+            print(f"File saved to: '{file_path}'.")
