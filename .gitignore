@@ -3,3 +3,5 @@ venv/
 .vscode/
 __pycache__/
 *.session
+scraped_data_dir/
+*.csv
