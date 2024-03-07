@@ -103,7 +103,10 @@ class Scraper:
                             all_users.append(participant)
 
         except ChatAdminRequiredError:
-            print(f"Cannot scrape users from '{entity.title}'. Reason: admin privileges are required.")
+            print(
+                f"Cannot scrape users from '{entity.title}'. " 
+                "Reason: group/chat admin privileges are required."
+            )
             os._exit(0)
 
         return [user for user in all_users if user not in admins]
