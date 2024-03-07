@@ -19,11 +19,7 @@ from telethon.tl.types import (
 
 class Scraper:
 
-    def __init__(
-            self, 
-            client: TelegramClient,
-            active_in_last_days: int = 30
-        ):
+    def __init__(self, client: TelegramClient, active_in_last_days: int = 30):
         self._active_in_last_days = active_in_last_days
         self._client = client
         self._scraped_data_dir_path = os.path.join(os.getcwd(), "scraped_data_dir")
@@ -34,7 +30,11 @@ class Scraper:
         entity = await self._get_entity_to_scrape()
         if entity is None:
             return
+
         users = await self._get_users_from_entity(entity)
+        if users is None:
+            return
+
         users_data = self._extract_users_data(users)
         print(f"Total users scraped: {len(users_data)}.")
         self._write_users_data_to_csv(users_data, entity.title)
@@ -107,7 +107,7 @@ class Scraper:
                 f"Cannot scrape users from '{entity.title}'. " 
                 "Reason: group/chat admin privileges are required."
             )
-            os._exit(0)
+            return None
 
         return [user for user in all_users if user not in admins]
 
