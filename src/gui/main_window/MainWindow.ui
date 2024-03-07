@@ -6,17 +6,17 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>328</width>
-    <height>195</height>
+    <width>287</width>
+    <height>215</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout_2">
+   <layout class="QVBoxLayout" name="verticalLayout_5">
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout_5">
+     <layout class="QVBoxLayout" name="verticalLayout_3">
       <item alignment="Qt::AlignHCenter">
        <widget class="QLabel" name="label_5">
         <property name="font">
@@ -55,7 +55,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="lineEdit"/>
+         <widget class="QLineEdit" name="line_edit_username"/>
         </item>
        </layout>
       </item>
@@ -80,7 +80,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="lineEdit_2"/>
+         <widget class="QLineEdit" name="line_edit_phone_number"/>
         </item>
        </layout>
       </item>
@@ -105,7 +105,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="lineEdit_3"/>
+         <widget class="QLineEdit" name="line_edit_api_id"/>
         </item>
        </layout>
       </item>
@@ -130,15 +130,39 @@
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="lineEdit_4"/>
+         <widget class="QLineEdit" name="line_edit_api_hash"/>
         </item>
        </layout>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_5">
+      <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+       <widget class="LoginButton" name="pushButton">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Login</string>
+        </property>
+       </widget>
       </item>
      </layout>
     </item>
    </layout>
   </widget>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>LoginButton</class>
+   <extends>QPushButton</extends>
+   <header>src.gui.main_window.button_login</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

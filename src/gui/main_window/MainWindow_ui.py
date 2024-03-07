@@ -18,17 +18,19 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QLineEdit,
     QMainWindow, QSizePolicy, QVBoxLayout, QWidget)
 
+from src.gui.main_window.button_login import LoginButton
+
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(328, 195)
+        MainWindow.resize(287, 215)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
-        self.verticalLayout_2 = QVBoxLayout(self.centralwidget)
-        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
-        self.horizontalLayout_5 = QHBoxLayout()
-        self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
+        self.verticalLayout_5 = QVBoxLayout(self.centralwidget)
+        self.verticalLayout_5.setObjectName(u"verticalLayout_5")
+        self.verticalLayout_3 = QVBoxLayout()
+        self.verticalLayout_3.setObjectName(u"verticalLayout_3")
         self.label_5 = QLabel(self.centralwidget)
         self.label_5.setObjectName(u"label_5")
         font = QFont()
@@ -36,10 +38,10 @@ class Ui_MainWindow(object):
         font.setBold(True)
         self.label_5.setFont(font)
 
-        self.horizontalLayout_5.addWidget(self.label_5, 0, Qt.AlignHCenter)
+        self.verticalLayout_3.addWidget(self.label_5, 0, Qt.AlignHCenter)
 
 
-        self.verticalLayout_2.addLayout(self.horizontalLayout_5)
+        self.verticalLayout_5.addLayout(self.verticalLayout_3)
 
         self.verticalLayout = QVBoxLayout()
         self.verticalLayout.setObjectName(u"verticalLayout")
@@ -58,10 +60,10 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout.addWidget(self.label)
 
-        self.lineEdit = QLineEdit(self.centralwidget)
-        self.lineEdit.setObjectName(u"lineEdit")
+        self.line_edit_username = QLineEdit(self.centralwidget)
+        self.line_edit_username.setObjectName(u"line_edit_username")
 
-        self.horizontalLayout.addWidget(self.lineEdit)
+        self.horizontalLayout.addWidget(self.line_edit_username)
 
 
         self.verticalLayout.addLayout(self.horizontalLayout)
@@ -76,10 +78,10 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_2.addWidget(self.label_2)
 
-        self.lineEdit_2 = QLineEdit(self.centralwidget)
-        self.lineEdit_2.setObjectName(u"lineEdit_2")
+        self.line_edit_phone_number = QLineEdit(self.centralwidget)
+        self.line_edit_phone_number.setObjectName(u"line_edit_phone_number")
 
-        self.horizontalLayout_2.addWidget(self.lineEdit_2)
+        self.horizontalLayout_2.addWidget(self.line_edit_phone_number)
 
 
         self.verticalLayout.addLayout(self.horizontalLayout_2)
@@ -94,10 +96,10 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_3.addWidget(self.label_3)
 
-        self.lineEdit_3 = QLineEdit(self.centralwidget)
-        self.lineEdit_3.setObjectName(u"lineEdit_3")
+        self.line_edit_api_id = QLineEdit(self.centralwidget)
+        self.line_edit_api_id.setObjectName(u"line_edit_api_id")
 
-        self.horizontalLayout_3.addWidget(self.lineEdit_3)
+        self.horizontalLayout_3.addWidget(self.line_edit_api_id)
 
 
         self.verticalLayout.addLayout(self.horizontalLayout_3)
@@ -112,16 +114,31 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_4.addWidget(self.label_4)
 
-        self.lineEdit_4 = QLineEdit(self.centralwidget)
-        self.lineEdit_4.setObjectName(u"lineEdit_4")
+        self.line_edit_api_hash = QLineEdit(self.centralwidget)
+        self.line_edit_api_hash.setObjectName(u"line_edit_api_hash")
 
-        self.horizontalLayout_4.addWidget(self.lineEdit_4)
+        self.horizontalLayout_4.addWidget(self.line_edit_api_hash)
 
 
         self.verticalLayout.addLayout(self.horizontalLayout_4)
 
 
-        self.verticalLayout_2.addLayout(self.verticalLayout)
+        self.verticalLayout_5.addLayout(self.verticalLayout)
+
+        self.horizontalLayout_5 = QHBoxLayout()
+        self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
+        self.pushButton = LoginButton(self.centralwidget)
+        self.pushButton.setObjectName(u"pushButton")
+        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
+        sizePolicy1.setHorizontalStretch(0)
+        sizePolicy1.setVerticalStretch(0)
+        sizePolicy1.setHeightForWidth(self.pushButton.sizePolicy().hasHeightForWidth())
+        self.pushButton.setSizePolicy(sizePolicy1)
+
+        self.horizontalLayout_5.addWidget(self.pushButton, 0, Qt.AlignHCenter|Qt.AlignVCenter)
+
+
+        self.verticalLayout_5.addLayout(self.horizontalLayout_5)
 
         MainWindow.setCentralWidget(self.centralwidget)
 
@@ -137,5 +154,6 @@ class Ui_MainWindow(object):
         self.label_2.setText(QCoreApplication.translate("MainWindow", u"Phone Number", None))
         self.label_3.setText(QCoreApplication.translate("MainWindow", u"API ID", None))
         self.label_4.setText(QCoreApplication.translate("MainWindow", u"API HASH", None))
+        self.pushButton.setText(QCoreApplication.translate("MainWindow", u"Login", None))
     # retranslateUi
 
