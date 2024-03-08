@@ -16,19 +16,21 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QLineEdit,
-    QMainWindow, QSizePolicy, QVBoxLayout, QWidget)
+    QMainWindow, QSizePolicy, QSpacerItem, QVBoxLayout,
+    QWidget)
 
 from src.gui.main_window.button_login import LoginButton
+from src.gui.main_window.button_logout import LogoutButton
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(287, 215)
+        MainWindow.resize(285, 220)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
-        self.verticalLayout_5 = QVBoxLayout(self.centralwidget)
-        self.verticalLayout_5.setObjectName(u"verticalLayout_5")
+        self.verticalLayout_2 = QVBoxLayout(self.centralwidget)
+        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
         self.verticalLayout_3 = QVBoxLayout()
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
         self.label_5 = QLabel(self.centralwidget)
@@ -41,7 +43,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_3.addWidget(self.label_5, 0, Qt.AlignHCenter)
 
 
-        self.verticalLayout_5.addLayout(self.verticalLayout_3)
+        self.verticalLayout_2.addLayout(self.verticalLayout_3)
 
         self.verticalLayout = QVBoxLayout()
         self.verticalLayout.setObjectName(u"verticalLayout")
@@ -123,22 +125,37 @@ class Ui_MainWindow(object):
         self.verticalLayout.addLayout(self.horizontalLayout_4)
 
 
-        self.verticalLayout_5.addLayout(self.verticalLayout)
+        self.verticalLayout_2.addLayout(self.verticalLayout)
 
         self.horizontalLayout_5 = QHBoxLayout()
         self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
-        self.pushButton = LoginButton(self.centralwidget)
-        self.pushButton.setObjectName(u"pushButton")
+        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.horizontalLayout_5.addItem(self.horizontalSpacer)
+
+        self.login_button = LoginButton(self.centralwidget)
+        self.login_button.setObjectName(u"login_button")
         sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
         sizePolicy1.setHorizontalStretch(0)
         sizePolicy1.setVerticalStretch(0)
-        sizePolicy1.setHeightForWidth(self.pushButton.sizePolicy().hasHeightForWidth())
-        self.pushButton.setSizePolicy(sizePolicy1)
+        sizePolicy1.setHeightForWidth(self.login_button.sizePolicy().hasHeightForWidth())
+        self.login_button.setSizePolicy(sizePolicy1)
 
-        self.horizontalLayout_5.addWidget(self.pushButton, 0, Qt.AlignHCenter|Qt.AlignVCenter)
+        self.horizontalLayout_5.addWidget(self.login_button, 0, Qt.AlignHCenter)
+
+        self.logout_button = LogoutButton(self.centralwidget)
+        self.logout_button.setObjectName(u"logout_button")
+        sizePolicy1.setHeightForWidth(self.logout_button.sizePolicy().hasHeightForWidth())
+        self.logout_button.setSizePolicy(sizePolicy1)
+
+        self.horizontalLayout_5.addWidget(self.logout_button, 0, Qt.AlignHCenter)
+
+        self.horizontalSpacer_2 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.horizontalLayout_5.addItem(self.horizontalSpacer_2)
 
 
-        self.verticalLayout_5.addLayout(self.horizontalLayout_5)
+        self.verticalLayout_2.addLayout(self.horizontalLayout_5)
 
         MainWindow.setCentralWidget(self.centralwidget)
 
@@ -154,6 +171,7 @@ class Ui_MainWindow(object):
         self.label_2.setText(QCoreApplication.translate("MainWindow", u"Phone Number", None))
         self.label_3.setText(QCoreApplication.translate("MainWindow", u"API ID", None))
         self.label_4.setText(QCoreApplication.translate("MainWindow", u"API HASH", None))
-        self.pushButton.setText(QCoreApplication.translate("MainWindow", u"Login", None))
+        self.login_button.setText(QCoreApplication.translate("MainWindow", u"Login", None))
+        self.logout_button.setText(QCoreApplication.translate("MainWindow", u"Logout", None))
     # retranslateUi
 
