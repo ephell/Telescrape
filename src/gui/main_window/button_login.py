@@ -5,7 +5,7 @@ from PySide6.QtWidgets import QMessageBox, QPushButton
 from qasync import asyncSlot
 
 from client import Client
-from src.gui.main_window.dialog_code_request.dialog_code_request import CodeRequestDialog
+from src.gui.main_window.dialog_login_code_input.dialog_login_code_input import LoginCodeInputDialog
 
 
 class LoginButton(QPushButton):
@@ -16,9 +16,9 @@ class LoginButton(QPushButton):
         super().__init__(parent)
         self.clicked.connect(self._on_clicked)
 
-    async def open_code_input_dialog_and_get_input(self):
+    async def open_login_code_input_dialog_and_get_input(self):
         future = asyncio.Future()
-        self.dialog = CodeRequestDialog()
+        self.dialog = LoginCodeInputDialog()
         self.dialog.buttonBox.accepted.connect(lambda: future.set_result(self.dialog.lineEdit.text()))
         self.dialog.buttonBox.rejected.connect(lambda: future.set_result(None))
         self.dialog.show()
@@ -31,7 +31,7 @@ class LoginButton(QPushButton):
         if login_info is None:
             return
 
-        self.client = Client(*login_info, self.open_code_input_dialog_and_get_input) 
+        self.client = Client(*login_info, self.open_login_code_input_dialog_and_get_input) 
         await self.client.login()
 
     def _get_login_info(self):
