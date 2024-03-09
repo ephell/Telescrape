@@ -14,16 +14,7 @@ class LoginButton(QPushButton):
 
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.clicked.connect(self.on_clicked)
-
-    @asyncSlot()
-    async def on_clicked(self):
-        login_info = self._get_login_info()
-        if login_info is None:
-            return
-
-        self.client = Client(*login_info, self.open_code_input_dialog_and_get_input) 
-        await self.client.login()
+        self.clicked.connect(self._on_clicked)
 
     async def open_code_input_dialog_and_get_input(self):
         future = asyncio.Future()
@@ -33,6 +24,15 @@ class LoginButton(QPushButton):
         self.dialog.show()
         await future
         return future.result()
+
+    @asyncSlot()
+    async def _on_clicked(self):
+        login_info = self._get_login_info()
+        if login_info is None:
+            return
+
+        self.client = Client(*login_info, self.open_code_input_dialog_and_get_input) 
+        await self.client.login()
 
     def _get_login_info(self):
         mw = self.window()
