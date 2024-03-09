@@ -10,6 +10,7 @@ packages = [{include = "src"}]
 python = ">=3.12,<3.13"
 telethon = "^1.34.0"
 pyside6 = "^6.6.2"
+qasync = "^0.27.1"
 
 [build-system]
 requires = ["poetry-core"]
