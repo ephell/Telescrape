@@ -1,17 +1,17 @@
 from PySide6.QtCore import Signal
 from PySide6.QtWidgets import QDialog
 
-from src.gui.main_window.dialog_code_request.CodeRequestDialog_ui import Ui_CodeRequestDialog
+from src.gui.main_window.dialog_login_code_input.LoginCodeInputDialog_ui import Ui_LoginCodeInputDialog
 
 
-class CodeRequestDialog(QDialog, Ui_CodeRequestDialog):
+class LoginCodeInputDialog(QDialog, Ui_LoginCodeInputDialog):
 
     code_entered = Signal(int)
 
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setupUi(self)
-        self.setWindowTitle("Code Request Dialog")
+        self.setWindowTitle("Login Code")
 
     def closeEvent(self, event):
         self.buttonBox.rejected.emit()
@@ -23,6 +23,6 @@ if __name__ == "__main__":
 
     from src.gui.application.application import Application
     app = Application(sys.argv)
-    cd = CodeRequestDialog() 
+    cd = LoginCodeInputDialog() 
     cd.show()
     app.exec()
