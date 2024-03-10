@@ -11,7 +11,7 @@ class LoginCodeInputDialog(QDialog, Ui_LoginCodeInputDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setupUi(self)
-        self.setWindowTitle("Login Code")
+        self.setWindowTitle("Login Code Input")
 
     def closeEvent(self, event):
         self.buttonBox.rejected.emit()
