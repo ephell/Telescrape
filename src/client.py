@@ -1,6 +1,15 @@
 from typing import Awaitable, Callable
 
 from telethon import TelegramClient
+from telethon.errors.rpcerrorlist import (
+    PhoneCodeEmptyError,
+    PhoneCodeExpiredError,
+    PhoneCodeHashEmptyError,
+    PhoneCodeInvalidError,
+    PhoneNumberBannedError,
+    PhoneNumberInvalidError,
+    PhoneNumberOccupiedError
+)
 
 
 class Client(TelegramClient):
