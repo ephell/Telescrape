@@ -7,8 +7,7 @@ from telethon.errors.rpcerrorlist import (
     PhoneCodeHashEmptyError,
     PhoneCodeInvalidError,
     PhoneNumberBannedError,
-    PhoneNumberInvalidError,
-    PhoneNumberOccupiedError
+    PhoneNumberInvalidError
 )
 
 
@@ -20,14 +19,14 @@ class Client(TelegramClient):
         phone_number: int, 
         api_id: str, 
         api_hash: str,
-        open_code_input_dialog_and_get_input: None | Callable[[], Awaitable[None | str]] = None,
+        open_login_code_input_dialog_and_get_input: None | Callable[[], Awaitable[None | str]] = None,
     ):
         self._username = username
         self._phone_number = phone_number
         self._api_id = api_id
         self._api_hash = api_hash
         super().__init__(self._username, self._api_id, self._api_hash)
-        self._open_code_input_dialog_and_get_input = open_code_input_dialog_and_get_input
+        self._open_login_code_input_dialog_and_get_input = open_login_code_input_dialog_and_get_input
 
     async def login(self):
         try:
@@ -39,33 +38,56 @@ class Client(TelegramClient):
                 print("Failed to connect.")
                 return None
 
-            if not await self.is_user_authorized():
-                print("User is not authorized. Sending code request ... ")
+            if await self.is_user_authorized():
+                print("User is already authorized. Successfully logged in!")
+                return self
+
+            try:
+                print("User is not authorized. Sending the login code request ... ")
                 code_request = await self.send_code_request(self._phone_number)
                 print("Code request sent.")
+            except PhoneNumberInvalidError:
+                # ToDo: open error message box.
+                print("Provided phone number is invalid.")
+                return None
+            except PhoneNumberBannedError:
+                # ToDo: open error message box.
+                print("Provided phone number is banned.")
+                return None
 
-                if self._open_code_input_dialog_and_get_input is not None:
-                    print("Waiting for code from the input dialog ... ")
-                    code = await self._open_code_input_dialog_and_get_input()
+            while True:
+                if self._open_login_code_input_dialog_and_get_input is not None:
+                    code = await self._open_login_code_input_dialog_and_get_input()
                 else:
                     code = input("Enter the login code you received from Telegram (app/SMS): ")
-                print("Received code:", code)
 
                 if code == "":
+                    # ToDo: open error message box.
                     print("Received code is an empty string.")
-                    return None
+                    continue
                 elif code is not None:
-                    await self.sign_in(
-                        self._phone_number, 
-                        code, 
-                        phone_code_hash=code_request.phone_code_hash
-                    )
+                    try:
+                        await self.sign_in(
+                            self._phone_number, 
+                            code, 
+                            phone_code_hash=code_request.phone_code_hash
+                        )
+                        if await self.get_me() is not None:
+                            print("logged in successfully")
+                            s = Scraper(self)
+                            await s.scrape()
+                        return self
+                    except (
+                        PhoneCodeEmptyError,
+                        PhoneCodeExpiredError,
+                        PhoneCodeHashEmptyError,
+                        PhoneCodeInvalidError
+                    ):
+                        print("Invalid login code.")
                 else:
                     print("Login cancelled.")
                     return None
 
-            print("Signed in successfully!")
-            return self
         except Exception as e:
             print(f"An error occured while signing in: {e}.")
             return None
