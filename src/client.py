@@ -73,9 +73,7 @@ class Client(TelegramClient):
                             phone_code_hash=code_request.phone_code_hash
                         )
                         if await self.get_me() is not None:
-                            print("logged in successfully")
-                            s = Scraper(self)
-                            await s.scrape()
+                            print("Logged in successfully!")
                         return self
                     except (
                         PhoneCodeEmptyError,
