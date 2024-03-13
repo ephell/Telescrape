@@ -33,9 +33,10 @@ class Client(TelegramClient):
             print(f"Signing in as: {self._username} ... ")
 
             try:
-                await self.connect()
-            except OSError:
-                print("Failed to connect.")
+                if not self.is_connected():
+                    await self.connect()
+            except Exception as e:
+                print(f"Connecting to Telegram failed: {e}.")
                 return None
 
             if await self.is_user_authorized():
@@ -74,7 +75,8 @@ class Client(TelegramClient):
                         )
                         if await self.get_me() is not None:
                             print("Logged in successfully!")
-                        return self
+                            return self
+                        return None
                     except (
                         PhoneCodeEmptyError,
                         PhoneCodeExpiredError,
@@ -87,7 +89,7 @@ class Client(TelegramClient):
                     return None
 
         except Exception as e:
-            print(f"An error occured while signing in: {e}.")
+            print(f"An unhandled error occured in '{self.login.__name__}': {e}.")
             return None
 
     async def logout(self):
