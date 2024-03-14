@@ -1,4 +1,4 @@
-from typing import Awaitable, Callable
+from typing import Awaitable, Callable, Self
 
 from telethon import TelegramClient
 from telethon.errors.rpcerrorlist import (
@@ -25,13 +25,34 @@ class Client(TelegramClient):
         self._phone_number = phone_number
         self._api_id = api_id
         self._api_hash = api_hash
+        self._password = None # ToDo: add support. This is 2FA.
         super().__init__(self._username, self._api_id, self._api_hash)
         self._open_login_code_input_dialog_and_get_input = open_login_code_input_dialog_and_get_input
 
-    async def login(self):
-        try:
-            print(f"Signing in as: {self._username} ... ")
+    async def login(self) -> Self | None:
+        print(f"Signing in as: {self._username} ... ")
+        if self._open_login_code_input_dialog_and_get_input is None:
+            login_method = self._login_via_terminal
+        else:
+            login_method = self._login_via_gui 
 
+        if await login_method() is not None:
+            return self
+        return None
+            
+    async def logout(self):
+        await self.disconnect()
+
+    async def _login_via_terminal(self):
+        print("Signing in via terminal ... ")
+        await self.start(self._phone_number, self._password)
+        if await self.get_me() is not None:
+            return self
+        return None
+
+    async def _login_via_gui(self):
+        print("Signing in via GUI ... ")
+        try:
             try:
                 if not self.is_connected():
                     await self.connect()
@@ -57,10 +78,7 @@ class Client(TelegramClient):
                 return None
 
             while True:
-                if self._open_login_code_input_dialog_and_get_input is not None:
-                    code = await self._open_login_code_input_dialog_and_get_input()
-                else:
-                    code = input("Enter the login code you received from Telegram (app/SMS): ")
+                code = await self._open_login_code_input_dialog_and_get_input()
 
                 if code == "":
                     # ToDo: open error message box.
