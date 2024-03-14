@@ -33,10 +33,10 @@ class Ui_LoadingStatusWidget(object):
 
         self.verticalLayout.addWidget(self.status_message_label, 0, Qt.AlignHCenter)
 
-        self.gif_placeholder_label = QLabel(LoadingStatusWidget)
-        self.gif_placeholder_label.setObjectName(u"gif_placeholder_label")
+        self.status_image_placeholder_label = QLabel(LoadingStatusWidget)
+        self.status_image_placeholder_label.setObjectName(u"status_image_placeholder_label")
 
-        self.verticalLayout.addWidget(self.gif_placeholder_label, 0, Qt.AlignHCenter)
+        self.verticalLayout.addWidget(self.status_image_placeholder_label, 0, Qt.AlignHCenter)
 
 
         self.retranslateUi(LoadingStatusWidget)
@@ -47,6 +47,6 @@ class Ui_LoadingStatusWidget(object):
     def retranslateUi(self, LoadingStatusWidget):
         LoadingStatusWidget.setWindowTitle(QCoreApplication.translate("LoadingStatusWidget", u"Loading Status Dialog", None))
         self.status_message_label.setText(QCoreApplication.translate("LoadingStatusWidget", u"STATUS MESSAGE", None))
-        self.gif_placeholder_label.setText(QCoreApplication.translate("LoadingStatusWidget", u".GIF PLACEHOLDER", None))
+        self.status_image_placeholder_label.setText(QCoreApplication.translate("LoadingStatusWidget", u".GIF PLACEHOLDER", None))
     # retranslateUi
 

@@ -27,7 +27,7 @@
     </widget>
    </item>
    <item alignment="Qt::AlignHCenter">
-    <widget class="QLabel" name="gif_placeholder_label">
+    <widget class="QLabel" name="status_image_placeholder_label">
      <property name="text">
       <string>.GIF PLACEHOLDER</string>
      </property>
