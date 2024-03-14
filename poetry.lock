@@ -73,6 +73,17 @@ files = [
 shiboken6 = "6.6.2"
 
 [[package]]
+name = "qasync"
+version = "0.27.1"
+description = "Python library for using asyncio in Qt-based applications"
+optional = false
+python-versions = ">=3.8,<4.0"
+files = [
+    {file = "qasync-0.27.1-py3-none-any.whl", hash = "sha256:5d57335723bc7d9b328dadd8cb2ed7978640e4bf2da184889ce50ee3ad2602c7"},
+    {file = "qasync-0.27.1.tar.gz", hash = "sha256:8dc768fd1ee5de1044c7c305eccf2d39d24d87803ea71189d4024fb475f4985f"},
+]
+
+[[package]]
 name = "rsa"
 version = "4.9"
 description = "Pure-Python RSA implementation"
@@ -119,4 +130,4 @@ cryptg = ["cryptg"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.12,<3.13"
-content-hash = "0a51b32e7c10367599f4f58726a3ef7bbde2023d35d613f4ec3c3664854105c3"
+content-hash = "add219177ac34bbdfad82c9846975bcb3bce5c9612dcb78064aa3fc7512b8ebc"
