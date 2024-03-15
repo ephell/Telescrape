@@ -23,6 +23,7 @@ class LoginButton(QPushButton):
         self.login_widget = LoginWidget()
         self.client = Client(*login_info, self.login_widget) 
         self.client_login_finished.emit(await self.client.login())
+        self.login_widget.close()
 
     def _get_login_info(self):
         mw = self.window()

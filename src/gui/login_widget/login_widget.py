@@ -4,8 +4,8 @@ from PySide6.QtCore import QByteArray, QSize
 from PySide6.QtGui import QMovie, QPixmap
 from PySide6.QtWidgets import QMessageBox, QWidget
 
-from src.gui.login_widget.LoginWidget_ui import Ui_LoginWidget
 from src.gui.login_widget.login_code_input_dialog.login_code_input_dialog import LoginCodeInputDialog
+from src.gui.login_widget.LoginWidget_ui import Ui_LoginWidget
 
 
 class LoginWidget(Ui_LoginWidget, QWidget):

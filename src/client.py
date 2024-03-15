@@ -66,10 +66,7 @@ class Client(TelegramClient):
                 await self.connect()
 
             if await self.is_user_authorized():
-                self._login_widget.set_status_image_success()
-                self._login_widget.set_status_message(
-                    f"'{self._username}' is already authorized. Successfully logged in ... "
-                )
+                print("Logged in successfullly!")
                 return self
 
             try:
@@ -106,8 +103,7 @@ class Client(TelegramClient):
                             phone_code_hash=code_request.phone_code_hash
                         )
                         if await self.get_me() is not None:
-                            self._login_widget.set_status_image_success()
-                            self._login_widget.set_status_message("Successfully logged in!")
+                            print("Logged in successfully!")
                             return self
                         return None
                     except (
