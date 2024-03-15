@@ -14,3 +14,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.setFocus()
         self.setFocusPolicy(Qt.ClickFocus) # Make all widgets lose focus when clicking on the main window.
         self.setWindowFlags(Qt.Dialog | Qt.MSWindowsFixedSizeDialogHint) # Set non resizable.
+
+    @asyncClose
+    async def closeEvent(self, event):
+        super().closeEvent(event)
+        for window in QApplication.topLevelWidgets():
+            window.close()
