@@ -16,8 +16,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.setFocus()
         self.setFocusPolicy(Qt.ClickFocus) # Make all widgets lose focus when clicking on the main window.
         self.setWindowFlags(Qt.Dialog | Qt.MSWindowsFixedSizeDialogHint) # Set non resizable.
-        self.login_button.client_login_finished.connect(self._on_client_login_finished)
-        self.login_button.client_login_finished.connect(self.logout_button.on_client_login_finished)
+        self.login_button.client_login_finished_signal.connect(self._on_client_login_finished_signal)
+        self.login_button.client_login_finished_signal.connect(self.logout_button.on_client_login_finished_signal)
+        self.logout_button.client_logout_finished_signal.connect(self.login_button.on_client_logout_finished_signal)
 
 
     @asyncClose
@@ -28,5 +29,5 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if self.client is not None:
             await self.client.logout()
 
-    def _on_client_login_finished(self, client):
+    def _on_client_login_finished_signal(self, client):
         self.client = client

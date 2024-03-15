@@ -1,4 +1,4 @@
-from PySide6.QtCore import Signal
+from PySide6.QtCore import Signal, Slot
 from PySide6.QtWidgets import QMessageBox, QPushButton
 from qasync import asyncSlot
 
@@ -8,11 +8,15 @@ from src.gui.login_widget.login_widget import LoginWidget
 
 class LoginButton(QPushButton):
 
-    client_login_finished = Signal(Client)
+    client_login_finished_signal = Signal(Client)
 
     def __init__(self, parent=None):
         super().__init__(parent)
         self.clicked.connect(self._on_clicked)
+
+    @Slot()
+    def on_client_logout_finished_signal(self):
+        self.setEnabled(True)
 
     @asyncSlot()
     async def _on_clicked(self):
@@ -22,7 +26,11 @@ class LoginButton(QPushButton):
 
         self.login_widget = LoginWidget()
         self.client = Client(*login_info, self.login_widget) 
-        self.client_login_finished.emit(await self.client.login())
+
+        login_result = await self.client.login()
+        if login_result is not None:
+            self.setEnabled(False)
+        self.client_login_finished_signal.emit(login_result)
         self.login_widget.close()
 
     def _get_login_info(self):
