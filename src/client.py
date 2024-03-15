@@ -13,7 +13,7 @@ from telethon.errors.rpcerrorlist import (
     PhoneNumberInvalidError
 )
 
-from src.gui.loading_status_widget.loading_status_widget import LoadingStatusWidget
+from src.gui.login_widget.login_widget import LoginWidget
 
 
 class Client(TelegramClient):
@@ -24,18 +24,18 @@ class Client(TelegramClient):
         phone_number: int, 
         api_id: str, 
         api_hash: str,
-        loading_status_widget: LoadingStatusWidget | None = None
+        login_widget: LoginWidget | None = None
     ):
         self._username = username
         self._phone_number = phone_number
         self._api_id = api_id
         self._api_hash = api_hash
         self._password = None # ToDo: add support. This is 2FA.
-        self._loading_status_widget = loading_status_widget
+        self._login_widget = login_widget
         super().__init__(self._username, self._api_id, self._api_hash)
 
     async def login(self) -> Self | None:
-        if self._loading_status_widget is None:
+        if self._login_widget is None:
             login_method = self._login_via_terminal
         else:
             login_method = self._login_via_gui 
@@ -58,46 +58,46 @@ class Client(TelegramClient):
     async def _login_via_gui(self):
         print("Signing in via GUI ... ")
 
-        self._loading_status_widget.set_status_message(f"Signing in as: '{self._username}' ... ")
-        self._loading_status_widget.show()
+        self._login_widget.set_status_message(f"Signing in as: '{self._username}' ... ")
+        self._login_widget.show()
 
         try:
             if not self.is_connected():
                 await self.connect()
 
             if await self.is_user_authorized():
-                self._loading_status_widget.set_status_image_success()
-                self._loading_status_widget.set_status_message(
+                self._login_widget.set_status_image_success()
+                self._login_widget.set_status_message(
                     f"'{self._username}' is already authorized. Successfully logged in ... "
                 )
                 return self
 
             try:
-                self._loading_status_widget.set_status_message(
+                self._login_widget.set_status_message(
                     f"'{self._username}' is not authorized. Sending the login code request ... "
                 )
                 code_request = await self.send_code_request(self._phone_number)
-                self._loading_status_widget.set_status_message("Waiting for login code ... ")
+                self._login_widget.set_status_message("Waiting for login code ... ")
             except PhoneNumberInvalidError:
-                self._loading_status_widget.set_status_image_fail()
-                self._loading_status_widget.set_status_message("Provided phone number is invalid.")
+                self._login_widget.set_status_image_fail()
+                self._login_widget.set_status_message("Provided phone number is invalid.")
                 return None
             except PhoneNumberBannedError:
-                self._loading_status_widget.set_status_image_fail()
-                self._loading_status_widget.set_status_message("Provided phone number is banned.")
+                self._login_widget.set_status_image_fail()
+                self._login_widget.set_status_message("Provided phone number is banned.")
                 return None
             except FloodWaitError as e:
-                self._loading_status_widget.set_status_image_fail()
-                self._loading_status_widget.set_status_message(
+                self._login_widget.set_status_image_fail()
+                self._login_widget.set_status_message(
                     "Too many login attempts. "
                     f"Try again in {e.seconds // 60} minutes and {e.seconds % 60} seconds."
                 )
                 return None
 
             while True:
-                code = await self._loading_status_widget.open_login_code_input_dialog_and_get_input()
+                code = await self._login_widget.open_login_code_input_dialog_and_get_input()
                 if code == "":
-                    await self._loading_status_widget.open_error_message_box("Login code field cannot be empty.")
+                    await self._login_widget.open_error_message_box("Login code field cannot be empty.")
                 elif code is not None:
                     try:
                         await self.sign_in(
@@ -106,8 +106,8 @@ class Client(TelegramClient):
                             phone_code_hash=code_request.phone_code_hash
                         )
                         if await self.get_me() is not None:
-                            self._loading_status_widget.set_status_image_success()
-                            self._loading_status_widget.set_status_message("Successfully logged in!")
+                            self._login_widget.set_status_image_success()
+                            self._login_widget.set_status_message("Successfully logged in!")
                             return self
                         return None
                     except (
@@ -116,19 +116,37 @@ class Client(TelegramClient):
                         PhoneCodeHashEmptyError,
                         PhoneCodeInvalidError
                     ):
-                        await self._loading_status_widget.open_error_message_box("Invalid login code.")
+                        await self._login_widget.open_error_message_box("Invalid login code.")
                 else:
-                    self._loading_status_widget.set_status_image_fail()
-                    self._loading_status_widget.set_status_message("Login cancelled.")
+                    self._login_widget.set_status_image_fail()
+                    self._login_widget.set_status_message("Login cancelled.")
                     return None
 
         except Exception as e:
-            self._loading_status_widget.set_status_image_fail()
-            self._loading_status_widget.set_status_message(f"An unhandled exception occured while logging in.")
+            self._login_widget.set_status_image_fail()
+            self._login_widget.set_status_message(f"An unhandled exception occured while logging in.")
             print(f"An unhandled error occured in '{self.login.__name__}': {e}.")
             traceback.print_exc()
             return None
 
-    async def logout(self):
-        await self.disconnect()
 
+if __name__ == "__main__":
+    import asyncio
+
+    from client import Client
+    from scraper import Scraper
+
+    async def main():
+        client = Client(
+            "Raska Good",
+            37060751782,
+            "14112344",
+            "90d2a30e6a391fee8c99f38476d4bf46",
+        )
+        await client.login()
+        # await asyncio.sleep(1)
+        # scraper = Scraper(client)
+        # await scraper.scrape()
+        await client.logout()
+
+    asyncio.run(main())
