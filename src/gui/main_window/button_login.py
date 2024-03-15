@@ -8,7 +8,7 @@ from src.gui.login_widget.login_widget import LoginWidget
 
 class LoginButton(QPushButton):
 
-    logged_in_successfully = Signal(Client)
+    client_login_finished = Signal(Client)
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -22,7 +22,7 @@ class LoginButton(QPushButton):
 
         self.login_widget = LoginWidget()
         self.client = Client(*login_info, self.login_widget) 
-        await self.client.login()
+        self.client_login_finished.emit(await self.client.login())
 
     def _get_login_info(self):
         mw = self.window()
