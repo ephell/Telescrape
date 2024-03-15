@@ -20,7 +20,7 @@ class LoginButton(QPushButton):
         if login_info is None:
             return
 
-        self.login_widget = LoginWidget(self)
+        self.login_widget = LoginWidget()
         self.client = Client(*login_info, self.login_widget) 
         await self.client.login()
 
