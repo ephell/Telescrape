@@ -1,6 +1,6 @@
 from PySide6.QtWidgets import QWidget
 
-from src.gui.main_window.base_widget.BaseWidget_ui import Ui_BaseWidget
+from src.gui.main_window.central_widget.base_widget.BaseWidget_ui import Ui_BaseWidget
 
 
 class BaseWidget(Ui_BaseWidget, QWidget):
