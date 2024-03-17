@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>CentralWidget</class>
- <widget class="QWidget" name="CentralWidget">
+ <class>BaseWidget</class>
+ <widget class="QWidget" name="BaseWidget">
   <property name="geometry">
    <rect>
     <x>0</x>

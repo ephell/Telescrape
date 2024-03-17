@@ -1,9 +1,9 @@
 from PySide6.QtWidgets import QWidget
 
-from src.gui.main_window.central_widget.CentralWidget_ui import Ui_CentralWidget
+from src.gui.main_window.base_widget.BaseWidget_ui import Ui_BaseWidget
 
 
-class CentralWidget(Ui_CentralWidget, QWidget):
+class BaseWidget(Ui_BaseWidget, QWidget):
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -17,7 +17,7 @@ if __name__ == "__main__":
 
     app = QApplication(sys.argv)
     mw = QMainWindow()
-    cw = CentralWidget(mw)
+    cw = BaseWidget(mw)
     mw.setCentralWidget(cw)
     mw.show()
     app.exec()

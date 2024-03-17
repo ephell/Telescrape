@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'CentralWidget.ui'
+## Form generated from reading UI file 'BaseWidget.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.6.2
 ##
@@ -21,16 +21,16 @@ from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QLineEdit,
 from src.gui.main_window.button_login import LoginButton
 from src.gui.main_window.button_logout import LogoutButton
 
-class Ui_CentralWidget(object):
-    def setupUi(self, CentralWidget):
-        if not CentralWidget.objectName():
-            CentralWidget.setObjectName(u"CentralWidget")
-        CentralWidget.resize(285, 220)
-        self.verticalLayout_2 = QVBoxLayout(CentralWidget)
+class Ui_BaseWidget(object):
+    def setupUi(self, BaseWidget):
+        if not BaseWidget.objectName():
+            BaseWidget.setObjectName(u"BaseWidget")
+        BaseWidget.resize(285, 220)
+        self.verticalLayout_2 = QVBoxLayout(BaseWidget)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
         self.verticalLayout_3 = QVBoxLayout()
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
-        self.label_5 = QLabel(CentralWidget)
+        self.label_5 = QLabel(BaseWidget)
         self.label_5.setObjectName(u"label_5")
         font = QFont()
         font.setPointSize(23)
@@ -46,7 +46,7 @@ class Ui_CentralWidget(object):
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.label = QLabel(CentralWidget)
+        self.label = QLabel(BaseWidget)
         self.label.setObjectName(u"label")
         sizePolicy = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Preferred)
         sizePolicy.setHorizontalStretch(0)
@@ -59,7 +59,7 @@ class Ui_CentralWidget(object):
 
         self.horizontalLayout.addWidget(self.label)
 
-        self.line_edit_username = QLineEdit(CentralWidget)
+        self.line_edit_username = QLineEdit(BaseWidget)
         self.line_edit_username.setObjectName(u"line_edit_username")
 
         self.horizontalLayout.addWidget(self.line_edit_username)
@@ -69,7 +69,7 @@ class Ui_CentralWidget(object):
 
         self.horizontalLayout_2 = QHBoxLayout()
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
-        self.label_2 = QLabel(CentralWidget)
+        self.label_2 = QLabel(BaseWidget)
         self.label_2.setObjectName(u"label_2")
         sizePolicy.setHeightForWidth(self.label_2.sizePolicy().hasHeightForWidth())
         self.label_2.setSizePolicy(sizePolicy)
@@ -77,7 +77,7 @@ class Ui_CentralWidget(object):
 
         self.horizontalLayout_2.addWidget(self.label_2)
 
-        self.line_edit_phone_number = QLineEdit(CentralWidget)
+        self.line_edit_phone_number = QLineEdit(BaseWidget)
         self.line_edit_phone_number.setObjectName(u"line_edit_phone_number")
 
         self.horizontalLayout_2.addWidget(self.line_edit_phone_number)
@@ -87,7 +87,7 @@ class Ui_CentralWidget(object):
 
         self.horizontalLayout_3 = QHBoxLayout()
         self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
-        self.label_3 = QLabel(CentralWidget)
+        self.label_3 = QLabel(BaseWidget)
         self.label_3.setObjectName(u"label_3")
         sizePolicy.setHeightForWidth(self.label_3.sizePolicy().hasHeightForWidth())
         self.label_3.setSizePolicy(sizePolicy)
@@ -95,7 +95,7 @@ class Ui_CentralWidget(object):
 
         self.horizontalLayout_3.addWidget(self.label_3)
 
-        self.line_edit_api_id = QLineEdit(CentralWidget)
+        self.line_edit_api_id = QLineEdit(BaseWidget)
         self.line_edit_api_id.setObjectName(u"line_edit_api_id")
 
         self.horizontalLayout_3.addWidget(self.line_edit_api_id)
@@ -105,7 +105,7 @@ class Ui_CentralWidget(object):
 
         self.horizontalLayout_4 = QHBoxLayout()
         self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
-        self.label_4 = QLabel(CentralWidget)
+        self.label_4 = QLabel(BaseWidget)
         self.label_4.setObjectName(u"label_4")
         sizePolicy.setHeightForWidth(self.label_4.sizePolicy().hasHeightForWidth())
         self.label_4.setSizePolicy(sizePolicy)
@@ -113,7 +113,7 @@ class Ui_CentralWidget(object):
 
         self.horizontalLayout_4.addWidget(self.label_4)
 
-        self.line_edit_api_hash = QLineEdit(CentralWidget)
+        self.line_edit_api_hash = QLineEdit(BaseWidget)
         self.line_edit_api_hash.setObjectName(u"line_edit_api_hash")
 
         self.horizontalLayout_4.addWidget(self.line_edit_api_hash)
@@ -130,7 +130,7 @@ class Ui_CentralWidget(object):
 
         self.horizontalLayout_5.addItem(self.horizontalSpacer)
 
-        self.login_button = LoginButton(CentralWidget)
+        self.login_button = LoginButton(BaseWidget)
         self.login_button.setObjectName(u"login_button")
         sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
         sizePolicy1.setHorizontalStretch(0)
@@ -140,7 +140,7 @@ class Ui_CentralWidget(object):
 
         self.horizontalLayout_5.addWidget(self.login_button, 0, Qt.AlignHCenter)
 
-        self.logout_button = LogoutButton(CentralWidget)
+        self.logout_button = LogoutButton(BaseWidget)
         self.logout_button.setObjectName(u"logout_button")
         sizePolicy1.setHeightForWidth(self.logout_button.sizePolicy().hasHeightForWidth())
         self.logout_button.setSizePolicy(sizePolicy1)
@@ -155,19 +155,19 @@ class Ui_CentralWidget(object):
         self.verticalLayout_2.addLayout(self.horizontalLayout_5)
 
 
-        self.retranslateUi(CentralWidget)
+        self.retranslateUi(BaseWidget)
 
-        QMetaObject.connectSlotsByName(CentralWidget)
+        QMetaObject.connectSlotsByName(BaseWidget)
     # setupUi
 
-    def retranslateUi(self, CentralWidget):
-        CentralWidget.setWindowTitle(QCoreApplication.translate("CentralWidget", u"Form", None))
-        self.label_5.setText(QCoreApplication.translate("CentralWidget", u"Telescrape", None))
-        self.label.setText(QCoreApplication.translate("CentralWidget", u"Username", None))
-        self.label_2.setText(QCoreApplication.translate("CentralWidget", u"Phone Number", None))
-        self.label_3.setText(QCoreApplication.translate("CentralWidget", u"API ID", None))
-        self.label_4.setText(QCoreApplication.translate("CentralWidget", u"API HASH", None))
-        self.login_button.setText(QCoreApplication.translate("CentralWidget", u"Login", None))
-        self.logout_button.setText(QCoreApplication.translate("CentralWidget", u"Logout", None))
+    def retranslateUi(self, BaseWidget):
+        BaseWidget.setWindowTitle(QCoreApplication.translate("BaseWidget", u"Form", None))
+        self.label_5.setText(QCoreApplication.translate("BaseWidget", u"Telescrape", None))
+        self.label.setText(QCoreApplication.translate("BaseWidget", u"Username", None))
+        self.label_2.setText(QCoreApplication.translate("BaseWidget", u"Phone Number", None))
+        self.label_3.setText(QCoreApplication.translate("BaseWidget", u"API ID", None))
+        self.label_4.setText(QCoreApplication.translate("BaseWidget", u"API HASH", None))
+        self.login_button.setText(QCoreApplication.translate("BaseWidget", u"Login", None))
+        self.logout_button.setText(QCoreApplication.translate("BaseWidget", u"Logout", None))
     # retranslateUi
 
