@@ -27,7 +27,7 @@
    </item>
    <item>
     <layout class="QVBoxLayout" name="verticalLayout">
-     <item alignment="Qt::AlignHCenter">
+     <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
       <widget class="QLabel" name="image_label">
        <property name="text">
         <string>Image label</string>

@@ -40,7 +40,7 @@ class Ui_OverlayWidget(object):
         self.image_label = QLabel(OverlayWidget)
         self.image_label.setObjectName(u"image_label")
 
-        self.verticalLayout.addWidget(self.image_label, 0, Qt.AlignHCenter)
+        self.verticalLayout.addWidget(self.image_label, 0, Qt.AlignHCenter|Qt.AlignVCenter)
 
 
         self.verticalLayout_3.addLayout(self.verticalLayout)

@@ -2,8 +2,7 @@ from PySide6.QtCore import Signal, Slot
 from PySide6.QtWidgets import QMessageBox, QPushButton
 from qasync import asyncSlot
 
-from client import Client
-from src.gui.login_widget.login_widget import LoginWidget
+from src.client import Client
 
 
 class LoginButton(QPushButton):
@@ -24,18 +23,17 @@ class LoginButton(QPushButton):
         if login_info is None:
             return
 
-        self.login_widget = LoginWidget()
-        self.client = Client(*login_info, self.login_widget) 
-
+        main_window = self.window()
+        self.client = Client(*login_info, main_window) 
         login_result = await self.client.login()
         if login_result is not None:
             self.setEnabled(False)
         self.client_login_finished_signal.emit(login_result)
-        self.login_widget.close()
+        main_window.central_widget.overlay_widget.set_hidden(True)
 
     def _get_login_info(self):
-        mw = self.window()
-        phone_number = mw.line_edit_phone_number.text()
+        bw = self.window().centralWidget().base_widget
+        phone_number = bw.line_edit_phone_number.text()
         try:
             phone_number = int(phone_number)
         except ValueError:
@@ -47,8 +45,8 @@ class LoginButton(QPushButton):
             return None
         else:
             return (
-                mw.line_edit_username.text(),
+                bw.line_edit_username.text(),
                 phone_number,
-                mw.line_edit_api_id.text(),
-                mw.line_edit_api_hash.text()
+                bw.line_edit_api_id.text(),
+                bw.line_edit_api_hash.text()
             )

@@ -14,7 +14,7 @@ def main():
     app_close_event = asyncio.Event()
     app.aboutToQuit.connect(app_close_event.set)
 
-    main_window = MainWindow(app)
+    main_window = MainWindow()
     main_window.show()
 
     with event_loop:

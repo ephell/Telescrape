@@ -1,6 +1,6 @@
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QColor, QPalette
-from PySide6.QtWidgets import QApplication, QVBoxLayout, QWidget
+from PySide6.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget
 
 from src.gui.main_window.central_widget.base_widget.base_widget import BaseWidget
 from src.gui.main_window.central_widget.overlay_widget.overlay_widget import OverlayWidget
@@ -8,10 +8,12 @@ from src.gui.main_window.central_widget.overlay_widget.overlay_widget import Ove
 
 class CentralWidget(QWidget):
 
-    def __init__(self, main_window=None):
+    def __init__(self, main_window: QMainWindow | None = None):
         super().__init__(main_window)
         self.base_widget = self._set_base_widget(BaseWidget(self))
         self.overlay_widget = self._set_overlay_widget(OverlayWidget(self))
+        self.set_overlay_widget_hidden(True)
+
         self.resize(self.base_widget.size())
         if main_window is not None:
             main_window.resize(self.size())

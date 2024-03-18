@@ -2,23 +2,21 @@ from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QApplication, QMainWindow
 from qasync import asyncClose
 
-from src.gui.main_window.MainWindow_ui import Ui_MainWindow
+from src.gui.main_window.central_widget.central_widget import CentralWidget
 
 
-class MainWindow(QMainWindow, Ui_MainWindow):
+class MainWindow(QMainWindow):
 
-    def __init__(self, app: QApplication):
+    def __init__(self):
         super().__init__()
-        self.app = app
         self.client = None
-        self.setupUi(self)
         self.setWindowTitle("Telescrape")
         self.setFocus()
         self.setFocusPolicy(Qt.ClickFocus) # Make all widgets lose focus when clicking on the main window.
         self.setWindowFlags(Qt.Dialog | Qt.MSWindowsFixedSizeDialogHint) # Set non resizable.
-        self.login_button.client_login_finished_signal.connect(self._on_client_login_finished_signal)
-        self.login_button.client_login_finished_signal.connect(self.logout_button.on_client_login_finished_signal)
-        self.logout_button.client_logout_finished_signal.connect(self.login_button.on_client_logout_finished_signal)
+        self.central_widget = CentralWidget(self)
+        self.setCentralWidget(self.central_widget)
+
 
 
     @asyncClose
