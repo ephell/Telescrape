@@ -13,11 +13,14 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_3">
+  <layout class="QVBoxLayout" name="verticalLayout_4" stretch="3,2,1">
+   <property name="spacing">
+    <number>6</number>
+   </property>
    <item>
     <layout class="QVBoxLayout" name="verticalLayout_2">
-     <item alignment="Qt::AlignHCenter|Qt::AlignBottom">
-      <widget class="QLabel" name="message_label">
+     <item alignment="Qt::AlignHCenter">
+      <widget class="QLabel" name="status_message_label">
        <property name="text">
         <string>Message label</string>
        </property>
@@ -26,9 +29,26 @@
     </layout>
    </item>
    <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item alignment="Qt::AlignHCenter|Qt::AlignTop">
+      <widget class="QPushButton" name="continue_button">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>Continue</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
     <layout class="QVBoxLayout" name="verticalLayout">
-     <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
-      <widget class="QLabel" name="image_label">
+     <item alignment="Qt::AlignHCenter|Qt::AlignBottom">
+      <widget class="QLabel" name="status_image_label">
        <property name="text">
         <string>Image label</string>
        </property>
