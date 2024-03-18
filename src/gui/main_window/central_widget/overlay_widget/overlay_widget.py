@@ -25,7 +25,6 @@ class OverlayWidget(Ui_OverlayWidget, QWidget):
 
     def set_hidden(self, value: bool):
         if self.central_widget is not None:
-            print("alalal")
             self.central_widget.set_overlay_widget_hidden(value)
 
     def set_message(self, message: str):
