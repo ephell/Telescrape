@@ -1,3 +1,9 @@
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from src.gui.main_window.central_widget.base_widget.base_widget import BaseWidget
+    from src.gui.main_window.central_widget.overlay_widget.overlay_widget import OverlayWidget
+
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QApplication, QMainWindow
 from qasync import asyncClose
@@ -17,9 +23,9 @@ class MainWindow(QMainWindow):
         self.central_widget = CentralWidget(self)
         self.setCentralWidget(self.central_widget)
 
-        # self.login_button.client_login_finished_signal.connect(self._on_client_login_finished_signal)
-        # self.login_button.client_login_finished_signal.connect(self.logout_button.on_client_login_finished_signal)
-        # self.logout_button.client_logout_finished_signal.connect(self.login_button.on_client_logout_finished_signal)
+        self.get_base_widget().login_button.client_login_finished_signal.connect(
+            self._on_client_login_finished_signal
+        )
 
         self.central_widget.base_widget.line_edit_username.setText("Raska Goo")
         self.central_widget.base_widget.line_edit_phone_number.setText("37060751782")
@@ -31,10 +37,10 @@ class MainWindow(QMainWindow):
         # self.line_edit_api_id.setText("21366188")
         # self.line_edit_api_hash.setText("b78754703b1780a3db1087c371ed3bc7")
 
-    def get_base_widget(self):
+    def get_base_widget(self) -> "BaseWidget":
         return self.central_widget.base_widget
 
-    def get_overlay_widget(self):
+    def get_overlay_widget(self) -> "OverlayWidget":
         return self.central_widget.overlay_widget
 
     @asyncClose

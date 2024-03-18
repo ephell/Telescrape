@@ -1,4 +1,4 @@
-from PySide6.QtCore import Signal, Slot
+from PySide6.QtCore import Signal
 from PySide6.QtWidgets import QMessageBox, QPushButton
 from qasync import asyncSlot
 
@@ -12,10 +12,6 @@ class LoginButton(QPushButton):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.clicked.connect(self._on_clicked)
-
-    @Slot()
-    def on_client_logout_finished_signal(self):
-        self.setEnabled(True)
 
     @asyncSlot()
     async def _on_clicked(self):

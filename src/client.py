@@ -61,7 +61,7 @@ class Client(TelegramClient):
         print("Signing in via GUI ... ")
 
         login_overlay: OverlayWidget = self._main_window.get_overlay_widget()
-        login_overlay.set_message(f"Signing in as: '{self._username}' ... ")
+        login_overlay.set_status_loading(f"Signing in as: '{self._username}' ... ")
         login_overlay.set_hidden(False)
 
         try:
@@ -70,25 +70,23 @@ class Client(TelegramClient):
 
             if await self.is_user_authorized():
                 print("Logged in successfullly!")
+                login_overlay.set_status_success("Logged in successfully!")
                 return self
 
             try:
-                login_overlay.set_message(
+                login_overlay.set_status_loading(
                     f"'{self._username}' is not authorized. Sending the login code request ... "
                 )
                 code_request = await self.send_code_request(self._phone_number)
-                login_overlay.set_message("Waiting for login code ... ")
+                login_overlay.set_status_loading("Waiting for login code ... ")
             except PhoneNumberInvalidError:
-                login_overlay.set_image_fail()
-                login_overlay.set_message("Provided phone number is invalid.")
+                login_overlay.set_status_fail("Provided phone number is invalid.")
                 return None
             except PhoneNumberBannedError:
-                login_overlay.set_image_fail()
-                login_overlay.set_message("Provided phone number is banned.")
+                login_overlay.set_status_fail("Provided phone number is banned.")
                 return None
             except FloodWaitError as e:
-                login_overlay.set_image_fail()
-                login_overlay.set_message(
+                login_overlay.set_status_fail(
                     "Too many login attempts. "
                     f"Try again in {e.seconds // 60} minutes and {e.seconds % 60} seconds."
                 )
@@ -106,7 +104,7 @@ class Client(TelegramClient):
                             phone_code_hash=code_request.phone_code_hash
                         )
                         if await self.get_me() is not None:
-                            print("Logged in successfully!")
+                            login_overlay.set_status_success("Logged in successfully!")
                             return self
                         return None
                     except (
@@ -117,13 +115,11 @@ class Client(TelegramClient):
                     ):
                         await login_overlay.open_error_message_box("Invalid login code.")
                 else:
-                    login_overlay.set_image_fail()
-                    login_overlay.set_message("Login cancelled.")
+                    login_overlay.set_status_fail("Login cancelled.")
                     return None
 
         except Exception as e:
-            login_overlay.set_image_fail()
-            login_overlay.set_message(f"An unhandled exception occured while logging in.")
+            login_overlay.set_status_fail("An unhandled exception occured while logging in.")
             print(f"An unhandled error occured in '{self.login.__name__}': {e}.")
             traceback.print_exc()
             return None

@@ -19,7 +19,6 @@ from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QLineEdit,
     QSizePolicy, QSpacerItem, QVBoxLayout, QWidget)
 
 from src.gui.main_window.button_login import LoginButton
-from src.gui.main_window.button_logout import LogoutButton
 
 class Ui_BaseWidget(object):
     def setupUi(self, BaseWidget):
@@ -140,13 +139,6 @@ class Ui_BaseWidget(object):
 
         self.horizontalLayout_5.addWidget(self.login_button, 0, Qt.AlignHCenter)
 
-        self.logout_button = LogoutButton(BaseWidget)
-        self.logout_button.setObjectName(u"logout_button")
-        sizePolicy1.setHeightForWidth(self.logout_button.sizePolicy().hasHeightForWidth())
-        self.logout_button.setSizePolicy(sizePolicy1)
-
-        self.horizontalLayout_5.addWidget(self.logout_button, 0, Qt.AlignHCenter)
-
         self.horizontalSpacer_2 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.horizontalLayout_5.addItem(self.horizontalSpacer_2)
@@ -168,6 +160,5 @@ class Ui_BaseWidget(object):
         self.label_3.setText(QCoreApplication.translate("BaseWidget", u"API ID", None))
         self.label_4.setText(QCoreApplication.translate("BaseWidget", u"API HASH", None))
         self.login_button.setText(QCoreApplication.translate("BaseWidget", u"Login", None))
-        self.logout_button.setText(QCoreApplication.translate("BaseWidget", u"Logout", None))
     # retranslateUi
 
