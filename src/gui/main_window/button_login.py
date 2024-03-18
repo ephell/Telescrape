@@ -29,7 +29,7 @@ class LoginButton(QPushButton):
         if login_result is not None:
             self.setEnabled(False)
         self.client_login_finished_signal.emit(login_result)
-        main_window.central_widget.overlay_widget.set_hidden(True)
+        main_window.get_overlay_widget().set_hidden(True)
 
     def _get_login_info(self):
         bw = self.window().centralWidget().base_widget

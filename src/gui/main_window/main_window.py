@@ -18,6 +18,11 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(self.central_widget)
 
 
+    def get_base_widget(self):
+        return self.central_widget.base_widget
+
+    def get_overlay_widget(self):
+        return self.central_widget.overlay_widget
 
     @asyncClose
     async def closeEvent(self, event):

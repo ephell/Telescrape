@@ -60,7 +60,7 @@ class Client(TelegramClient):
     async def _login_via_gui(self):
         print("Signing in via GUI ... ")
 
-        login_overlay: OverlayWidget = self._main_window.central_widget.overlay_widget
+        login_overlay: OverlayWidget = self._main_window.get_overlay_widget()
         login_overlay.set_message(f"Signing in as: '{self._username}' ... ")
         login_overlay.set_hidden(False)
 
