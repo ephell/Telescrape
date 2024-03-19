@@ -1,6 +1,10 @@
 import asyncio
 import traceback
-from typing import Self
+from typing import TYPE_CHECKING, Optional, Self
+
+if TYPE_CHECKING:
+    from src.gui.main_window.main_window import MainWindow
+    from src.gui.main_window.central_widget.overlay_widget.overlay_widget import OverlayWidget
 
 from telethon import TelegramClient
 from telethon.errors.rpcerrorlist import (
@@ -13,8 +17,6 @@ from telethon.errors.rpcerrorlist import (
     PhoneNumberInvalidError
 )
 
-from src.gui.login_widget.login_widget import LoginWidget
-
 
 class Client(TelegramClient):
 
@@ -24,18 +26,18 @@ class Client(TelegramClient):
         phone_number: int, 
         api_id: str, 
         api_hash: str,
-        login_widget: LoginWidget | None = None
+        main_window: Optional["MainWindow"] = None
     ):
         self._username = username
         self._phone_number = phone_number
         self._api_id = api_id
         self._api_hash = api_hash
         self._password = None # ToDo: add support. This is 2FA.
-        self._login_widget = login_widget
+        self._main_window = main_window
         super().__init__(self._username, self._api_id, self._api_hash)
 
     async def login(self) -> Self | None:
-        if self._login_widget is None:
+        if self._main_window is None:
             login_method = self._login_via_terminal
         else:
             login_method = self._login_via_gui 
@@ -58,46 +60,42 @@ class Client(TelegramClient):
     async def _login_via_gui(self):
         print("Signing in via GUI ... ")
 
-        self._login_widget.set_status_message(f"Signing in as: '{self._username}' ... ")
-        self._login_widget.show()
+        login_overlay: OverlayWidget = self._main_window.get_overlay_widget()
+        login_overlay.set_status_loading(f"Signing in as: '{self._username}' ... ")
+        login_overlay.set_hidden(False)
 
         try:
             if not self.is_connected():
                 await self.connect()
 
             if await self.is_user_authorized():
-                self._login_widget.set_status_image_success()
-                self._login_widget.set_status_message(
-                    f"'{self._username}' is already authorized. Successfully logged in ... "
-                )
+                print("Logged in successfullly!")
+                login_overlay.set_status_success("Logged in successfully!")
                 return self
 
             try:
-                self._login_widget.set_status_message(
+                login_overlay.set_status_loading(
                     f"'{self._username}' is not authorized. Sending the login code request ... "
                 )
                 code_request = await self.send_code_request(self._phone_number)
-                self._login_widget.set_status_message("Waiting for login code ... ")
+                login_overlay.set_status_loading("Waiting for login code ... ")
             except PhoneNumberInvalidError:
-                self._login_widget.set_status_image_fail()
-                self._login_widget.set_status_message("Provided phone number is invalid.")
+                login_overlay.set_status_fail("Provided phone number is invalid.")
                 return None
             except PhoneNumberBannedError:
-                self._login_widget.set_status_image_fail()
-                self._login_widget.set_status_message("Provided phone number is banned.")
+                login_overlay.set_status_fail("Provided phone number is banned.")
                 return None
             except FloodWaitError as e:
-                self._login_widget.set_status_image_fail()
-                self._login_widget.set_status_message(
+                login_overlay.set_status_fail(
                     "Too many login attempts. "
                     f"Try again in {e.seconds // 60} minutes and {e.seconds % 60} seconds."
                 )
                 return None
 
             while True:
-                code = await self._login_widget.open_login_code_input_dialog_and_get_input()
+                code = await login_overlay.open_login_code_input_dialog_and_get_input()
                 if code == "":
-                    await self._login_widget.open_error_message_box("Login code field cannot be empty.")
+                    await login_overlay.open_error_message_box("Login code field cannot be empty.")
                 elif code is not None:
                     try:
                         await self.sign_in(
@@ -106,8 +104,7 @@ class Client(TelegramClient):
                             phone_code_hash=code_request.phone_code_hash
                         )
                         if await self.get_me() is not None:
-                            self._login_widget.set_status_image_success()
-                            self._login_widget.set_status_message("Successfully logged in!")
+                            login_overlay.set_status_success("Logged in successfully!")
                             return self
                         return None
                     except (
@@ -116,15 +113,13 @@ class Client(TelegramClient):
                         PhoneCodeHashEmptyError,
                         PhoneCodeInvalidError
                     ):
-                        await self._login_widget.open_error_message_box("Invalid login code.")
+                        await login_overlay.open_error_message_box("Invalid login code.")
                 else:
-                    self._login_widget.set_status_image_fail()
-                    self._login_widget.set_status_message("Login cancelled.")
+                    login_overlay.set_status_fail("Login cancelled.")
                     return None
 
         except Exception as e:
-            self._login_widget.set_status_image_fail()
-            self._login_widget.set_status_message(f"An unhandled exception occured while logging in.")
+            login_overlay.set_status_fail("An unhandled exception occured while logging in.")
             print(f"An unhandled error occured in '{self.login.__name__}': {e}.")
             traceback.print_exc()
             return None

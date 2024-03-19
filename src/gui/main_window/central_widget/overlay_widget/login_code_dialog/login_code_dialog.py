@@ -1,9 +1,9 @@
 from PySide6.QtWidgets import QDialog
 
-from src.gui.login_widget.login_code_input_dialog.LoginCodeInputDialog_ui import Ui_LoginCodeInputDialog
+from src.gui.main_window.central_widget.overlay_widget.login_code_dialog.LoginCodeDialog_ui import Ui_LoginCodeDialog
 
 
-class LoginCodeInputDialog(QDialog, Ui_LoginCodeInputDialog):
+class LoginCodeInputDialog(QDialog, Ui_LoginCodeDialog):
 
     def __init__(self, parent=None):
         super().__init__(parent)
