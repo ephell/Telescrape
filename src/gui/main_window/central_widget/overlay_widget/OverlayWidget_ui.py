@@ -30,6 +30,13 @@ class Ui_OverlayWidget(object):
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
         self.status_message_label = QLabel(OverlayWidget)
         self.status_message_label.setObjectName(u"status_message_label")
+        font = QFont()
+        font.setPointSize(14)
+        font.setBold(False)
+        self.status_message_label.setFont(font)
+        self.status_message_label.setTextFormat(Qt.PlainText)
+        self.status_message_label.setAlignment(Qt.AlignCenter)
+        self.status_message_label.setWordWrap(True)
 
         self.verticalLayout_2.addWidget(self.status_message_label, 0, Qt.AlignHCenter)
 

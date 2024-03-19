@@ -16,7 +16,6 @@ from src.gui.main_window.central_widget.overlay_widget.OverlayWidget_ui import U
 class OverlayWidget(Ui_OverlayWidget, QWidget):
     """Displayed during sign-in by overlaying the `base_widget` in `CentralWidget`."""
 
-
     def __init__(self, central_widget: Optional["CentralWidget"] = None):
         super().__init__(central_widget)
         self.central_widget = central_widget
