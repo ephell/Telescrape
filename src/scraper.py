@@ -51,6 +51,15 @@ class Scraper:
                 entities.append(entity)
         return entities
 
+    async def scrape_entity(self, entity: Channel | Chat):
+        users = await self._get_users_from_entity(entity)
+        if users is None:
+            return
+
+        users_data = self._extract_users_data(users)
+        self._write_users_data_to_csv(users_data, entity.title)
+        print(f"Finished scraping '{entity.title}'. Total users scraped: {len(users_data)}.")
+
     async def _get_entity_to_scrape(self) -> Channel | Chat:
         print("Getting scrapable groups and channels ... ")
 
