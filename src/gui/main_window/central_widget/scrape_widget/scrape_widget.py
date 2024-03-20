@@ -2,8 +2,9 @@ from typing import TYPE_CHECKING, Optional
 
 if TYPE_CHECKING:
     from src.gui.main_window.central_widget.central_widget import CentralWidget
+    from src.client import Client
 
-from PySide6.QtCore import Signal
+from PySide6.QtCore import Signal, Slot
 from PySide6.QtWidgets import QCheckBox, QLayout, QWidget
 
 from src.gui.main_window.central_widget.scrape_widget.ScrapeWidget_ui import Ui_ScrapeWidget
@@ -22,6 +23,7 @@ class ScrapeWidget(Ui_ScrapeWidget, QWidget):
         self.scroll_area_layout.setSizeConstraint(QLayout.SetFixedSize)
         self.checked_check_boxes_counter = 0
         self.all_check_boxes = []
+        self._client: "Client" = None
         # Signals and slots.
         self.logout_button.clicked.connect(self.logout_signal.emit)
 
@@ -34,12 +36,13 @@ class ScrapeWidget(Ui_ScrapeWidget, QWidget):
     def _add_check_box(self, text: str = "Test") -> QCheckBox:
         check_box = QCheckBox(self)
         check_box.setText(text)
-        check_box.stateChanged.connect(self.on_checkbox_stateChanged)
+        check_box.stateChanged.connect(self._on_checkbox_stateChanged)
         self.all_check_boxes.append(check_box)
         self.scroll_area_layout.addWidget(check_box)
         return check_box
 
-    def on_checkbox_stateChanged(self, check_state):
+    @Slot()
+    def _on_checkbox_stateChanged(self, check_state):
         if check_state == 2: # Checked
             self.checked_check_boxes_counter += 1
         elif check_state == 0: # Unchecked
@@ -47,6 +50,11 @@ class ScrapeWidget(Ui_ScrapeWidget, QWidget):
         self.check_boxes_checked_label.setText(
             f"({self.checked_check_boxes_counter}/{len(self.all_check_boxes)}) Selected."
         )
+
+    # Space in between 'o' and 'n' to prevent 'QMetaObject::connectSlotsByName: No matching signal'.
+    @Slot()
+    def o_n_client_login_finished_signal(self, client: "Client"):
+        self._client = client
 
 
 if __name__ == "__main__":

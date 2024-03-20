@@ -17,7 +17,7 @@ class MainWindow(QMainWindow):
 
     def __init__(self):
         super().__init__()
-        self.client: Client = None
+        self.client: "Client" = None
         self.setWindowTitle("Telescrape")
         self.setFocus()
         self.setFocusPolicy(Qt.ClickFocus) # Make all widgets lose focus when clicking on the main window.
@@ -29,8 +29,9 @@ class MainWindow(QMainWindow):
         self.overlay_widget = self.get_overlay_widget()
         self.scrape_widget = self.get_scrape_widget()
         # Signals and slots.
+        self.base_widget.login_button.client_login_finished_signal.connect(self._on_client_login_finished_signal)
         self.base_widget.login_button.client_login_finished_signal.connect(
-            self._on_client_login_finished_signal
+            self.scrape_widget.o_n_client_login_finished_signal
         )
         self.overlay_widget.login_successful_signal.connect(self._on_login_successful_signal)
         self.scrape_widget.logout_signal.connect(self._on_logout_signal)
@@ -54,15 +55,15 @@ class MainWindow(QMainWindow):
             await self.client.logout()
 
     @Slot()
-    def _on_client_login_finished_signal(self, client):
+    def _on_client_login_finished_signal(self, client: "Client"):
         self.client = client
 
     @Slot()
     def _on_login_successful_signal(self):
         self.base_widget.set_hidden(True)
         self.overlay_widget.set_hidden(True)
-        self.scrape_widget.set_hidden(False)
         self.resize(self.central_widget.get_scrape_widget_container_original_size())
+        self.scrape_widget.set_hidden(False)
 
     @asyncSlot()
     async def _on_logout_signal(self):
