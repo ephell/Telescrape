@@ -7,47 +7,45 @@
     <x>0</x>
     <y>0</y>
     <width>281</width>
-    <height>138</height>
+    <height>188</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
-   <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
-    <widget class="QPushButton" name="pushButton">
-     <property name="text">
-      <string>Button</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QScrollArea" name="scrollArea">
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,1">
+   <item alignment="Qt::AlignHCenter">
+    <widget class="QLabel" name="check_boxes_checked_label">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>90</height>
-      </size>
+     <property name="text">
+      <string>((0/0) Selected</string>
      </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QScrollArea" name="scroll_area">
      <property name="widgetResizable">
       <bool>true</bool>
      </property>
-     <widget class="QWidget" name="scrollAreaWidgetContents">
+     <widget class="QWidget" name="scroll_area_widget_contents">
       <property name="geometry">
        <rect>
         <x>0</x>
         <y>0</y>
         <width>261</width>
-        <height>88</height>
+        <height>146</height>
        </rect>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout_2"/>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <property name="sizeConstraint">
+        <enum>QLayout::SetDefaultConstraint</enum>
+       </property>
+      </layout>
      </widget>
     </widget>
    </item>
