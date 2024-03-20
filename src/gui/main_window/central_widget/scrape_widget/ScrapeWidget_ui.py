@@ -51,30 +51,30 @@ class Ui_ScrapeWidget(object):
 
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.pushButton = QPushButton(ScrapeWidget)
-        self.pushButton.setObjectName(u"pushButton")
+        self.get_groups_button = QPushButton(ScrapeWidget)
+        self.get_groups_button.setObjectName(u"get_groups_button")
 
-        self.horizontalLayout.addWidget(self.pushButton)
+        self.horizontalLayout.addWidget(self.get_groups_button)
 
-        self.pushButton_3 = QPushButton(ScrapeWidget)
-        self.pushButton_3.setObjectName(u"pushButton_3")
+        self.select_all_button = QPushButton(ScrapeWidget)
+        self.select_all_button.setObjectName(u"select_all_button")
 
-        self.horizontalLayout.addWidget(self.pushButton_3)
+        self.horizontalLayout.addWidget(self.select_all_button)
 
-        self.pushButton_4 = QPushButton(ScrapeWidget)
-        self.pushButton_4.setObjectName(u"pushButton_4")
+        self.unselect_all_button = QPushButton(ScrapeWidget)
+        self.unselect_all_button.setObjectName(u"unselect_all_button")
 
-        self.horizontalLayout.addWidget(self.pushButton_4)
+        self.horizontalLayout.addWidget(self.unselect_all_button)
 
-        self.pushButton_5 = QPushButton(ScrapeWidget)
-        self.pushButton_5.setObjectName(u"pushButton_5")
+        self.scrape_button = QPushButton(ScrapeWidget)
+        self.scrape_button.setObjectName(u"scrape_button")
 
-        self.horizontalLayout.addWidget(self.pushButton_5)
+        self.horizontalLayout.addWidget(self.scrape_button)
 
-        self.pushButton_2 = QPushButton(ScrapeWidget)
-        self.pushButton_2.setObjectName(u"pushButton_2")
+        self.logout_button = QPushButton(ScrapeWidget)
+        self.logout_button.setObjectName(u"logout_button")
 
-        self.horizontalLayout.addWidget(self.pushButton_2)
+        self.horizontalLayout.addWidget(self.logout_button)
 
 
         self.verticalLayout.addLayout(self.horizontalLayout)
@@ -89,10 +89,10 @@ class Ui_ScrapeWidget(object):
     def retranslateUi(self, ScrapeWidget):
         ScrapeWidget.setWindowTitle(QCoreApplication.translate("ScrapeWidget", u"Form", None))
         self.check_boxes_checked_label.setText(QCoreApplication.translate("ScrapeWidget", u"(0/0) Selected", None))
-        self.pushButton.setText(QCoreApplication.translate("ScrapeWidget", u"Get Groups", None))
-        self.pushButton_3.setText(QCoreApplication.translate("ScrapeWidget", u"Select All", None))
-        self.pushButton_4.setText(QCoreApplication.translate("ScrapeWidget", u"Unselect All", None))
-        self.pushButton_5.setText(QCoreApplication.translate("ScrapeWidget", u"Scrape", None))
-        self.pushButton_2.setText(QCoreApplication.translate("ScrapeWidget", u"Logout", None))
+        self.get_groups_button.setText(QCoreApplication.translate("ScrapeWidget", u"Get Groups", None))
+        self.select_all_button.setText(QCoreApplication.translate("ScrapeWidget", u"Select All", None))
+        self.unselect_all_button.setText(QCoreApplication.translate("ScrapeWidget", u"Unselect All", None))
+        self.scrape_button.setText(QCoreApplication.translate("ScrapeWidget", u"Scrape", None))
+        self.logout_button.setText(QCoreApplication.translate("ScrapeWidget", u"Logout", None))
     # retranslateUi
 

@@ -3,12 +3,15 @@ from typing import TYPE_CHECKING, Optional
 if TYPE_CHECKING:
     from src.gui.main_window.central_widget.central_widget import CentralWidget
 
+from PySide6.QtCore import Signal
 from PySide6.QtWidgets import QCheckBox, QLayout, QWidget
 
 from src.gui.main_window.central_widget.scrape_widget.ScrapeWidget_ui import Ui_ScrapeWidget
 
 
 class ScrapeWidget(Ui_ScrapeWidget, QWidget):
+
+    logout_signal = Signal()
 
     def __init__(self, central_widget: Optional["CentralWidget"] = None):
         super().__init__(central_widget)
@@ -19,6 +22,8 @@ class ScrapeWidget(Ui_ScrapeWidget, QWidget):
         self.scroll_area_layout.setSizeConstraint(QLayout.SetFixedSize)
         self.checked_check_boxes_counter = 0
         self.all_check_boxes = []
+        # Signals and slots.
+        self.logout_button.clicked.connect(self.logout_signal.emit)
 
     def set_hidden(self, value: bool):
         if self.central_widget is not None:

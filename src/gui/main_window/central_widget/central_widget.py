@@ -25,6 +25,7 @@ class CentralWidget(QWidget):
         super().resizeEvent(event)
         self._base_widget_container.resize(self.size())
         self._overlay_widget_container.resize(self.size())
+        self._scrape_widget_container.resize(self.size())
 
     def set_base_widget_hidden(self, value: bool):
         self._set_widget_container_hidden(self._base_widget_container, value)
@@ -40,12 +41,16 @@ class CentralWidget(QWidget):
         if value:
             widget_container.raise_()
 
-    def get_scrape_widget_container_size(self):
-        return self._scrape_widget_container.size()
+    def get_base_widget_container_original_size(self):
+        return self._base_widget_container_original_size
+
+    def get_scrape_widget_container_original_size(self):
+        return self._scrape_widget_container_original_size
 
     def _set_base_widget(self, base_widget) -> BaseWidget:
         self._base_widget_container = QWidget(self)
         self._base_widget_container.resize(base_widget.size())
+        self._base_widget_container_original_size = self._base_widget_container.size()
         self._base_widget_container.setLayout(QVBoxLayout())
         self._base_widget_container.layout().addWidget(base_widget)
         return base_widget
@@ -68,6 +73,7 @@ class CentralWidget(QWidget):
     def _set_scrape_widget(self, scrape_widget) -> ScrapeWidget:
         self._scrape_widget_container = QWidget(self)
         self._scrape_widget_container.resize(scrape_widget.size())
+        self._scrape_widget_container_original_size = self._scrape_widget_container.size()
         self._scrape_widget_container.setLayout(QVBoxLayout())
         self._scrape_widget_container.layout().addWidget(scrape_widget)
         return scrape_widget
