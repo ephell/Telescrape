@@ -15,14 +15,15 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QLabel, QLayout, QScrollArea,
-    QSizePolicy, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QLayout,
+    QPushButton, QScrollArea, QSizePolicy, QVBoxLayout,
+    QWidget)
 
 class Ui_ScrapeWidget(object):
     def setupUi(self, ScrapeWidget):
         if not ScrapeWidget.objectName():
             ScrapeWidget.setObjectName(u"ScrapeWidget")
-        ScrapeWidget.resize(281, 188)
+        ScrapeWidget.resize(419, 277)
         self.verticalLayout = QVBoxLayout(ScrapeWidget)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.check_boxes_checked_label = QLabel(ScrapeWidget)
@@ -40,13 +41,43 @@ class Ui_ScrapeWidget(object):
         self.scroll_area.setWidgetResizable(True)
         self.scroll_area_widget_contents = QWidget()
         self.scroll_area_widget_contents.setObjectName(u"scroll_area_widget_contents")
-        self.scroll_area_widget_contents.setGeometry(QRect(0, 0, 261, 146))
+        self.scroll_area_widget_contents.setGeometry(QRect(0, 0, 399, 203))
         self.verticalLayout_2 = QVBoxLayout(self.scroll_area_widget_contents)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
         self.verticalLayout_2.setSizeConstraint(QLayout.SetDefaultConstraint)
         self.scroll_area.setWidget(self.scroll_area_widget_contents)
 
         self.verticalLayout.addWidget(self.scroll_area)
+
+        self.horizontalLayout = QHBoxLayout()
+        self.horizontalLayout.setObjectName(u"horizontalLayout")
+        self.pushButton = QPushButton(ScrapeWidget)
+        self.pushButton.setObjectName(u"pushButton")
+
+        self.horizontalLayout.addWidget(self.pushButton)
+
+        self.pushButton_3 = QPushButton(ScrapeWidget)
+        self.pushButton_3.setObjectName(u"pushButton_3")
+
+        self.horizontalLayout.addWidget(self.pushButton_3)
+
+        self.pushButton_4 = QPushButton(ScrapeWidget)
+        self.pushButton_4.setObjectName(u"pushButton_4")
+
+        self.horizontalLayout.addWidget(self.pushButton_4)
+
+        self.pushButton_5 = QPushButton(ScrapeWidget)
+        self.pushButton_5.setObjectName(u"pushButton_5")
+
+        self.horizontalLayout.addWidget(self.pushButton_5)
+
+        self.pushButton_2 = QPushButton(ScrapeWidget)
+        self.pushButton_2.setObjectName(u"pushButton_2")
+
+        self.horizontalLayout.addWidget(self.pushButton_2)
+
+
+        self.verticalLayout.addLayout(self.horizontalLayout)
 
         self.verticalLayout.setStretch(1, 1)
 
@@ -57,6 +88,11 @@ class Ui_ScrapeWidget(object):
 
     def retranslateUi(self, ScrapeWidget):
         ScrapeWidget.setWindowTitle(QCoreApplication.translate("ScrapeWidget", u"Form", None))
-        self.check_boxes_checked_label.setText(QCoreApplication.translate("ScrapeWidget", u"((0/0) Selected", None))
+        self.check_boxes_checked_label.setText(QCoreApplication.translate("ScrapeWidget", u"(0/0) Selected", None))
+        self.pushButton.setText(QCoreApplication.translate("ScrapeWidget", u"Get Groups", None))
+        self.pushButton_3.setText(QCoreApplication.translate("ScrapeWidget", u"Select All", None))
+        self.pushButton_4.setText(QCoreApplication.translate("ScrapeWidget", u"Unselect All", None))
+        self.pushButton_5.setText(QCoreApplication.translate("ScrapeWidget", u"Scrape", None))
+        self.pushButton_2.setText(QCoreApplication.translate("ScrapeWidget", u"Logout", None))
     # retranslateUi
 

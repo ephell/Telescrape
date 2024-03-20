@@ -40,6 +40,9 @@ class CentralWidget(QWidget):
         if value:
             widget_container.raise_()
 
+    def get_scrape_widget_container_size(self):
+        return self._scrape_widget_container.size()
+
     def _set_base_widget(self, base_widget) -> BaseWidget:
         self._base_widget_container = QWidget(self)
         self._base_widget_container.resize(base_widget.size())
