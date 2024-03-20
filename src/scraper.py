@@ -1,9 +1,13 @@
 import csv
 import os
 import re
+from typing import TYPE_CHECKING, List
+
+if TYPE_CHECKING:
+    from src.client import Client
+
 from datetime import datetime, timedelta, timezone
 
-from telethon import TelegramClient
 from telethon.errors import ChatAdminRequiredError
 from telethon.tl.types import (
     Channel,
@@ -19,7 +23,7 @@ from telethon.tl.types import (
 
 class Scraper:
 
-    def __init__(self, client: TelegramClient, active_in_last_days: int = 30):
+    def __init__(self, client: "Client", active_in_last_days: int = 30):
         self._active_in_last_days = active_in_last_days
         self._client = client
         self._scraped_data_dir_path = os.path.join(os.getcwd(), "scraped_data_dir")
@@ -38,6 +42,14 @@ class Scraper:
         users_data = self._extract_users_data(users)
         print(f"Total users scraped: {len(users_data)}.")
         self._write_users_data_to_csv(users_data, entity.title)
+
+    async def get_scrapable_entities(self) -> List[Channel | Chat]:
+        entities = []
+        async for dialog in self._client.iter_dialogs(ignore_migrated=True):
+            entity = dialog.entity
+            if isinstance(entity, Channel) or isinstance(entity, Chat):
+                entities.append(entity)
+        return entities
 
     async def _get_entity_to_scrape(self) -> Channel | Chat:
         print("Getting scrapable groups and channels ... ")
