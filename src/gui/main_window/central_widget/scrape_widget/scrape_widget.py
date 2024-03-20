@@ -6,8 +6,10 @@ if TYPE_CHECKING:
 
 from PySide6.QtCore import Signal, Slot
 from PySide6.QtWidgets import QCheckBox, QLayout, QWidget
+from qasync import asyncSlot
 
 from src.gui.main_window.central_widget.scrape_widget.ScrapeWidget_ui import Ui_ScrapeWidget
+from src.scraper import Scraper
 
 
 class ScrapeWidget(Ui_ScrapeWidget, QWidget):
@@ -23,9 +25,10 @@ class ScrapeWidget(Ui_ScrapeWidget, QWidget):
         self.scroll_area_layout.setSizeConstraint(QLayout.SetFixedSize)
         self.checked_check_boxes_counter = 0
         self.all_check_boxes = []
-        self._client: "Client" = None
+        self._scraper: Scraper = None
         # Signals and slots.
         self.logout_button.clicked.connect(self.logout_signal.emit)
+        self.get_groups_button.clicked.connect(self._on_get_groups_button_clicked)
 
     def set_hidden(self, value: bool):
         if self.central_widget is not None:
@@ -53,8 +56,14 @@ class ScrapeWidget(Ui_ScrapeWidget, QWidget):
 
     # Space in between 'o' and 'n' to prevent 'QMetaObject::connectSlotsByName: No matching signal'.
     @Slot()
-    def o_n_client_login_finished_signal(self, client: "Client"):
-        self._client = client
+    def o_n_client_login_finished_signal(self, client: Optional["Client"]):
+        if client is not None:
+            self._scraper = Scraper(client)
+
+    @asyncSlot()
+    async def _on_get_groups_button_clicked(self):
+        for i, entity in enumerate(await self._scraper.get_scrapable_entities()):
+            self._add_check_box(f"[{i}] {entity.title}")
 
 
 if __name__ == "__main__":
