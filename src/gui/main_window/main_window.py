@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional
 
 if TYPE_CHECKING:
     from src.gui.main_window.central_widget.base_widget.base_widget import BaseWidget
@@ -55,7 +55,7 @@ class MainWindow(QMainWindow):
             await self.client.logout()
 
     @Slot()
-    def _on_client_login_finished_signal(self, client: "Client"):
+    def _on_client_login_finished_signal(self, client: Optional["Client"]):
         self.client = client
 
     @Slot()
