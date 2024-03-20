@@ -1,4 +1,8 @@
-from PySide6.QtCore import Qt
+from typing import TYPE_CHECKING, Optional
+
+if TYPE_CHECKING:
+    from src.gui.main_window.central_widget.central_widget import CentralWidget
+
 from PySide6.QtWidgets import QCheckBox, QLayout, QWidget
 
 from src.gui.main_window.central_widget.scrape_widget.ScrapeWidget_ui import Ui_ScrapeWidget
@@ -6,14 +10,21 @@ from src.gui.main_window.central_widget.scrape_widget.ScrapeWidget_ui import Ui_
 
 class ScrapeWidget(Ui_ScrapeWidget, QWidget):
 
-    def __init__(self, parent=None):
-        super().__init__(parent)
+    def __init__(self, central_widget: Optional["CentralWidget"] = None):
+        super().__init__(central_widget)
+        self.central_widget = central_widget
         self.setupUi(self)
         self.scroll_area_layout = self.scroll_area_widget_contents.layout()
         # Force items inside the scroll area to stack from top to bottom, equally.
         self.scroll_area_layout.setSizeConstraint(QLayout.SetFixedSize)
         self.checked_check_boxes_counter = 0
         self.all_check_boxes = []
+
+    def set_hidden(self, value: bool):
+        if self.central_widget is not None:
+            self.central_widget.set_scrape_widget_hidden(value)
+        else:
+            self.setHidden(value)
 
     def _add_check_box(self, text: str = "Test") -> QCheckBox:
         check_box = QCheckBox(self)

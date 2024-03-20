@@ -4,6 +4,7 @@ from PySide6.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget
 
 from src.gui.main_window.central_widget.base_widget.base_widget import BaseWidget
 from src.gui.main_window.central_widget.overlay_widget.overlay_widget import OverlayWidget
+from src.gui.main_window.central_widget.scrape_widget.scrape_widget import ScrapeWidget
 
 
 class CentralWidget(QWidget):
@@ -13,6 +14,8 @@ class CentralWidget(QWidget):
         self.base_widget = self._set_base_widget(BaseWidget(self))
         self.overlay_widget = self._set_overlay_widget(OverlayWidget(self))
         self.set_overlay_widget_hidden(True)
+        self.scrape_widget = self._set_scrape_widget(ScrapeWidget(self))
+        self.set_scrape_widget_hidden(True)
 
         self.resize(self.base_widget.size())
         if main_window is not None:
@@ -29,14 +32,22 @@ class CentralWidget(QWidget):
     def set_overlay_widget_hidden(self, value: bool):
         self._set_widget_container_hidden(self._overlay_widget_container, value)
 
-    def _set_base_widget(self, base_widget):
+    def set_scrape_widget_hidden(self, value: bool):
+        self._set_widget_container_hidden(self._scrape_widget_container, value)
+
+    def _set_widget_container_hidden(self, widget_container: QWidget, value: bool):
+        widget_container.setHidden(value)
+        if value:
+            widget_container.raise_()
+
+    def _set_base_widget(self, base_widget) -> BaseWidget:
         self._base_widget_container = QWidget(self)
         self._base_widget_container.resize(base_widget.size())
         self._base_widget_container.setLayout(QVBoxLayout())
         self._base_widget_container.layout().addWidget(base_widget)
         return base_widget
 
-    def _set_overlay_widget(self, overlay_widget):
+    def _set_overlay_widget(self, overlay_widget) -> OverlayWidget:
         self._overlay_widget_container = QWidget(self)
         self._overlay_widget_container.setWindowFlags(Qt.WindowType.Widget | Qt.WindowType.FramelessWindowHint)
         self._overlay_widget_container.setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents, False)
@@ -51,10 +62,12 @@ class CentralWidget(QWidget):
         self._overlay_widget_container.setPalette(palette)
         return overlay_widget
 
-    def _set_widget_container_hidden(self, widget_container: QWidget, value: bool):
-        widget_container.setHidden(value)
-        if value:
-            widget_container.raise_()
+    def _set_scrape_widget(self, scrape_widget) -> ScrapeWidget:
+        self._scrape_widget_container = QWidget(self)
+        self._scrape_widget_container.resize(scrape_widget.size())
+        self._scrape_widget_container.setLayout(QVBoxLayout())
+        self._scrape_widget_container.layout().addWidget(scrape_widget)
+        return scrape_widget
 
 
 if __name__ == "__main__":

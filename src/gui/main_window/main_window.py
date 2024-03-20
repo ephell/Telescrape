@@ -3,6 +3,7 @@ from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from src.gui.main_window.central_widget.base_widget.base_widget import BaseWidget
     from src.gui.main_window.central_widget.overlay_widget.overlay_widget import OverlayWidget
+    from src.gui.main_window.central_widget.scrape_widget.scrape_widget import ScrapeWidget
 
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QApplication, QMainWindow
@@ -26,22 +27,23 @@ class MainWindow(QMainWindow):
         self.get_base_widget().login_button.client_login_finished_signal.connect(
             self._on_client_login_finished_signal
         )
+        self.get_overlay_widget().login_successful_signal.connect(
+            self._on_login_successful_signal
+        )
 
-        self.central_widget.base_widget.line_edit_username.setText("Raska Goo")
-        self.central_widget.base_widget.line_edit_phone_number.setText("37060751782")
-        self.central_widget.base_widget.line_edit_api_id.setText("14112344")
-        self.central_widget.base_widget.line_edit_api_hash.setText("90d2a30e6a391fee8c99f38476d4bf46")
-
-        # self.line_edit_username.setText("Saulius One")
-        # self.line_edit_phone_number.setText("37067210952")
-        # self.line_edit_api_id.setText("21366188")
-        # self.line_edit_api_hash.setText("b78754703b1780a3db1087c371ed3bc7")
+    def _on_login_successful_signal(self):
+        self.get_base_widget().set_hidden(True)
+        self.get_overlay_widget().set_hidden(True)
+        self.get_scrape_widget().set_hidden(False)
 
     def get_base_widget(self) -> "BaseWidget":
         return self.central_widget.base_widget
 
     def get_overlay_widget(self) -> "OverlayWidget":
         return self.central_widget.overlay_widget
+
+    def get_scrape_widget(self) -> "ScrapeWidget":
+        return self.central_widget.scrape_widget
 
     @asyncClose
     async def closeEvent(self, event):
