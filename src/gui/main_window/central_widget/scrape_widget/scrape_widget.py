@@ -27,9 +27,9 @@ class ScrapeWidget(Ui_ScrapeWidget, QWidget):
         super().__init__(central_widget)
         self.central_widget = central_widget
         self.setupUi(self)
-        self.scroll_area_layout = self.scroll_area_widget_contents.layout()
+        self._scroll_area_layout = self.scroll_area_widget_contents.layout()
         # Force items inside the scroll area to stack from top to bottom, equally.
-        self.scroll_area_layout.setSizeConstraint(QLayout.SetFixedSize)
+        self._scroll_area_layout.setSizeConstraint(QLayout.SetFixedSize)
         self.checked_check_boxes_counter = 0
         self._all_check_boxes: Dict[QCheckBox, Entity] = {}
         self._scraper: Scraper = None
@@ -58,25 +58,25 @@ class ScrapeWidget(Ui_ScrapeWidget, QWidget):
             self.setHidden(value)
 
     def _start_loading_gif(self):
-        self.scroll_area_layout.setSizeConstraint(QLayout.SetMaximumSize)
-        self.scroll_area_layout.addWidget(self._loading_gif_container_label, 0, Qt.AlignCenter)
+        self._scroll_area_layout.setSizeConstraint(QLayout.SetMaximumSize)
+        self._scroll_area_layout.addWidget(self._loading_gif_container_label, 0, Qt.AlignCenter)
         self._loading_gif_container_label.setHidden(False)
         self._loading_gif.start()
 
     def _stop_loading_gif(self):
-        self.scroll_area_layout.setSizeConstraint(QLayout.SetFixedSize)
-        self.scroll_area_layout.removeWidget(self._loading_gif_container_label)
+        self._scroll_area_layout.setSizeConstraint(QLayout.SetFixedSize)
+        self._scroll_area_layout.removeWidget(self._loading_gif_container_label)
         self._loading_gif_container_label.setHidden(True)
         self._loading_gif.stop()
 
     def _clear_scroll_area(self):
-        while self.scroll_area_layout.count():
-            child = self.scroll_area_layout.takeAt(0)
+        while self._scroll_area_layout.count():
+            child = self._scroll_area_layout.takeAt(0)
             if child.widget():
                 child.widget().deleteLater()
         # Shrink (redo) the layout after widgets have been deleted.
-        self.scroll_area_layout.invalidate()
-        self.scroll_area_layout.activate()
+        self._scroll_area_layout.invalidate()
+        self._scroll_area_layout.activate()
 
     def _add_check_box(self, entity: Union["Entity", str] = "Test"): # 'str' is for testing.
         check_box = QCheckBox(self)
@@ -86,7 +86,7 @@ class ScrapeWidget(Ui_ScrapeWidget, QWidget):
             check_box.setText(entity.title)
         self._all_check_boxes.update({check_box: entity})
         check_box.stateChanged.connect(self._on_checkbox_stateChanged)
-        self.scroll_area_layout.addWidget(check_box)
+        self._scroll_area_layout.addWidget(check_box)
         self._update_check_boxes_checked_label()
 
     def _update_check_boxes_checked_label(self):
