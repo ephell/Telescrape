@@ -26,9 +26,9 @@ class Scraper:
     def __init__(self, client: "Client", active_in_last_days: int = 30):
         self._active_in_last_days = active_in_last_days
         self._client = client
-        self._scraped_data_dir_path = os.path.join(os.getcwd(), "scraped_data_dir")
-        if not os.path.exists(self._scraped_data_dir_path):
-            os.mkdir(self._scraped_data_dir_path)
+        self.scraped_data_dir_path = os.path.join(os.getcwd(), "scraped_data_dir")
+        if not os.path.exists(self.scraped_data_dir_path):
+            os.mkdir(self.scraped_data_dir_path)
 
     async def scrape(self):
         entity = await self._get_entity_to_scrape()
@@ -92,7 +92,7 @@ class Scraper:
             except ValueError:
                 print("Invalid input. Please enter a number.")
 
-    async def _get_users_from_entity(self, entity: Channel | Chat) -> list[User]:
+    async def _get_users_from_entity(self, entity: Channel | Chat) -> List[User]:
         print(f"Scraping users from: '{entity.title}' ... ")
         try:
             admins = []
@@ -132,7 +132,7 @@ class Scraper:
 
         return [user for user in all_users if user not in admins]
 
-    def _extract_users_data(self, users: list[User]) -> list[dict]:
+    def _extract_users_data(self, users: List[User]) -> List[dict]:
         users_data = []
         for user in users:
             if user.username:
@@ -156,13 +156,13 @@ class Scraper:
             })
         return users_data
 
-    def _write_users_data_to_csv(self, users_data: list[dict], scraped_entity_title: str):
+    def _write_users_data_to_csv(self, users_data: List[dict], scraped_entity_title: str):
         if len(users_data) <= 0:
             print(f"Nothing to write to CSV file. Provided data of '{scraped_entity_title}' is empty.")
             return
         
         title_no_illegal_chars = re.sub(r'[<>:"/\\|?*]', '_', scraped_entity_title)
-        file_path = os.path.join(self._scraped_data_dir_path, title_no_illegal_chars + ".csv")
+        file_path = os.path.join(self.scraped_data_dir_path, title_no_illegal_chars + ".csv")
         with open(
             file=file_path,
             mode="w", 
