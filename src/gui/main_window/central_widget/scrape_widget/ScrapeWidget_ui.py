@@ -88,7 +88,7 @@ class Ui_ScrapeWidget(object):
 
     def retranslateUi(self, ScrapeWidget):
         ScrapeWidget.setWindowTitle(QCoreApplication.translate("ScrapeWidget", u"Form", None))
-        self.check_boxes_checked_label.setText(QCoreApplication.translate("ScrapeWidget", u"(0/0) Selected", None))
+        self.check_boxes_checked_label.setText(QCoreApplication.translate("ScrapeWidget", u"(0/0) Selected.", None))
         self.get_groups_button.setText(QCoreApplication.translate("ScrapeWidget", u"Get Groups", None))
         self.select_all_button.setText(QCoreApplication.translate("ScrapeWidget", u"Select All", None))
         self.unselect_all_button.setText(QCoreApplication.translate("ScrapeWidget", u"Unselect All", None))

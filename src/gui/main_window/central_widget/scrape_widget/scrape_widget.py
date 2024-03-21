@@ -1,3 +1,4 @@
+import os
 from typing import TYPE_CHECKING, Optional, Union
 
 if TYPE_CHECKING:
@@ -5,8 +6,9 @@ if TYPE_CHECKING:
     from src.client import Client
     from telethon.tl.types import Channel, Chat
 
-from PySide6.QtCore import Signal, Slot
-from PySide6.QtWidgets import QCheckBox, QLayout, QWidget
+from PySide6.QtCore import QByteArray, QSize, Qt, Signal, Slot
+from PySide6.QtGui import QMovie
+from PySide6.QtWidgets import QCheckBox, QLabel, QLayout, QWidget
 from qasync import asyncSlot
 
 from src.gui.main_window.central_widget.scrape_widget.ScrapeWidget_ui import Ui_ScrapeWidget
@@ -31,12 +33,43 @@ class ScrapeWidget(Ui_ScrapeWidget, QWidget):
         self.logout_button.clicked.connect(self.logout_signal.emit)
         self.get_groups_button.clicked.connect(self._on_get_groups_button_clicked)
         self.scrape_button.clicked.connect(self._on_scrape_button_clicked)
+        # Loading gif.
+        self._loading_gif = QMovie(
+            os.path.join(os.path.dirname(os.path.abspath(__file__)), "loading.gif"), 
+            QByteArray(), 
+            self
+        )
+        self._loading_gif_container_label = QLabel(self)
+        self._loading_gif_container_label.setMovie(self._loading_gif)
+        self._loading_gif_container_label.setMaximumSize(QSize(40, 40))
+        self._loading_gif_container_label.setScaledContents(True)
 
     def set_hidden(self, value: bool):
         if self.central_widget is not None:
             self.central_widget.set_scrape_widget_hidden(value)
         else:
             self.setHidden(value)
+
+    def _start_loading_gif(self):
+        self.scroll_area_layout.setSizeConstraint(QLayout.SetMaximumSize)
+        self.scroll_area_layout.addWidget(self._loading_gif_container_label, 0, Qt.AlignCenter)
+        self._loading_gif_container_label.setHidden(False)
+        self._loading_gif.start()
+
+    def _stop_loading_gif(self):
+        self.scroll_area_layout.setSizeConstraint(QLayout.SetFixedSize)
+        self.scroll_area_layout.removeWidget(self._loading_gif_container_label)
+        self._loading_gif_container_label.setHidden(True)
+        self._loading_gif.stop()
+
+    def _clear_scroll_area(self, layout: QLayout):
+        while layout.count():
+            child = layout.takeAt(0)
+            if child.widget():
+                child.widget().deleteLater()
+        # Shrink (redo) the layout after widgets have been deleted.
+        self.scroll_area_layout.invalidate()
+        self.scroll_area_layout.activate()
 
     def _add_check_box(self, entity: Union["Chat", "Channel", str] = "Test"): # 'str' is for testing.
         check_box = QCheckBox(self)
@@ -66,11 +99,16 @@ class ScrapeWidget(Ui_ScrapeWidget, QWidget):
 
     @asyncSlot()
     async def _on_get_groups_button_clicked(self):
-        for i, entity in enumerate(await self._scraper.get_scrapable_entities()):
-            self._add_check_box(entity)
+        self._clear_scroll_area(self.scroll_area_layout)
+        self._all_check_boxes = {}
+        self._start_loading_gif()
+        if self._scraper is not None:
+            for entity in await self._scraper.get_scrapable_entities():
+                self._add_check_box(entity)
         self.check_boxes_checked_label.setText(
             f"({self.checked_check_boxes_counter}/{len(self._all_check_boxes)}) Selected."
         )
+        self._stop_loading_gif()
 
     @asyncSlot()
     async def _on_scrape_button_clicked(self):
@@ -96,8 +134,10 @@ if __name__ == "__main__":
     app.aboutToQuit.connect(app_close_event.set)
 
     sw = ScrapeWidget()
-    for i in range(5):
+    sw._start_loading_gif()
+    for i in range(10):
         sw._add_check_box(f"Checkbox {i}")
+    sw._stop_loading_gif()
     sw.show()
 
     with event_loop:
