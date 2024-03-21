@@ -30,7 +30,7 @@ class ScrapeWidget(Ui_ScrapeWidget, QWidget):
         self._scroll_area_layout = self.scroll_area_widget_contents.layout()
         # Force items inside the scroll area to stack from top to bottom, equally.
         self._scroll_area_layout.setSizeConstraint(QLayout.SetFixedSize)
-        self.checked_check_boxes_counter = 0
+        self._checked_check_boxes_counter = 0
         self._all_check_boxes: Dict[QCheckBox, Entity] = {}
         self._scraper: Scraper = None
         # Loading gif.
@@ -91,15 +91,15 @@ class ScrapeWidget(Ui_ScrapeWidget, QWidget):
 
     def _update_check_boxes_checked_label(self):
         self.check_boxes_checked_label.setText(
-            f"({self.checked_check_boxes_counter}/{len(self._all_check_boxes)}) Selected."
+            f"({self._checked_check_boxes_counter}/{len(self._all_check_boxes)}) Selected."
         )
 
     @Slot()
     def _on_checkbox_stateChanged(self, check_state):
         if check_state == 2: # Checked
-            self.checked_check_boxes_counter += 1
+            self._checked_check_boxes_counter += 1
         elif check_state == 0: # Unchecked
-            self.checked_check_boxes_counter -= 1
+            self._checked_check_boxes_counter -= 1
         self._update_check_boxes_checked_label()
 
     # Space in between 'o' and 'n' to prevent 'QMetaObject::connectSlotsByName: No matching signal'.
