@@ -1,4 +1,6 @@
 import os
+import platform
+import subprocess
 from typing import TYPE_CHECKING, Dict, Optional, Union
 
 if TYPE_CHECKING:
@@ -47,6 +49,7 @@ class ScrapeWidget(Ui_ScrapeWidget, QWidget):
         self.scrape_button.clicked.connect(self._on_scrape_button_clicked)
         self.select_all_button.clicked.connect(self._on_select_all_button_clicked)
         self.unselect_all_button.clicked.connect(self._on_unselect_all_button_clicked)
+        self.open_data_dir_button.clicked.connect(self._on_open_data_dir_button_clicked)
 
     def set_hidden(self, value: bool):
         if self.central_widget is not None:
@@ -136,6 +139,17 @@ class ScrapeWidget(Ui_ScrapeWidget, QWidget):
     def _on_unselect_all_button_clicked(self):
         for check_box, _ in self._all_check_boxes.items():
             check_box.setChecked(False)
+
+    @Slot()    
+    def _on_open_data_dir_button_clicked(self):
+        if self._scraper is not None:
+            system = platform.system()
+            if system == "Windows":
+                os.startfile(self._scraper.scraped_data_dir_path)
+            elif system == "Darwin":
+                subprocess.Popen(["open", self._scraper.scraped_data_dir_path])
+            else:
+                subprocess.Popen(["xdg-open", self._scraper.scraped_data_dir_path])
 
 
 if __name__ == "__main__":

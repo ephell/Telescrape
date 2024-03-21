@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>419</width>
+    <width>500</width>
     <height>277</height>
    </rect>
   </property>
@@ -37,7 +37,7 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>399</width>
+        <width>480</width>
         <height>203</height>
        </rect>
       </property>
@@ -76,6 +76,13 @@
       <widget class="QPushButton" name="scrape_button">
        <property name="text">
         <string>Scrape</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="open_data_dir_button">
+       <property name="text">
+        <string>Data Dir</string>
        </property>
       </widget>
      </item>

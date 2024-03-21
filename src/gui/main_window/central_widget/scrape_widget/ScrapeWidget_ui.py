@@ -23,7 +23,7 @@ class Ui_ScrapeWidget(object):
     def setupUi(self, ScrapeWidget):
         if not ScrapeWidget.objectName():
             ScrapeWidget.setObjectName(u"ScrapeWidget")
-        ScrapeWidget.resize(419, 277)
+        ScrapeWidget.resize(500, 277)
         self.verticalLayout = QVBoxLayout(ScrapeWidget)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.check_boxes_checked_label = QLabel(ScrapeWidget)
@@ -41,7 +41,7 @@ class Ui_ScrapeWidget(object):
         self.scroll_area.setWidgetResizable(True)
         self.scroll_area_widget_contents = QWidget()
         self.scroll_area_widget_contents.setObjectName(u"scroll_area_widget_contents")
-        self.scroll_area_widget_contents.setGeometry(QRect(0, 0, 399, 203))
+        self.scroll_area_widget_contents.setGeometry(QRect(0, 0, 480, 203))
         self.verticalLayout_2 = QVBoxLayout(self.scroll_area_widget_contents)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
         self.verticalLayout_2.setSizeConstraint(QLayout.SetDefaultConstraint)
@@ -71,6 +71,11 @@ class Ui_ScrapeWidget(object):
 
         self.horizontalLayout.addWidget(self.scrape_button)
 
+        self.open_data_dir_button = QPushButton(ScrapeWidget)
+        self.open_data_dir_button.setObjectName(u"open_data_dir_button")
+
+        self.horizontalLayout.addWidget(self.open_data_dir_button)
+
         self.logout_button = QPushButton(ScrapeWidget)
         self.logout_button.setObjectName(u"logout_button")
 
@@ -93,6 +98,7 @@ class Ui_ScrapeWidget(object):
         self.select_all_button.setText(QCoreApplication.translate("ScrapeWidget", u"Select All", None))
         self.unselect_all_button.setText(QCoreApplication.translate("ScrapeWidget", u"Unselect All", None))
         self.scrape_button.setText(QCoreApplication.translate("ScrapeWidget", u"Scrape", None))
+        self.open_data_dir_button.setText(QCoreApplication.translate("ScrapeWidget", u"Data Dir", None))
         self.logout_button.setText(QCoreApplication.translate("ScrapeWidget", u"Logout", None))
     # retranslateUi
 
