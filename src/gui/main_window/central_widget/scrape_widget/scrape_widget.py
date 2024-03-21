@@ -44,7 +44,7 @@ class ScrapeWidget(Ui_ScrapeWidget, QWidget):
         self._loading_gif_container_label.setMaximumSize(QSize(40, 40))
         self._loading_gif_container_label.setScaledContents(True)
         # Signals and slots.
-        self.logout_button.clicked.connect(self.logout_signal.emit)
+        self.logout_button.clicked.connect(self._on_logout_button_clicked)
         self.get_groups_button.clicked.connect(self._on_get_groups_button_clicked)
         self.scrape_button.clicked.connect(self._on_scrape_button_clicked)
         self.select_all_button.clicked.connect(self._on_select_all_button_clicked)
@@ -108,6 +108,14 @@ class ScrapeWidget(Ui_ScrapeWidget, QWidget):
         if client is not None:
             self._scraper = Scraper(client)
 
+    @Slot()
+    def _on_logout_button_clicked(self):
+        self._clear_scroll_area()
+        self._checked_check_boxes_counter = 0
+        self._all_check_boxes = {}
+        self._update_check_boxes_checked_label()
+        self.logout_signal.emit()
+        
     @asyncSlot()
     async def _on_get_groups_button_clicked(self):
         self._clear_scroll_area()
