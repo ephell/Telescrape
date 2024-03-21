@@ -69,9 +69,9 @@ class ScrapeWidget(Ui_ScrapeWidget, QWidget):
         self._loading_gif_container_label.setHidden(True)
         self._loading_gif.stop()
 
-    def _clear_scroll_area(self, layout: QLayout):
-        while layout.count():
-            child = layout.takeAt(0)
+    def _clear_scroll_area(self):
+        while self.scroll_area_layout.count():
+            child = self.scroll_area_layout.takeAt(0)
             if child.widget():
                 child.widget().deleteLater()
         # Shrink (redo) the layout after widgets have been deleted.
@@ -110,7 +110,7 @@ class ScrapeWidget(Ui_ScrapeWidget, QWidget):
 
     @asyncSlot()
     async def _on_get_groups_button_clicked(self):
-        self._clear_scroll_area(self.scroll_area_layout)
+        self._clear_scroll_area()
         self._all_check_boxes = {}
         self._start_loading_gif()
         if self._scraper is not None:
