@@ -119,6 +119,7 @@ class ScrapeWidget(Ui_ScrapeWidget, QWidget):
     @asyncSlot()
     async def _on_get_groups_button_clicked(self):
         self._clear_scroll_area()
+        self._checked_check_boxes_counter = 0
         self._all_check_boxes = {}
         self._start_loading_gif()
         if self._scraper is not None:
