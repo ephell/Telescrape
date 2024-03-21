@@ -84,6 +84,12 @@ class ScrapeWidget(Ui_ScrapeWidget, QWidget):
         self._all_check_boxes.update({check_box: entity})
         check_box.stateChanged.connect(self._on_checkbox_stateChanged)
         self.scroll_area_layout.addWidget(check_box)
+        self._update_check_boxes_checked_label()
+
+    def _update_check_boxes_checked_label(self):
+        self.check_boxes_checked_label.setText(
+            f"({self.checked_check_boxes_counter}/{len(self._all_check_boxes)}) Selected."
+        )
 
     @Slot()
     def _on_checkbox_stateChanged(self, check_state):
@@ -91,9 +97,7 @@ class ScrapeWidget(Ui_ScrapeWidget, QWidget):
             self.checked_check_boxes_counter += 1
         elif check_state == 0: # Unchecked
             self.checked_check_boxes_counter -= 1
-        self.check_boxes_checked_label.setText(
-            f"({self.checked_check_boxes_counter}/{len(self._all_check_boxes)}) Selected."
-        )
+        self._update_check_boxes_checked_label()
 
     # Space in between 'o' and 'n' to prevent 'QMetaObject::connectSlotsByName: No matching signal'.
     @Slot()
@@ -109,9 +113,7 @@ class ScrapeWidget(Ui_ScrapeWidget, QWidget):
         if self._scraper is not None:
             for entity in await self._scraper.get_scrapable_entities():
                 self._add_check_box(entity)
-        self.check_boxes_checked_label.setText(
-            f"({self.checked_check_boxes_counter}/{len(self._all_check_boxes)}) Selected."
-        )
+        self._update_check_boxes_checked_label()
         self._stop_loading_gif()
 
     @asyncSlot()
