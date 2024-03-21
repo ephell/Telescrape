@@ -20,7 +20,7 @@ class OverlayWidget(Ui_OverlayWidget, QWidget):
 
     def __init__(self, central_widget: Optional["CentralWidget"] = None):
         super().__init__(central_widget)
-        self.central_widget = central_widget
+        self._central_widget = central_widget
         self.setupUi(self)
         self.continue_button.setHidden(True)
         self.status_image_label.setMaximumSize(QSize(30, 30))
@@ -32,8 +32,8 @@ class OverlayWidget(Ui_OverlayWidget, QWidget):
         self._LOADING_GIF = QMovie(os.path.join(module_dir_path, "loader.gif"), QByteArray(), self)
 
     def set_hidden(self, value: bool):
-        if self.central_widget is not None:
-            self.central_widget.set_overlay_widget_hidden(value)
+        if self._central_widget is not None:
+            self._central_widget.set_overlay_widget_hidden(value)
 
     def set_status_loading(self, message: str):
         self.status_message_label.setText(message)

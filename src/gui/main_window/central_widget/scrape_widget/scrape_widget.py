@@ -25,7 +25,7 @@ class ScrapeWidget(Ui_ScrapeWidget, QWidget):
 
     def __init__(self, central_widget: Optional["CentralWidget"] = None):
         super().__init__(central_widget)
-        self.central_widget = central_widget
+        self._central_widget = central_widget
         self.setupUi(self)
         self._scroll_area_layout = self.scroll_area_widget_contents.layout()
         # Force items inside the scroll area to stack from top to bottom, equally.
@@ -52,8 +52,8 @@ class ScrapeWidget(Ui_ScrapeWidget, QWidget):
         self.open_data_dir_button.clicked.connect(self._on_open_data_dir_button_clicked)
 
     def set_hidden(self, value: bool):
-        if self.central_widget is not None:
-            self.central_widget.set_scrape_widget_hidden(value)
+        if self._central_widget is not None:
+            self._central_widget.set_scrape_widget_hidden(value)
         else:
             self.setHidden(value)
 

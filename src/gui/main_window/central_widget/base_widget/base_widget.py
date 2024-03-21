@@ -12,12 +12,12 @@ class BaseWidget(Ui_BaseWidget, QWidget):
 
     def __init__(self, central_widget: Optional["CentralWidget"] = None):
         super().__init__(central_widget)
-        self.central_widget = central_widget
+        self._central_widget = central_widget
         self.setupUi(self)
 
     def set_hidden(self, value: bool):
-        if self.central_widget is not None:
-            self.central_widget.set_base_widget_hidden(value)
+        if self._central_widget is not None:
+            self._central_widget.set_base_widget_hidden(value)
 
 
 if __name__ == "__main__":
