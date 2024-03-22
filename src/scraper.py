@@ -1,7 +1,7 @@
 import csv
 import os
 import re
-from typing import TYPE_CHECKING, List
+from typing import TYPE_CHECKING, Dict, List
 
 if TYPE_CHECKING:
     from src.client import Client
@@ -132,7 +132,7 @@ class Scraper:
 
         return [user for user in all_users if user not in admins]
 
-    def _extract_users_data(self, users: List[User]) -> List[dict]:
+    def _extract_users_data(self, users: List[User]) -> List[Dict]:
         users_data = []
         for user in users:
             if user.username:
@@ -156,7 +156,7 @@ class Scraper:
             })
         return users_data
 
-    def _write_users_data_to_csv(self, users_data: List[dict], scraped_entity_title: str):
+    def _write_users_data_to_csv(self, users_data: List[Dict], scraped_entity_title: str):
         if len(users_data) <= 0:
             print(f"Nothing to write to CSV file. Provided data of '{scraped_entity_title}' is empty.")
             return
