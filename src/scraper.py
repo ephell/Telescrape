@@ -5,6 +5,7 @@ from typing import TYPE_CHECKING, Dict, List
 
 if TYPE_CHECKING:
     from src.client import Client
+    from src.gui.main_window.central_widget.scrape_widget.entity_status_widget.entity_status_widget import EntityStatusWidget
 
 from datetime import datetime, timedelta, timezone
 
@@ -51,14 +52,17 @@ class Scraper:
                 entities.append(entity)
         return entities
 
-    async def scrape_entity(self, entity: Channel | Chat):
+    async def scrape_entity(self, entity: Channel | Chat, esw: "EntityStatusWidget" = None):
         users = await self._get_users_from_entity(entity)
         if users is None:
+            if esw is not None:
+                esw.set_status_fail("Cannot scrape users. Reason: group/chat admin privileges are required.")
             return
 
         users_data = self._extract_users_data(users)
         self._write_users_data_to_csv(users_data, entity.title)
         print(f"Finished scraping '{entity.title}'. Total users scraped: {len(users_data)}.")
+        esw.set_status_success(f"Finished scraping. Total users scraped: {len(users_data)}.")
 
     async def _get_entity_to_scrape(self) -> Channel | Chat:
         print("Getting scrapable groups and channels ... ")

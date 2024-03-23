@@ -16,6 +16,7 @@ from PySide6.QtGui import QMovie
 from PySide6.QtWidgets import QCheckBox, QLabel, QLayout, QWidget
 from qasync import asyncSlot
 
+from src.gui.main_window.central_widget.scrape_widget.entity_status_widget.entity_status_widget import EntityStatusWidget
 from src.gui.main_window.central_widget.scrape_widget.ScrapeWidget_ui import Ui_ScrapeWidget
 from src.scraper import Scraper
 
@@ -31,6 +32,7 @@ class ScrapeWidget(Ui_ScrapeWidget, QWidget):
         self._scroll_area_layout = self.scroll_area_widget_contents.layout()
         # Force items inside the scroll area to stack from top to bottom, equally.
         self._scroll_area_layout.setSizeConstraint(QLayout.SetFixedSize)
+        self._scroll_area_layout.setSpacing(0)
         self._checked_check_boxes_counter = 0
         self._all_check_boxes: Dict[QCheckBox, Entity] = {}
         self._scraper: Scraper = None
@@ -131,6 +133,8 @@ class ScrapeWidget(Ui_ScrapeWidget, QWidget):
 
     @asyncSlot()
     async def _on_scrape_button_clicked(self):
+        self._clear_scroll_area()
+
         tasks = []
         for check_box, entity in self._all_check_boxes.items():
             if check_box.isChecked():
@@ -139,7 +143,11 @@ class ScrapeWidget(Ui_ScrapeWidget, QWidget):
                     # while developing.
                     print(f"No 'entity' set for '{check_box.text()}'. Skipping ... ")
                 else:
-                    tasks.append(self._scraper.scrape_entity(entity))
+                    esw = EntityStatusWidget(entity.title)
+                    esw.set_status_loading("Scraping ... ")
+                    self._scroll_area_layout.addWidget(esw)
+                    tasks.append(self._scraper.scrape_entity(entity, esw))
+
         await asyncio.gather(*tasks)
 
     @Slot()
@@ -179,8 +187,12 @@ if __name__ == "__main__":
 
     sw = ScrapeWidget()
     sw._start_loading_gif()
+    # for i in range(10):
+    #     sw._add_check_box(f"Checkbox {i}")
     for i in range(10):
-        sw._add_check_box(f"Checkbox {i}")
+        esw = EntityStatusWidget("Testing")
+        esw.set_status_loading("Scraping ... ")
+        sw._scroll_area_layout.addWidget(esw)
     sw._stop_loading_gif()
     sw.show()
 

@@ -13,7 +13,7 @@ class EntityStatusWidget(Ui_EntityStatusWidget, QWidget):
         super().__init__(parent)
         self.setupUi(self)
         self.entity_title_label.setText(entity_title)
-        self.status_image_label.setMaximumSize(QSize(20, 20))
+        self.status_image_label.setMaximumSize(QSize(17, 17))
         self.status_image_label.setScaledContents(True)
         module_dir_path = os.path.dirname(os.path.abspath(__file__))
         self._SUCCESS_IMAGE = QPixmap(os.path.join(module_dir_path, "status_success.png"))
