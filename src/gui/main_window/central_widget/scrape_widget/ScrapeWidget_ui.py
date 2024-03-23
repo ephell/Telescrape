@@ -26,15 +26,15 @@ class Ui_ScrapeWidget(object):
         ScrapeWidget.resize(500, 277)
         self.verticalLayout = QVBoxLayout(ScrapeWidget)
         self.verticalLayout.setObjectName(u"verticalLayout")
-        self.check_boxes_checked_label = QLabel(ScrapeWidget)
-        self.check_boxes_checked_label.setObjectName(u"check_boxes_checked_label")
+        self.counter_label = QLabel(ScrapeWidget)
+        self.counter_label.setObjectName(u"counter_label")
         sizePolicy = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.check_boxes_checked_label.sizePolicy().hasHeightForWidth())
-        self.check_boxes_checked_label.setSizePolicy(sizePolicy)
+        sizePolicy.setHeightForWidth(self.counter_label.sizePolicy().hasHeightForWidth())
+        self.counter_label.setSizePolicy(sizePolicy)
 
-        self.verticalLayout.addWidget(self.check_boxes_checked_label, 0, Qt.AlignHCenter)
+        self.verticalLayout.addWidget(self.counter_label, 0, Qt.AlignHCenter)
 
         self.scroll_area = QScrollArea(ScrapeWidget)
         self.scroll_area.setObjectName(u"scroll_area")
@@ -93,7 +93,7 @@ class Ui_ScrapeWidget(object):
 
     def retranslateUi(self, ScrapeWidget):
         ScrapeWidget.setWindowTitle(QCoreApplication.translate("ScrapeWidget", u"Form", None))
-        self.check_boxes_checked_label.setText(QCoreApplication.translate("ScrapeWidget", u"(0/0) Selected.", None))
+        self.counter_label.setText(QCoreApplication.translate("ScrapeWidget", u"(0/0) Selected.", None))
         self.get_groups_button.setText(QCoreApplication.translate("ScrapeWidget", u"Get Groups", None))
         self.select_all_button.setText(QCoreApplication.translate("ScrapeWidget", u"Select All", None))
         self.unselect_all_button.setText(QCoreApplication.translate("ScrapeWidget", u"Unselect All", None))

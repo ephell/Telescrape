@@ -33,8 +33,10 @@ class ScrapeWidget(Ui_ScrapeWidget, QWidget):
         # Force items inside the scroll area to stack from top to bottom, equally.
         self._scroll_area_layout.setSizeConstraint(QLayout.SetFixedSize)
         self._scroll_area_layout.setSpacing(0)
-        self._checked_check_boxes_counter = 0
+        self._total_checked_check_boxes = 0
         self._all_check_boxes: Dict[QCheckBox, Entity] = {}
+        self._total_scraping_tasks = 0
+        self._total_completed_scraping_tasks = 0
         self._scraper: Scraper = None
         # Loading gif.
         self._loading_gif = QMovie(
@@ -72,7 +74,7 @@ class ScrapeWidget(Ui_ScrapeWidget, QWidget):
         self._loading_gif_container_label.setHidden(True)
         self._loading_gif.stop()
 
-    def _clear_scroll_area(self):
+    def _remove_all_widgets_from_scroll_area(self):
         while self._scroll_area_layout.count():
             child = self._scroll_area_layout.takeAt(0)
             if child.widget():
@@ -90,20 +92,25 @@ class ScrapeWidget(Ui_ScrapeWidget, QWidget):
         self._all_check_boxes.update({check_box: entity})
         check_box.stateChanged.connect(self._on_checkbox_stateChanged)
         self._scroll_area_layout.addWidget(check_box)
-        self._update_check_boxes_checked_label()
+        self._update_counter_label("checked_check_boxes")
 
-    def _update_check_boxes_checked_label(self):
-        self.check_boxes_checked_label.setText(
-            f"({self._checked_check_boxes_counter}/{len(self._all_check_boxes)}) Selected."
-        )
+    def _update_counter_label(self, format: str):
+        if format == "checked_check_boxes":
+            self.counter_label.setText(
+                f"({self._total_checked_check_boxes}/{len(self._all_check_boxes)}) Selected."
+            )
+        elif format == "completed_scraping_tasks":
+            self.counter_label.setText(
+                f"({self._total_completed_scraping_tasks}/{self._total_scraping_tasks}) Completed."
+            )
 
     @Slot()
     def _on_checkbox_stateChanged(self, check_state):
         if check_state == 2: # Checked
-            self._checked_check_boxes_counter += 1
+            self._total_checked_check_boxes += 1
         elif check_state == 0: # Unchecked
-            self._checked_check_boxes_counter -= 1
-        self._update_check_boxes_checked_label()
+            self._total_checked_check_boxes -= 1
+        self._update_counter_label("checked_check_boxes")
 
     # Space in between 'o' and 'n' to prevent 'QMetaObject::connectSlotsByName: No matching signal'.
     @Slot()
@@ -113,27 +120,28 @@ class ScrapeWidget(Ui_ScrapeWidget, QWidget):
 
     @Slot()
     def _on_logout_button_clicked(self):
-        self._clear_scroll_area()
-        self._checked_check_boxes_counter = 0
+        self._remove_all_widgets_from_scroll_area()
+        self._total_checked_check_boxes = 0
         self._all_check_boxes = {}
-        self._update_check_boxes_checked_label()
+        self._update_counter_label("checked_check_boxes")
         self.logout_signal.emit()
         
     @asyncSlot()
     async def _on_get_groups_button_clicked(self):
-        self._clear_scroll_area()
-        self._checked_check_boxes_counter = 0
+        self._remove_all_widgets_from_scroll_area()
+        self._total_checked_check_boxes = 0
         self._all_check_boxes = {}
         self._start_loading_gif()
         if self._scraper is not None:
             for entity in await self._scraper.get_scrapable_entities():
                 self._add_check_box(entity)
-        self._update_check_boxes_checked_label()
+        self._update_counter_label("checked_check_boxes")
         self._stop_loading_gif()
 
     @asyncSlot()
     async def _on_scrape_button_clicked(self):
-        self._clear_scroll_area()
+        self._remove_all_widgets_from_scroll_area()
+        self._total_completed_scraping_tasks = 0
 
         tasks = []
         for check_box, entity in self._all_check_boxes.items():
@@ -144,11 +152,18 @@ class ScrapeWidget(Ui_ScrapeWidget, QWidget):
                     print(f"No 'entity' set for '{check_box.text()}'. Skipping ... ")
                 else:
                     esw = EntityStatusWidget(entity.title)
+                    esw.finished_signal.connect(self._on_entity_status_widget_finished_signal)
                     esw.set_status_loading("Scraping ... ")
                     self._scroll_area_layout.addWidget(esw)
                     tasks.append(self._scraper.scrape_entity(entity, esw))
 
+        self._total_scraping_tasks = len(tasks)
         await asyncio.gather(*tasks)
+
+    @Slot()
+    def _on_entity_status_widget_finished_signal(self):
+        self._total_completed_scraping_tasks += 1
+        self._update_counter_label("completed_scraping_tasks")
 
     @Slot()
     def _on_select_all_button_clicked(self):

@@ -1,6 +1,6 @@
 import os
 
-from PySide6.QtCore import QByteArray, QSize
+from PySide6.QtCore import QByteArray, QSize, Signal
 from PySide6.QtGui import QMovie, QPixmap
 from PySide6.QtWidgets import QWidget
 
@@ -9,6 +9,8 @@ from src.gui.main_window.central_widget.scrape_widget.entity_status_widget.Entit
 
 class EntityStatusWidget(Ui_EntityStatusWidget, QWidget):
     """Used to display the status of entity that is being scraped."""
+
+    finished_signal = Signal()
 
     def __init__(self, entity_title: str = "Test", parent=None):
         super().__init__(parent)
@@ -29,10 +31,12 @@ class EntityStatusWidget(Ui_EntityStatusWidget, QWidget):
     def set_status_success(self, message: str):
         self.status_message_label.setText(message)
         self.status_image_label.setPixmap(self._SUCCESS_IMAGE)
+        self.finished_signal.emit()
 
     def set_status_fail(self, message: str):
         self.status_message_label.setText(message)
         self.status_image_label.setPixmap(self._FAIL_IMAGE)
+        self.finished_signal.emit()
 
 
 if __name__ == "__main__":
