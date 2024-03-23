@@ -6,7 +6,7 @@ if TYPE_CHECKING:
     from src.gui.main_window.central_widget.scrape_widget.scrape_widget import ScrapeWidget
     from src.client import Client
 
-from PySide6.QtCore import Qt, Slot
+from PySide6.QtCore import QSize, Qt, Slot
 from PySide6.QtWidgets import QApplication, QMainWindow
 from qasync import asyncClose, asyncSlot
 
@@ -20,10 +20,11 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("Telescrape")
         self.setFocus()
         self.setFocusPolicy(Qt.ClickFocus) # Make all widgets lose focus when clicking on the main window.
-        self.setWindowFlags(Qt.Dialog | Qt.MSWindowsFixedSizeDialogHint) # Set non resizable.
+        self.setWindowFlags(Qt.Dialog)
         self._central_widget = CentralWidget(self)
         self._central_widget_initial_size = self._central_widget.size()
         self.setCentralWidget(self._central_widget)
+        self._set_resizable(False)
         self._client: "Client" = None
         self._base_widget = self.get_base_widget()
         self._overlay_widget = self.get_overlay_widget()
@@ -54,6 +55,14 @@ class MainWindow(QMainWindow):
         if self._client is not None:
             await self._client.logout()
 
+    def _set_resizable(self, value: bool):
+        if value:
+            self.setMinimumSize(self._central_widget.get_scrape_widget_container_original_size())
+            self.setMaximumSize(QSize(16777215, 16777215))
+        else:
+            self.setMinimumSize(self._central_widget_initial_size)
+            self.setMaximumSize(self._central_widget_initial_size)
+
     @Slot()
     def _on_client_login_finished_signal(self, client: Optional["Client"]):
         self._client = client
@@ -62,15 +71,16 @@ class MainWindow(QMainWindow):
     def _on_login_successful_signal(self):
         self._base_widget.set_hidden(True)
         self._overlay_widget.set_hidden(True)
-        self.resize(self._central_widget.get_scrape_widget_container_original_size())
         self._scrape_widget.set_hidden(False)
+        self._set_resizable(True)
+        self.resize(self._central_widget.get_scrape_widget_container_original_size())
 
     @asyncSlot()
     async def _on_logout_signal(self):
         await self._client.logout()
         if not self._client.is_connected():
             print("Logged out successfully!")
-        # ToDo: clear the scroll area from all checkboxes.
         self._scrape_widget.set_hidden(True)
-        self.resize(self._central_widget.get_base_widget_container_original_size())
         self._base_widget.set_hidden(False)
+        self.resize(self._central_widget.get_base_widget_container_original_size())
+        self._set_resizable(False)
