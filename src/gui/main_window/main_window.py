@@ -56,9 +56,11 @@ class MainWindow(QMainWindow):
             await self._client.logout()
 
     def _set_resizable(self, value: bool):
+        """MainWindow should only be resizable when ScrapeWidget is visible."""
         if value:
-            self.setMinimumSize(self._central_widget.get_scrape_widget_container_original_size())
-            self.setMaximumSize(QSize(16777215, 16777215))
+            size = self._central_widget.get_scrape_widget_container_original_size()
+            self.setMinimumSize(size)
+            self.setMaximumSize(QSize(size.width(), 16777215))
         else:
             self.setMinimumSize(self._central_widget_initial_size)
             self.setMaximumSize(self._central_widget_initial_size)

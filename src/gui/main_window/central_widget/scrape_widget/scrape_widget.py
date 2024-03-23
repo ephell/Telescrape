@@ -113,6 +113,12 @@ class ScrapeWidget(Ui_ScrapeWidget, QWidget):
                 f"Failed: {self._total_failed_scraping_tasks}"
             )
 
+    # Space in between 'o' and 'n' to prevent 'QMetaObject::connectSlotsByName: No matching signal'.
+    @Slot()
+    def o_n_client_login_finished_signal(self, client: Optional["Client"]):
+        if client is not None:
+            self._scraper = Scraper(client)
+
     @Slot()
     def _on_checkbox_stateChanged(self, check_state):
         if check_state == 2: # Checked
@@ -125,12 +131,6 @@ class ScrapeWidget(Ui_ScrapeWidget, QWidget):
             self.scrape_button.setEnabled(True)
         else:
             self.scrape_button.setEnabled(False)
-
-    # Space in between 'o' and 'n' to prevent 'QMetaObject::connectSlotsByName: No matching signal'.
-    @Slot()
-    def o_n_client_login_finished_signal(self, client: Optional["Client"]):
-        if client is not None:
-            self._scraper = Scraper(client)
 
     @Slot()
     def _on_logout_button_clicked(self):
@@ -244,8 +244,9 @@ if __name__ == "__main__":
     # for i in range(10):
     #     sw._add_check_box(f"Checkbox {i}")
     for i in range(10):
-        esw = EntityStatusWidget("Testing")
+        esw = EntityStatusWidget("Test EntityStatusWidgetTest EntityStatusWidgeTest EntityStatusWidgeTest EntityStatusWidgettt")
         esw.set_status_loading("Scraping ... ")
+        esw.set_status_loading("Finished scraping. Total users scraped: 100000.")
         sw._scroll_area_layout.addWidget(esw)
     sw._stop_loading_gif()
     sw.show()
