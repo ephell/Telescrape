@@ -39,24 +39,20 @@ class Scraper:
                 entities.append(entity)
         return entities
 
-    async def scrape_entity(self, entity: Channel | Chat, esw: "EntityStatusWidget" = None):
+    async def scrape_entity(self, entity: Channel | Chat, esw: "EntityStatusWidget"):
         try:
             users = await self._get_users_from_entity(entity)
             if users is None:
-                if esw is not None:
-                    esw.set_status_fail("Cannot scrape users. Reason: group/chat admin privileges are required.")
+                esw.set_status_fail("Cannot scrape users. Reason: group/chat admin privileges are required.")
                 return
 
             users_data = self._extract_users_data(users)
             self._write_users_data_to_csv(users_data, entity.title)
-            print(f"Finished scraping '{entity.title}'. Total users scraped: {len(users_data)}.")
             esw.set_status_success(f"Finished scraping. Total users scraped: {len(users_data)}.")
         except Exception as e:
-            if esw is not None:
-                esw.set_status_fail(f"An unhandled exception occured: {e}.")
+            esw.set_status_fail(f"An unhandled exception occured: {e}.")
 
     async def _get_users_from_entity(self, entity: Channel | Chat) -> List[User]:
-        print(f"Scraping users from: '{entity.title}' ... ")
         try:
             admins = []
             async for participant in self._client.iter_participants(entity, filter=ChannelParticipantsAdmins):
@@ -87,10 +83,6 @@ class Scraper:
                             all_users.append(participant)
 
         except ChatAdminRequiredError:
-            print(
-                f"Cannot scrape users from '{entity.title}'. " 
-                "Reason: group/chat admin privileges are required."
-            )
             return None
 
         return [user for user in all_users if user not in admins]
@@ -121,7 +113,6 @@ class Scraper:
 
     def _write_users_data_to_csv(self, users_data: List[Dict], scraped_entity_title: str):
         if len(users_data) <= 0:
-            print(f"Nothing to write to CSV file. Provided data of '{scraped_entity_title}' is empty.")
             return
         
         title_no_illegal_chars = re.sub(r'[<>:"/\\|?*]', '_', scraped_entity_title)
@@ -132,10 +123,7 @@ class Scraper:
             newline="", 
             encoding="utf-8"
         ) as file:
-            print(f"Writing '{scraped_entity_title}' user data to CSV ... ")
             writer = csv.writer(file)
             writer.writerow(users_data[0].keys())
             for user in users_data:
                 writer.writerow(user.values())
-            print(f"Finished writing '{scraped_entity_title}' user data.")
-            print(f"File saved to: '{file_path}'.")
