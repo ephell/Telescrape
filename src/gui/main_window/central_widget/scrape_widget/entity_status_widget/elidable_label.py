@@ -3,7 +3,7 @@ from PySide6.QtGui import QFontMetrics, QPainter
 from PySide6.QtWidgets import QLabel, QToolTip
 
 
-class EntityTitleLabel(QLabel):
+class ElidableLabel(QLabel):
 
     def __init__(self, parent=None):
         super().__init__(parent)

@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>576</width>
+    <width>598</width>
     <height>34</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="windowTitle">
    <string>Form</string>
@@ -41,27 +47,27 @@
     </widget>
    </item>
    <item>
-    <widget class="EntityTitleLabel" name="entity_title_label">
+    <widget class="ElidableLabel" name="entity_title_label">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+      <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
      <property name="minimumSize">
       <size>
-       <width>200</width>
+       <width>250</width>
        <height>0</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>200</width>
+       <width>250</width>
        <height>16777215</height>
       </size>
      </property>
      <property name="text">
-      <string>Entity Title</string>
+      <string>Entity Title Label</string>
      </property>
     </widget>
    </item>
@@ -73,9 +79,27 @@
     </widget>
    </item>
    <item>
-    <widget class="QLabel" name="status_message_label">
+    <widget class="ElidableLabel" name="status_message_label">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>250</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>250</width>
+       <height>16777215</height>
+      </size>
+     </property>
      <property name="text">
-      <string>Status Message</string>
+      <string>Status Message Label</string>
      </property>
     </widget>
    </item>
@@ -83,9 +107,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>EntityTitleLabel</class>
+   <class>ElidableLabel</class>
    <extends>QLabel</extends>
-   <header>src.gui.main_window.central_widget.scrape_widget.entity_status_widget.entity_title_label</header>
+   <header>src.gui.main_window.central_widget.scrape_widget.entity_status_widget.elidable_label</header>
   </customwidget>
  </customwidgets>
  <resources/>

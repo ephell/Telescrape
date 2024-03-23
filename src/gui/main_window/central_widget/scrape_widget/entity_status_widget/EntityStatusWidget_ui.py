@@ -18,22 +18,27 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QFrame, QHBoxLayout, QLabel,
     QSizePolicy, QWidget)
 
-from src.gui.main_window.central_widget.scrape_widget.entity_status_widget.entity_title_label import EntityTitleLabel
+from src.gui.main_window.central_widget.scrape_widget.entity_status_widget.elidable_label import ElidableLabel
 
 class Ui_EntityStatusWidget(object):
     def setupUi(self, EntityStatusWidget):
         if not EntityStatusWidget.objectName():
             EntityStatusWidget.setObjectName(u"EntityStatusWidget")
-        EntityStatusWidget.resize(576, 34)
+        EntityStatusWidget.resize(598, 34)
+        sizePolicy = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(EntityStatusWidget.sizePolicy().hasHeightForWidth())
+        EntityStatusWidget.setSizePolicy(sizePolicy)
         self.horizontalLayout = QHBoxLayout(EntityStatusWidget)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.status_image_label = QLabel(EntityStatusWidget)
         self.status_image_label.setObjectName(u"status_image_label")
-        sizePolicy = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.status_image_label.sizePolicy().hasHeightForWidth())
-        self.status_image_label.setSizePolicy(sizePolicy)
+        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Preferred)
+        sizePolicy1.setHorizontalStretch(0)
+        sizePolicy1.setVerticalStretch(0)
+        sizePolicy1.setHeightForWidth(self.status_image_label.sizePolicy().hasHeightForWidth())
+        self.status_image_label.setSizePolicy(sizePolicy1)
         self.status_image_label.setMaximumSize(QSize(50, 16777215))
 
         self.horizontalLayout.addWidget(self.status_image_label)
@@ -45,12 +50,15 @@ class Ui_EntityStatusWidget(object):
 
         self.horizontalLayout.addWidget(self.line)
 
-        self.entity_title_label = EntityTitleLabel(EntityStatusWidget)
+        self.entity_title_label = ElidableLabel(EntityStatusWidget)
         self.entity_title_label.setObjectName(u"entity_title_label")
-        sizePolicy.setHeightForWidth(self.entity_title_label.sizePolicy().hasHeightForWidth())
-        self.entity_title_label.setSizePolicy(sizePolicy)
-        self.entity_title_label.setMinimumSize(QSize(200, 0))
-        self.entity_title_label.setMaximumSize(QSize(200, 16777215))
+        sizePolicy2 = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Preferred)
+        sizePolicy2.setHorizontalStretch(0)
+        sizePolicy2.setVerticalStretch(0)
+        sizePolicy2.setHeightForWidth(self.entity_title_label.sizePolicy().hasHeightForWidth())
+        self.entity_title_label.setSizePolicy(sizePolicy2)
+        self.entity_title_label.setMinimumSize(QSize(250, 0))
+        self.entity_title_label.setMaximumSize(QSize(250, 16777215))
 
         self.horizontalLayout.addWidget(self.entity_title_label)
 
@@ -61,8 +69,12 @@ class Ui_EntityStatusWidget(object):
 
         self.horizontalLayout.addWidget(self.line_2)
 
-        self.status_message_label = QLabel(EntityStatusWidget)
+        self.status_message_label = ElidableLabel(EntityStatusWidget)
         self.status_message_label.setObjectName(u"status_message_label")
+        sizePolicy2.setHeightForWidth(self.status_message_label.sizePolicy().hasHeightForWidth())
+        self.status_message_label.setSizePolicy(sizePolicy2)
+        self.status_message_label.setMinimumSize(QSize(250, 0))
+        self.status_message_label.setMaximumSize(QSize(250, 16777215))
 
         self.horizontalLayout.addWidget(self.status_message_label)
 
@@ -75,7 +87,7 @@ class Ui_EntityStatusWidget(object):
     def retranslateUi(self, EntityStatusWidget):
         EntityStatusWidget.setWindowTitle(QCoreApplication.translate("EntityStatusWidget", u"Form", None))
         self.status_image_label.setText(QCoreApplication.translate("EntityStatusWidget", u"Status Image", None))
-        self.entity_title_label.setText(QCoreApplication.translate("EntityStatusWidget", u"Entity Title", None))
-        self.status_message_label.setText(QCoreApplication.translate("EntityStatusWidget", u"Status Message", None))
+        self.entity_title_label.setText(QCoreApplication.translate("EntityStatusWidget", u"Entity Title Label", None))
+        self.status_message_label.setText(QCoreApplication.translate("EntityStatusWidget", u"Status Message Label", None))
     # retranslateUi
 
