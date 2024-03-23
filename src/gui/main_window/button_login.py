@@ -21,8 +21,6 @@ class LoginButton(QPushButton):
 
         self.client = Client(*login_info, self.window()) 
         login_result = await self.client.login()
-        if login_result is not None:
-            self.setEnabled(False)
         self.client_login_finished_signal.emit(login_result)
 
     def _get_login_info(self):
@@ -31,11 +29,11 @@ class LoginButton(QPushButton):
         try:
             phone_number = int(phone_number)
         except ValueError:
-            message_box = QMessageBox()
-            message_box.setWindowTitle("Invalid Phone Number Format")
-            message_box.setText("Phone number field must contain digits only.")
-            message_box.setIcon(QMessageBox.Icon.Critical)
-            message_box.exec()
+            QMessageBox(
+                QMessageBox.Icon.Critical,
+                "Invalid Phone Number Format",
+                "Phone number field must contain digits only.",
+            ).exec()
             return None
         else:
             return (

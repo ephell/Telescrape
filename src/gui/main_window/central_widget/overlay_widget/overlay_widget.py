@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING, Optional
 if TYPE_CHECKING:
     from src.gui.main_window.central_widget.central_widget import CentralWidget
 
-from PySide6.QtCore import QByteArray, QSize
+from PySide6.QtCore import QByteArray, QSize, Signal
 from PySide6.QtGui import QMovie, QPixmap
 from PySide6.QtWidgets import QMessageBox, QWidget
 
@@ -16,9 +16,11 @@ from src.gui.main_window.central_widget.overlay_widget.OverlayWidget_ui import U
 class OverlayWidget(Ui_OverlayWidget, QWidget):
     """Displayed during sign-in by overlaying the `base_widget` in `CentralWidget`."""
 
+    login_successful_signal = Signal()
+
     def __init__(self, central_widget: Optional["CentralWidget"] = None):
         super().__init__(central_widget)
-        self.central_widget = central_widget
+        self._central_widget = central_widget
         self.setupUi(self)
         self.continue_button.setHidden(True)
         self.status_image_label.setMaximumSize(QSize(30, 30))
@@ -30,8 +32,8 @@ class OverlayWidget(Ui_OverlayWidget, QWidget):
         self._LOADING_GIF = QMovie(os.path.join(module_dir_path, "loader.gif"), QByteArray(), self)
 
     def set_hidden(self, value: bool):
-        if self.central_widget is not None:
-            self.central_widget.set_overlay_widget_hidden(value)
+        if self._central_widget is not None:
+            self._central_widget.set_overlay_widget_hidden(value)
 
     def set_status_loading(self, message: str):
         self.status_message_label.setText(message)
@@ -53,7 +55,7 @@ class OverlayWidget(Ui_OverlayWidget, QWidget):
 
     def _continue_button_on_click_login_success(self):
         self.set_hidden(True)
-        # ToDo: add logic that opens scraping intarface.
+        self.login_successful_signal.emit()
 
     def _continue_button_on_click_login_fail(self):
         self.set_hidden(True)
