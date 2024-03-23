@@ -49,8 +49,8 @@ class Ui_EntityStatusWidget(object):
         self.entity_title_label.setObjectName(u"entity_title_label")
         sizePolicy.setHeightForWidth(self.entity_title_label.sizePolicy().hasHeightForWidth())
         self.entity_title_label.setSizePolicy(sizePolicy)
-        self.entity_title_label.setMinimumSize(QSize(150, 0))
-        self.entity_title_label.setMaximumSize(QSize(150, 16777215))
+        self.entity_title_label.setMinimumSize(QSize(200, 0))
+        self.entity_title_label.setMaximumSize(QSize(200, 16777215))
 
         self.horizontalLayout.addWidget(self.entity_title_label)
 
