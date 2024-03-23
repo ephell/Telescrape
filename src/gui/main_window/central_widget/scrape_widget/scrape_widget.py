@@ -12,7 +12,7 @@ if TYPE_CHECKING:
     Entity = Union[Channel, Chat]
 
 from PySide6.QtCore import QByteArray, QSize, Qt, Signal, Slot
-from PySide6.QtGui import QMovie
+from PySide6.QtGui import QFont, QMovie
 from PySide6.QtWidgets import QCheckBox, QLabel, QLayout, QWidget
 from qasync import asyncSlot
 
@@ -92,6 +92,9 @@ class ScrapeWidget(Ui_ScrapeWidget, QWidget):
 
     def _add_check_box(self, entity: Union["Entity", str] = "Test"): # 'str' is for testing.
         check_box = QCheckBox(self)
+        font = QFont()
+        font.setPointSize(10)
+        check_box.setFont(font)
         if isinstance(entity, str):
             check_box.setText(entity)
         else:

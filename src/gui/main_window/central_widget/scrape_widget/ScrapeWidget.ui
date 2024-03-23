@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>635</width>
+    <width>685</width>
     <height>327</height>
    </rect>
   </property>
@@ -28,6 +28,11 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="font">
+      <font>
+       <pointsize>11</pointsize>
+      </font>
+     </property>
      <property name="text">
       <string>Selected: 0/0</string>
      </property>
@@ -43,8 +48,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>615</width>
-        <height>253</height>
+        <width>665</width>
+        <height>249</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
