@@ -23,7 +23,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>(0/0) Selected.</string>
+      <string>Selected: 0/0</string>
      </property>
     </widget>
    </item>
