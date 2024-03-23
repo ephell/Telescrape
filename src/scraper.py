@@ -31,19 +31,6 @@ class Scraper:
         if not os.path.exists(self.scraped_data_dir_path):
             os.mkdir(self.scraped_data_dir_path)
 
-    async def scrape(self):
-        entity = await self._get_entity_to_scrape()
-        if entity is None:
-            return
-
-        users = await self._get_users_from_entity(entity)
-        if users is None:
-            return
-
-        users_data = self._extract_users_data(users)
-        print(f"Total users scraped: {len(users_data)}.")
-        self._write_users_data_to_csv(users_data, entity.title)
-
     async def get_scrapable_entities(self) -> List[Channel | Chat]:
         entities = []
         async for dialog in self._client.iter_dialogs(ignore_migrated=True):
@@ -67,38 +54,6 @@ class Scraper:
         except Exception as e:
             if esw is not None:
                 esw.set_status_fail(f"An unhandled exception occured: {e}.")
-
-    async def _get_entity_to_scrape(self) -> Channel | Chat:
-        print("Getting scrapable groups and channels ... ")
-
-        entities = []
-        async for dialog in self._client.iter_dialogs(ignore_migrated=True):
-            entity = dialog.entity
-            if isinstance(entity, Channel) or isinstance(entity, Chat):
-                entities.append(entity)
-
-        if len(entities) == 0:
-            print(f"No groups or channels detected.")
-            return None
-
-        print("\nRetrieved groups/channels:")
-        print("----------------------------")
-        for i, entity in enumerate(entities):
-            print(f"[{i}] {entity.title}")
-        print("----------------------------\n")
-
-        while True:
-            try:
-                choice = int(input("Select group/channel: "))
-                if 0 <= choice < len(entities):
-                    choice = entities[choice]
-                    print(f"Selected: {choice.title}")
-                    print(end="\n")
-                    return choice
-                else:
-                    print(f"Invalid selection. Number must be from 0 to {len(entities) - 1}.")
-            except ValueError:
-                print("Invalid input. Please enter a number.")
 
     async def _get_users_from_entity(self, entity: Channel | Chat) -> List[User]:
         print(f"Scraping users from: '{entity.title}' ... ")
