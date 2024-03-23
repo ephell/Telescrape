@@ -30,10 +30,12 @@ class ScrapeWidget(Ui_ScrapeWidget, QWidget):
         self._central_widget = central_widget
         self.setupUi(self)
         self.counter_label.setText(f"Selected: 0/0")
+        self.scrape_button.setEnabled(False)
         self._scroll_area_layout = self.scroll_area_widget_contents.layout()
         # Force items inside the scroll area to stack from top to bottom, equally.
         self._scroll_area_layout.setSizeConstraint(QLayout.SetFixedSize)
         self._scroll_area_layout.setSpacing(0)
+        # General.
         self._total_checked_check_boxes = 0
         self._all_check_boxes: Dict[QCheckBox, Entity] = {}
         self._scraper: Scraper = None
@@ -117,6 +119,11 @@ class ScrapeWidget(Ui_ScrapeWidget, QWidget):
             self._total_checked_check_boxes -= 1
         self._update_counter_label("checked_check_boxes")
 
+        if self._total_checked_check_boxes > 0:
+            self.scrape_button.setEnabled(True)
+        else:
+            self.scrape_button.setEnabled(False)
+
     # Space in between 'o' and 'n' to prevent 'QMetaObject::connectSlotsByName: No matching signal'.
     @Slot()
     def o_n_client_login_finished_signal(self, client: Optional["Client"]):
@@ -129,6 +136,7 @@ class ScrapeWidget(Ui_ScrapeWidget, QWidget):
         self._total_checked_check_boxes = 0
         self._all_check_boxes = {}
         self._update_counter_label("checked_check_boxes")
+        self.scrape_button.setEnabled(False)
         self.logout_signal.emit()
         
     @asyncSlot()
