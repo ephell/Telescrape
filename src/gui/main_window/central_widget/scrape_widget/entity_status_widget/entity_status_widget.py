@@ -8,6 +8,7 @@ from src.gui.main_window.central_widget.scrape_widget.entity_status_widget.Entit
 
 
 class EntityStatusWidget(Ui_EntityStatusWidget, QWidget):
+    """Used to display the status of entity that is being scraped."""
 
     def __init__(self, entity_title: str = "Test", parent=None):
         super().__init__(parent)
