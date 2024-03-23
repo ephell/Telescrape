@@ -151,8 +151,16 @@ class ScrapeWidget(Ui_ScrapeWidget, QWidget):
         self._update_counter_label("checked_check_boxes")
         self._stop_loading_gif()
 
+    def _setEnabled_forbidden_buttons_while_scraping(self, value: bool):
+        self.get_groups_button.setEnabled(value)
+        self.select_all_button.setEnabled(value)
+        self.unselect_all_button.setEnabled(value)
+        self.scrape_button.setEnabled(value)
+        self.logout_button.setEnabled(value)
+
     @asyncSlot()
     async def _on_scrape_button_clicked(self):
+        self._setEnabled_forbidden_buttons_while_scraping(False)
         self._remove_all_widgets_from_scroll_area()
         self._total_completed_scraping_tasks = 0
         self._total_successful_scraping_tasks = 0
@@ -174,6 +182,7 @@ class ScrapeWidget(Ui_ScrapeWidget, QWidget):
 
         self._total_scraping_tasks = len(tasks)
         await asyncio.gather(*tasks)
+        self._setEnabled_forbidden_buttons_while_scraping(True)
 
     @Slot()
     def _on_entity_status_widget_finished_signal(self, is_success):
