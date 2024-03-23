@@ -1,3 +1,4 @@
+import asyncio
 import os
 import platform
 import subprocess
@@ -130,6 +131,7 @@ class ScrapeWidget(Ui_ScrapeWidget, QWidget):
 
     @asyncSlot()
     async def _on_scrape_button_clicked(self):
+        tasks = []
         for check_box, entity in self._all_check_boxes.items():
             if check_box.isChecked():
                 if isinstance(entity, str):
@@ -137,7 +139,8 @@ class ScrapeWidget(Ui_ScrapeWidget, QWidget):
                     # while developing.
                     print(f"No 'entity' set for '{check_box.text()}'. Skipping ... ")
                 else:
-                    await self._scraper.scrape_entity(entity)
+                    tasks.append(self._scraper.scrape_entity(entity))
+        await asyncio.gather(*tasks)
 
     @Slot()
     def _on_select_all_button_clicked(self):
