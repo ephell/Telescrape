@@ -149,6 +149,7 @@ class ScrapeWidget(Ui_ScrapeWidget, QWidget):
         self.select_all_button.setEnabled(False)
         self.unselect_all_button.setEnabled(False)
         self.scrape_button.setEnabled(False)
+        self.logout_button.setEnabled(False)
 
         self._remove_all_widgets_from_scroll_area()
         self._total_checked_check_boxes = 0
@@ -163,6 +164,7 @@ class ScrapeWidget(Ui_ScrapeWidget, QWidget):
         self.get_groups_button.setEnabled(True)
         self.select_all_button.setEnabled(True)
         self.unselect_all_button.setEnabled(True)
+        self.logout_button.setEnabled(True)
 
     @asyncSlot()
     async def _on_scrape_button_clicked(self):
