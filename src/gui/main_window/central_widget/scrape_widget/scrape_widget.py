@@ -191,7 +191,7 @@ class ScrapeWidget(Ui_ScrapeWidget, QWidget):
                 else:
                     esw = EntityStatusWidget(entity.title)
                     esw.finished_signal.connect(self._on_entity_status_widget_finished_signal)
-                    esw.set_status_loading("Scraping ... ")
+                    esw.set_status_loading("In progress ... ")
                     self._scroll_area_layout.addWidget(esw)
                     tasks.append(self._scraper.scrape_entity(entity, esw))
 
