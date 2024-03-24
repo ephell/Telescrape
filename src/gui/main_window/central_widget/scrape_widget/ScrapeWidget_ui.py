@@ -79,8 +79,15 @@ class Ui_ScrapeWidget(object):
 
         self.horizontalLayout.addWidget(self.scrape_button)
 
+        self.open_scrape_settings_button = QPushButton(ScrapeWidget)
+        self.open_scrape_settings_button.setObjectName(u"open_scrape_settings_button")
+        self.open_scrape_settings_button.setMinimumSize(QSize(100, 0))
+
+        self.horizontalLayout.addWidget(self.open_scrape_settings_button)
+
         self.open_data_dir_button = QPushButton(ScrapeWidget)
         self.open_data_dir_button.setObjectName(u"open_data_dir_button")
+        self.open_data_dir_button.setMinimumSize(QSize(105, 0))
 
         self.horizontalLayout.addWidget(self.open_data_dir_button)
 
@@ -106,7 +113,8 @@ class Ui_ScrapeWidget(object):
         self.select_all_button.setText(QCoreApplication.translate("ScrapeWidget", u"Select All", None))
         self.unselect_all_button.setText(QCoreApplication.translate("ScrapeWidget", u"Unselect All", None))
         self.scrape_button.setText(QCoreApplication.translate("ScrapeWidget", u"Scrape", None))
-        self.open_data_dir_button.setText(QCoreApplication.translate("ScrapeWidget", u"Data Dir", None))
+        self.open_scrape_settings_button.setText(QCoreApplication.translate("ScrapeWidget", u"Scrape Settings", None))
+        self.open_data_dir_button.setText(QCoreApplication.translate("ScrapeWidget", u"Scraped Data Dir", None))
         self.logout_button.setText(QCoreApplication.translate("ScrapeWidget", u"Logout", None))
     # retranslateUi
 

@@ -62,6 +62,7 @@ class ScrapeWidget(Ui_ScrapeWidget, QWidget):
         self.select_all_button.clicked.connect(self._on_select_all_button_clicked)
         self.unselect_all_button.clicked.connect(self._on_unselect_all_button_clicked)
         self.open_data_dir_button.clicked.connect(self._on_open_data_dir_button_clicked)
+        self.open_scrape_settings_button.clicked.connect(self._on_open_scrape_settings_button_clicked)
 
     def set_hidden(self, value: bool):
         if self._central_widget is not None:
@@ -176,6 +177,7 @@ class ScrapeWidget(Ui_ScrapeWidget, QWidget):
         self.unselect_all_button.setEnabled(False)
         self.scrape_button.setEnabled(False)
         self.logout_button.setEnabled(False)
+        self.open_scrape_settings_button.setEnabled(False)
         self._remove_all_widgets_from_scroll_area()
         self._total_completed_scraping_tasks = 0
         self._total_successful_scraping_tasks = 0
@@ -199,6 +201,7 @@ class ScrapeWidget(Ui_ScrapeWidget, QWidget):
         await asyncio.gather(*tasks)
         self.get_groups_button.setEnabled(True)
         self.logout_button.setEnabled(True)
+        self.open_scrape_settings_button.setEnabled(True)
 
     @Slot()
     def _on_entity_status_widget_finished_signal(self, is_success):
@@ -229,6 +232,10 @@ class ScrapeWidget(Ui_ScrapeWidget, QWidget):
                 subprocess.Popen(["open", self._scraper.scraped_data_dir_path])
             else:
                 subprocess.Popen(["xdg-open", self._scraper.scraped_data_dir_path])
+
+    @Slot()
+    def _on_open_scrape_settings_button_clicked(self):
+        pass
 
 
 if __name__ == "__main__":
