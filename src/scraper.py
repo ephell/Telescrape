@@ -40,23 +40,43 @@ class Scraper:
                 entities.append(entity)
         return entities
 
-    async def scrape_entity(self, entity: Channel | Chat, esw: "EntityStatusWidget"):
+    async def scrape_entity(
+            self, 
+            entity: Channel | Chat, 
+            esw: "EntityStatusWidget",
+            user_active_in_last_days: int = 0, # 0 = regardless of activity.
+            exclude_admins: bool = True,
+            exclude_bots: bool = True,
+            exclude_deleted_users: bool = True,
+            exclude_restricted_users: bool = True,
+            exclude_scam_flagged_users: bool = True,
+            exclude_fake_flagged_users: bool = True
+        ):
         try:
-            users = await self._get_users_from_entity(entity)
+            users = await self._get_users_from_entity(
+                entity=entity,
+                user_active_in_last_days=user_active_in_last_days,
+                exclude_admins=exclude_admins,
+                exclude_bots=exclude_bots,
+                exclude_deleted_users=exclude_deleted_users,
+                exclude_restricted_users=exclude_restricted_users,
+                exclude_scam_flagged_users=exclude_scam_flagged_users,
+                exclude_fake_flagged_users=exclude_fake_flagged_users
+            )
             if users is None:
                 esw.set_status_fail("Cannot scrape users. Reason: group/chat/channel admin privileges are required.")
                 return
 
             users_data = self._extract_users_data(users)
             self._write_users_data_to_csv(users_data, entity.title)
-            esw.set_status_success(f"Finished scraping. Total users scraped: {len(users_data)}.")
+            esw.set_status_success(f"Finished scraping. Total users scraped: {len(users)}.")
         except Exception as e:
             esw.set_status_fail(f"An unhandled exception occured: {e}.")
 
     async def _get_users_from_entity(
             self, 
             entity: Channel | Chat,
-            user_active_in_past_days: int = 0, # 0 = regardless of activity.
+            user_active_in_last_days: int = 0, # 0 = regardless of activity.
             exclude_admins: bool = True,
             exclude_bots: bool = True,
             exclude_deleted_users: bool = True,
@@ -77,7 +97,6 @@ class Scraper:
 
         all_users = []
         for participant in all_participants:
-            participant: User = participant
             if (
                 (exclude_bots and participant.bot)
                 or (exclude_deleted_users and participant.deleted)
@@ -87,27 +106,29 @@ class Scraper:
             ):
                 continue
 
-            if user_active_in_past_days <= 0:
+            if user_active_in_last_days <= 0:
                 all_users.append(participant)
             else:
-                if isinstance(participant.status, UserStatusEmpty):
-                    continue
+                # ToDo: make a scraping setting option.
+                # if isinstance(participant.status, UserStatusEmpty) or participant.status is None:
+                #     all_users.append(participant)
+                #     continue
 
                 if isinstance(participant.status, UserStatusOffline):
                     last_online = participant.status.was_online.replace(tzinfo=timezone.utc)
-                    day_offset = datetime.now(timezone.utc) - timedelta(days=user_active_in_past_days)
+                    day_offset = datetime.now(timezone.utc) - timedelta(days=user_active_in_last_days)
                     if last_online >= day_offset:
                         all_users.append(participant)
                 else:
-                    activity_statuses = set()
-                    if user_active_in_past_days <= 1:
-                        activity_statuses.add(UserStatusOnline)
-                        activity_statuses.add(UserStatusRecently)
-                    if user_active_in_past_days >= 6:
-                        activity_statuses.add(UserStatusLastWeek)
-                        activity_statuses.add(UserStatusLastMonth)
-                    if participant.status in activity_statuses:
-                        all_users.append(participant)
+                    activity_statuses = [UserStatusOnline, UserStatusRecently]
+                    if user_active_in_last_days >= 2:
+                        activity_statuses.append(UserStatusLastWeek)
+                    if user_active_in_last_days >= 6:
+                        activity_statuses.append(UserStatusLastMonth)
+
+                    for activity_status in activity_statuses:
+                        if isinstance(participant.status, activity_status):
+                            all_users.append(participant)
 
         return all_users
 
