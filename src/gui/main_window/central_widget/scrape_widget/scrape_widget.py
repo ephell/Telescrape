@@ -160,6 +160,7 @@ class ScrapeWidget(Ui_ScrapeWidget, QWidget):
         self._remove_all_widgets_from_scroll_area()
         self._total_checked_check_boxes = 0
         self._all_check_boxes = {}
+        self._update_counter_label("checked_check_boxes") # Reset to default.
         self._start_loading_gif()
         if self._scraper is not None:
             for entity in await self._scraper.get_scrapable_entities():
@@ -197,9 +198,23 @@ class ScrapeWidget(Ui_ScrapeWidget, QWidget):
                     esw.finished_signal.connect(self._on_entity_status_widget_finished_signal)
                     esw.set_status_loading("In progress ... ")
                     self._scroll_area_layout.addWidget(esw)
-                    tasks.append(self._scraper.scrape_entity(entity, esw))
+                    scraping_settings = self._scrape_settings_widget.get_settings()
+                    tasks.append(
+                        self._scraper.scrape_entity(
+                            entity, 
+                            esw,
+                            user_active_in_last_days=scraping_settings["user_active_in_last_days"],
+                            exclude_admins=scraping_settings["exclude_admins"],
+                            exclude_bots=scraping_settings["exclude_bots"],
+                            exclude_deleted_users=scraping_settings["exclude_deleted_users"],
+                            exclude_restricted_users=scraping_settings["exclude_restricted_users"],
+                            exclude_scam_flagged_users=scraping_settings["exclude_scam_flagged_users"],
+                            exclude_fake_flagged_users=scraping_settings["exclude_fake_flagged_users"]
+                        )
+                    )
 
         self._total_scraping_tasks = len(tasks)
+        self._update_counter_label("scraping_tasks")
         await asyncio.gather(*tasks)
         self.get_groups_button.setEnabled(True)
         self.logout_button.setEnabled(True)
