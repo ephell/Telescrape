@@ -26,8 +26,7 @@ from telethon.tl.types import (
 
 class Scraper:
 
-    def __init__(self, client: "Client", active_in_last_days: int = 0):
-        self._active_in_last_days = active_in_last_days
+    def __init__(self, client: "Client"):
         self._client = client
         self.scraped_data_dir_path = os.path.join(os.getcwd(), "scraped_data_dir")
         if not os.path.exists(self.scraped_data_dir_path):
@@ -54,61 +53,63 @@ class Scraper:
         except Exception as e:
             esw.set_status_fail(f"An unhandled exception occured: {e}.")
 
-    async def _get_users_from_entity(self, entity: Channel | Chat) -> List[User]:
+    async def _get_users_from_entity(
+            self, 
+            entity: Channel | Chat,
+            user_active_in_past_days: int = 0, # 0 = regardless of activity.
+            exclude_admins: bool = True,
+            exclude_bots: bool = True,
+            exclude_deleted_users: bool = True,
+            exclude_restricted_users: bool = True,
+            exclude_scam_flagged_users: bool = True,
+            exclude_fake_flagged_users: bool = True
+        ) -> List[User]:
         try:
-            admins = []
-            async for participant in self._client.iter_participants(entity, filter=ChannelParticipantsAdmins):
-                admins.append(participant)
-
-            all_users = []
-            async for participant in self._client.iter_participants(entity):
-                if (
-                    not participant.bot 
-                    and not participant.is_self
-                    and not participant.deleted
-                    and not participant.restricted
-                    and not participant.scam
-                    and not participant.fake
-                ):
-                    if self._active_in_last_days <= 0:
-                        all_users.append(participant)
-                    else:
-                        if isinstance(participant.status, UserStatusEmpty):
-                            continue
-
-                        if hasattr(participant.status, "was_online"):
-                            last_online = participant.status.was_online.replace(tzinfo=timezone.utc)
-                            day_offset = datetime.now(timezone.utc) - timedelta(days=self._active_in_last_days)
-
-                        if self._active_in_last_days <= 1:
-                            if (
-                                isinstance(participant.status, UserStatusOnline)
-                                or isinstance(participant.status, UserStatusRecently)
-                                or (isinstance(participant.status, UserStatusOffline) and last_online >= day_offset)
-                            ):
-                                all_users.append(participant)
-                        elif self._active_in_last_days <= 7:
-                            if (
-                                isinstance(participant.status, UserStatusOnline)
-                                or isinstance(participant.status, UserStatusRecently)
-                                or isinstance(participant.status, UserStatusLastWeek)
-                                or (isinstance(participant.status, UserStatusOffline) and last_online >= day_offset)
-                            ):
-                                all_users.append(participant)
-                        else:
-                            if (
-                                isinstance(participant.status, UserStatusOnline)
-                                or isinstance(participant.status, UserStatusRecently)
-                                or isinstance(participant.status, UserStatusLastWeek)
-                                or isinstance(participant.status, UserStatusLastMonth)
-                                or (isinstance(participant.status, UserStatusOffline) and last_online >= day_offset)
-                            ):
-                                all_users.append(participant)
-
+            all_participants = [p async for p in self._client.iter_participants(entity)]
+            if exclude_admins:
+                admin_participants = [
+                    p async for p in 
+                    self._client.iter_participants(entity, filter=ChannelParticipantsAdmins)
+                ]
+                all_participants = [p for p in all_participants if p not in admin_participants]
         except ChatAdminRequiredError:
             return None
 
-        return [user for user in all_users if user not in admins]
+        all_users = []
+        for participant in all_participants:
+            participant: User = participant
+            if (
+                (exclude_bots and participant.bot)
+                or (exclude_deleted_users and participant.deleted)
+                or (exclude_restricted_users and participant.restricted)
+                or (exclude_scam_flagged_users and participant.scam)
+                or (exclude_fake_flagged_users and participant.fake)
+            ):
+                continue
+
+            if user_active_in_past_days <= 0:
+                all_users.append(participant)
+            else:
+                if isinstance(participant.status, UserStatusEmpty):
+                    continue
+
+                if isinstance(participant.status, UserStatusOffline):
+                    last_online = participant.status.was_online.replace(tzinfo=timezone.utc)
+                    day_offset = datetime.now(timezone.utc) - timedelta(days=user_active_in_past_days)
+                    if last_online >= day_offset:
+                        all_users.append(participant)
+                else:
+                    activity_statuses = set()
+                    if user_active_in_past_days <= 1:
+                        activity_statuses.add(UserStatusOnline)
+                        activity_statuses.add(UserStatusRecently)
+                    if user_active_in_past_days >= 6:
+                        activity_statuses.add(UserStatusLastWeek)
+                        activity_statuses.add(UserStatusLastMonth)
+                    if participant.status in activity_statuses:
+                        all_users.append(participant)
+
+        return all_users
 
     def _extract_users_data(self, users: List[User]) -> List[Dict]:
         users_data = []
@@ -131,7 +132,7 @@ class Scraper:
             if user.phone:
                 phone = user.phone
             else:
-                phone = ""
+                phone = "Hidden"
 
             users_data.append({
                 "id": user.id,
