@@ -23,24 +23,24 @@ class Ui_ScrapeSettingsWidget(object):
         if not ScrapeSettingsWidget.objectName():
             ScrapeSettingsWidget.setObjectName(u"ScrapeSettingsWidget")
         ScrapeSettingsWidget.setWindowModality(Qt.ApplicationModal)
-        ScrapeSettingsWidget.resize(453, 205)
+        ScrapeSettingsWidget.resize(453, 232)
         self.verticalLayout_2 = QVBoxLayout(ScrapeSettingsWidget)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.past_active_days_label = QLabel(ScrapeSettingsWidget)
-        self.past_active_days_label.setObjectName(u"past_active_days_label")
+        self.last_active_days_label = QLabel(ScrapeSettingsWidget)
+        self.last_active_days_label.setObjectName(u"last_active_days_label")
         font = QFont()
         font.setPointSize(11)
-        self.past_active_days_label.setFont(font)
+        self.last_active_days_label.setFont(font)
 
-        self.horizontalLayout.addWidget(self.past_active_days_label)
+        self.horizontalLayout.addWidget(self.last_active_days_label)
 
-        self.past_active_days_spin_box = QSpinBox(ScrapeSettingsWidget)
-        self.past_active_days_spin_box.setObjectName(u"past_active_days_spin_box")
-        self.past_active_days_spin_box.setMaximum(9999)
+        self.last_active_days_spin_box = QSpinBox(ScrapeSettingsWidget)
+        self.last_active_days_spin_box.setObjectName(u"last_active_days_spin_box")
+        self.last_active_days_spin_box.setMaximum(9999)
 
-        self.horizontalLayout.addWidget(self.past_active_days_spin_box)
+        self.horizontalLayout.addWidget(self.last_active_days_spin_box)
 
 
         self.verticalLayout_2.addLayout(self.horizontalLayout)
@@ -53,10 +53,17 @@ class Ui_ScrapeSettingsWidget(object):
 
         self.verticalLayout.addWidget(self.exclude_label)
 
-        self.bots_check_box = QCheckBox(ScrapeSettingsWidget)
-        self.bots_check_box.setObjectName(u"bots_check_box")
+        self.admins_check_box = QCheckBox(ScrapeSettingsWidget)
+        self.admins_check_box.setObjectName(u"admins_check_box")
         font1 = QFont()
         font1.setPointSize(10)
+        self.admins_check_box.setFont(font1)
+        self.admins_check_box.setChecked(True)
+
+        self.verticalLayout.addWidget(self.admins_check_box)
+
+        self.bots_check_box = QCheckBox(ScrapeSettingsWidget)
+        self.bots_check_box.setObjectName(u"bots_check_box")
         self.bots_check_box.setFont(font1)
         self.bots_check_box.setChecked(True)
 
@@ -83,12 +90,12 @@ class Ui_ScrapeSettingsWidget(object):
 
         self.verticalLayout.addWidget(self.scam_flagged_users_check_box)
 
-        self.spam_flagged_users_check_box = QCheckBox(ScrapeSettingsWidget)
-        self.spam_flagged_users_check_box.setObjectName(u"spam_flagged_users_check_box")
-        self.spam_flagged_users_check_box.setFont(font1)
-        self.spam_flagged_users_check_box.setChecked(True)
+        self.fake_flagged_users_check_box = QCheckBox(ScrapeSettingsWidget)
+        self.fake_flagged_users_check_box.setObjectName(u"fake_flagged_users_check_box")
+        self.fake_flagged_users_check_box.setFont(font1)
+        self.fake_flagged_users_check_box.setChecked(True)
 
-        self.verticalLayout.addWidget(self.spam_flagged_users_check_box)
+        self.verticalLayout.addWidget(self.fake_flagged_users_check_box)
 
 
         self.verticalLayout_2.addLayout(self.verticalLayout)
@@ -101,12 +108,13 @@ class Ui_ScrapeSettingsWidget(object):
 
     def retranslateUi(self, ScrapeSettingsWidget):
         ScrapeSettingsWidget.setWindowTitle(QCoreApplication.translate("ScrapeSettingsWidget", u"Form", None))
-        self.past_active_days_label.setText(QCoreApplication.translate("ScrapeSettingsWidget", u"Get users active in past days (0 = activity doesn't matter):", None))
+        self.last_active_days_label.setText(QCoreApplication.translate("ScrapeSettingsWidget", u"Get users active in last days (0 = activity doesn't matter):", None))
         self.exclude_label.setText(QCoreApplication.translate("ScrapeSettingsWidget", u"Exclude:", None))
+        self.admins_check_box.setText(QCoreApplication.translate("ScrapeSettingsWidget", u"Admins", None))
         self.bots_check_box.setText(QCoreApplication.translate("ScrapeSettingsWidget", u"Bots", None))
         self.deleted_users_check_box.setText(QCoreApplication.translate("ScrapeSettingsWidget", u"Deleted users", None))
         self.restricted_users_check_box.setText(QCoreApplication.translate("ScrapeSettingsWidget", u"Restricted users", None))
         self.scam_flagged_users_check_box.setText(QCoreApplication.translate("ScrapeSettingsWidget", u"Users flagged as scam", None))
-        self.spam_flagged_users_check_box.setText(QCoreApplication.translate("ScrapeSettingsWidget", u"Users flagged as fake", None))
+        self.fake_flagged_users_check_box.setText(QCoreApplication.translate("ScrapeSettingsWidget", u"Users flagged as fake", None))
     # retranslateUi
 
