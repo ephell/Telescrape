@@ -17,6 +17,7 @@ from PySide6.QtWidgets import QCheckBox, QLabel, QLayout, QWidget
 from qasync import asyncSlot
 
 from src.gui.main_window.central_widget.scrape_widget.entity_status_widget.entity_status_widget import EntityStatusWidget
+from src.gui.main_window.central_widget.scrape_widget.scrape_settings_widget.scrape_settings_widget import ScrapeSettingsWidget
 from src.gui.main_window.central_widget.scrape_widget.ScrapeWidget_ui import Ui_ScrapeWidget
 from src.scraper import Scraper
 
@@ -34,6 +35,7 @@ class ScrapeWidget(Ui_ScrapeWidget, QWidget):
         self.select_all_button.setEnabled(False)
         self.unselect_all_button.setEnabled(False)
         self._scroll_area_layout = self.scroll_area_widget_contents.layout()
+        self._scrape_settings_widget = ScrapeSettingsWidget(self)
         # setSizeContraint() to force items inside the scroll area to stack from top to bottom, equally.
         self._scroll_area_layout.setSizeConstraint(QLayout.SetFixedSize)
         self._scroll_area_layout.setSpacing(0)
@@ -235,7 +237,7 @@ class ScrapeWidget(Ui_ScrapeWidget, QWidget):
 
     @Slot()
     def _on_open_scrape_settings_button_clicked(self):
-        pass
+        self._scrape_settings_widget.show()
 
 
 if __name__ == "__main__":
