@@ -91,23 +91,31 @@ class Scraper:
         users_data = []
         for user in users:
             if user.username:
-                username= user.username
+                username = user.username
             else:
-                username= ""
+                username = ""
+
             if user.first_name:
-                first_name= user.first_name
+                first_name = user.first_name
             else:
-                first_name= ""
+                first_name = ""
             if user.last_name:
                 last_name= user.last_name
             else:
-                last_name= ""
+                last_name = ""
             name = (first_name + ' ' + last_name).strip()
+
+            if user.phone:
+                phone = user.phone
+            else:
+                phone = ""
+
             users_data.append({
                 "id": user.id,
                 "access_hash": user.access_hash,
-                "name": name,
+                "first_last_name": name,
                 "username": username,
+                "phone": phone
             })
         return users_data
 
