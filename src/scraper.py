@@ -44,24 +44,30 @@ class Scraper:
             self, 
             entity: Channel | Chat, 
             esw: "EntityStatusWidget",
-            user_active_in_last_days: int = 0, # 0 = regardless of activity.
-            exclude_admins: bool = True,
-            exclude_bots: bool = True,
-            exclude_deleted_users: bool = True,
-            exclude_restricted_users: bool = True,
-            exclude_scam_flagged_users: bool = True,
-            exclude_fake_flagged_users: bool = True
+            exclude_yourself: bool,
+            exclude_admins: bool,
+            exclude_bots: bool,
+            exclude_deleted_users: bool,
+            exclude_restricted_users: bool,
+            exclude_scam_flagged_users: bool,
+            exclude_fake_flagged_users: bool,
+            exclude_users_in_contacts: bool,
+            exclude_users_with_hidden_last_seen_online: bool,
+            user_active_in_last_days: int = 0 # 0 = regardless of activity.
         ):
         try:
             users = await self._get_users_from_entity(
                 entity=entity,
-                user_active_in_last_days=user_active_in_last_days,
+                exclude_yourself=exclude_yourself,
                 exclude_admins=exclude_admins,
                 exclude_bots=exclude_bots,
                 exclude_deleted_users=exclude_deleted_users,
                 exclude_restricted_users=exclude_restricted_users,
                 exclude_scam_flagged_users=exclude_scam_flagged_users,
-                exclude_fake_flagged_users=exclude_fake_flagged_users
+                exclude_fake_flagged_users=exclude_fake_flagged_users,
+                exclude_users_in_contacts=exclude_users_in_contacts,
+                exclude_users_with_hidden_last_seen_online=exclude_users_with_hidden_last_seen_online,
+                user_active_in_last_days=user_active_in_last_days
             )
             if users is None:
                 esw.set_status_fail("Cannot scrape users. Reason: group/chat/channel admin privileges are required.")
@@ -76,13 +82,16 @@ class Scraper:
     async def _get_users_from_entity(
             self, 
             entity: Channel | Chat,
-            user_active_in_last_days: int = 0, # 0 = regardless of activity.
-            exclude_admins: bool = True,
-            exclude_bots: bool = True,
-            exclude_deleted_users: bool = True,
-            exclude_restricted_users: bool = True,
-            exclude_scam_flagged_users: bool = True,
-            exclude_fake_flagged_users: bool = True
+            exclude_yourself: bool,
+            exclude_admins: bool,
+            exclude_bots: bool,
+            exclude_deleted_users: bool,
+            exclude_restricted_users: bool,
+            exclude_scam_flagged_users: bool,
+            exclude_fake_flagged_users: bool,
+            exclude_users_in_contacts: bool,
+            exclude_users_with_hidden_last_seen_online: bool,
+            user_active_in_last_days: int = 0 # 0 = regardless of activity.
         ) -> List[User]:
         try:
             all_participants = [p async for p in self._client.iter_participants(entity)]
@@ -98,21 +107,29 @@ class Scraper:
         all_users = []
         for participant in all_participants:
             if (
-                (exclude_bots and participant.bot)
+                (exclude_yourself and participant.is_self)
+                or (exclude_bots and participant.bot)
                 or (exclude_deleted_users and participant.deleted)
                 or (exclude_restricted_users and participant.restricted)
                 or (exclude_scam_flagged_users and participant.scam)
                 or (exclude_fake_flagged_users and participant.fake)
+                or (exclude_users_in_contacts and participant.contact)
             ):
                 continue
 
             if user_active_in_last_days <= 0:
-                all_users.append(participant)
+                if not exclude_users_with_hidden_last_seen_online:
+                    all_users.append(participant)
+                else:
+                    if isinstance(participant.status, (UserStatusEmpty, type(None))):
+                        continue
+                    else:
+                        all_users.append(participant)
             else:
-                # ToDo: make a scraping setting option.
-                # if isinstance(participant.status, UserStatusEmpty) or participant.status is None:
-                #     all_users.append(participant)
-                #     continue
+                if not exclude_users_with_hidden_last_seen_online:
+                    if isinstance(participant.status, (UserStatusEmpty, type(None))):
+                        all_users.append(participant)
+                        continue
 
                 if isinstance(participant.status, UserStatusOffline):
                     last_online = participant.status.was_online.replace(tzinfo=timezone.utc)
