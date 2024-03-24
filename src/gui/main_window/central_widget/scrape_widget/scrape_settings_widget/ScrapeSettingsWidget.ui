@@ -174,7 +174,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QCheckBox" name="contacts_users_check_box">
+         <widget class="QCheckBox" name="users_in_contacts_check_box">
           <property name="font">
            <font>
             <pointsize>10</pointsize>
@@ -189,7 +189,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QCheckBox" name="hidden_last_seen_online_check_box">
+         <widget class="QCheckBox" name="users_with_hidden_last_seen_online_check_box">
           <property name="font">
            <font>
             <pointsize>10</pointsize>

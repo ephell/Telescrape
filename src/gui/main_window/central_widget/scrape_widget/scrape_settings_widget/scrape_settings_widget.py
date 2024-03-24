@@ -34,8 +34,8 @@ class ScrapeSettingsWidget(Ui_ScrapeSettingsWidget, QWidget):
             "exclude_restricted_users": self.restricted_users_check_box.isChecked(),
             "exclude_scam_flagged_users": self.scam_flagged_users_check_box.isChecked(),
             "exclude_fake_flagged_users": self.fake_flagged_users_check_box.isChecked(),
-            "exclude_contacts_users": self.contacts_users_check_box.isChecked(),
-            "exclude_hidden_last_seen_online_users": self.hidden_last_seen_online_check_box.isChecked()
+            "exclude_users_in_contacts": self.users_in_contacts_check_box.isChecked(),
+            "exclude_users_with_hidden_last_seen_online": self.users_with_hidden_last_seen_online_check_box.isChecked()
         }
 
     @Slot()
@@ -52,8 +52,8 @@ class ScrapeSettingsWidget(Ui_ScrapeSettingsWidget, QWidget):
         self.restricted_users_check_box.setChecked(self._default_settings["exclude_restricted_users"])
         self.scam_flagged_users_check_box.setChecked(self._default_settings["exclude_scam_flagged_users"])
         self.fake_flagged_users_check_box.setChecked(self._default_settings["exclude_fake_flagged_users"])
-        self.contacts_users_check_box.setChecked(self._default_settings["exclude_contacts_users"])
-        self.hidden_last_seen_online_check_box.setChecked(self._default_settings["exclude_hidden_last_seen_online_users"])
+        self.users_in_contacts_check_box.setChecked(self._default_settings["exclude_users_in_contacts"])
+        self.users_with_hidden_last_seen_online_check_box.setChecked(self._default_settings["exclude_users_with_hidden_last_seen_online"])
 
 
 if __name__ == "__main__":

@@ -112,19 +112,19 @@ class Ui_ScrapeSettingsWidget(object):
 
         self.verticalLayout.addWidget(self.fake_flagged_users_check_box)
 
-        self.contacts_users_check_box = QCheckBox(self.exclude_frame)
-        self.contacts_users_check_box.setObjectName(u"contacts_users_check_box")
-        self.contacts_users_check_box.setFont(font1)
-        self.contacts_users_check_box.setChecked(False)
+        self.users_in_contacts_check_box = QCheckBox(self.exclude_frame)
+        self.users_in_contacts_check_box.setObjectName(u"users_in_contacts_check_box")
+        self.users_in_contacts_check_box.setFont(font1)
+        self.users_in_contacts_check_box.setChecked(False)
 
-        self.verticalLayout.addWidget(self.contacts_users_check_box)
+        self.verticalLayout.addWidget(self.users_in_contacts_check_box)
 
-        self.hidden_last_seen_online_check_box = QCheckBox(self.exclude_frame)
-        self.hidden_last_seen_online_check_box.setObjectName(u"hidden_last_seen_online_check_box")
-        self.hidden_last_seen_online_check_box.setFont(font1)
-        self.hidden_last_seen_online_check_box.setChecked(False)
+        self.users_with_hidden_last_seen_online_check_box = QCheckBox(self.exclude_frame)
+        self.users_with_hidden_last_seen_online_check_box.setObjectName(u"users_with_hidden_last_seen_online_check_box")
+        self.users_with_hidden_last_seen_online_check_box.setFont(font1)
+        self.users_with_hidden_last_seen_online_check_box.setChecked(False)
 
-        self.verticalLayout.addWidget(self.hidden_last_seen_online_check_box)
+        self.verticalLayout.addWidget(self.users_with_hidden_last_seen_online_check_box)
 
 
         self.verticalLayout_2.addLayout(self.verticalLayout)
@@ -175,8 +175,8 @@ class Ui_ScrapeSettingsWidget(object):
         self.restricted_users_check_box.setText(QCoreApplication.translate("ScrapeSettingsWidget", u"Restricted users", None))
         self.scam_flagged_users_check_box.setText(QCoreApplication.translate("ScrapeSettingsWidget", u"Users flagged as scam", None))
         self.fake_flagged_users_check_box.setText(QCoreApplication.translate("ScrapeSettingsWidget", u"Users flagged as fake", None))
-        self.contacts_users_check_box.setText(QCoreApplication.translate("ScrapeSettingsWidget", u"Users in your contacts", None))
-        self.hidden_last_seen_online_check_box.setText(QCoreApplication.translate("ScrapeSettingsWidget", u"Users with hidden 'last seen online' status", None))
+        self.users_in_contacts_check_box.setText(QCoreApplication.translate("ScrapeSettingsWidget", u"Users in your contacts", None))
+        self.users_with_hidden_last_seen_online_check_box.setText(QCoreApplication.translate("ScrapeSettingsWidget", u"Users with hidden 'last seen online' status", None))
         self.close_button.setText(QCoreApplication.translate("ScrapeSettingsWidget", u"Close", None))
         self.reset_to_default_button.setText(QCoreApplication.translate("ScrapeSettingsWidget", u"Reset to Default", None))
     # retranslateUi
