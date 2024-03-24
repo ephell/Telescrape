@@ -203,13 +203,16 @@ class ScrapeWidget(Ui_ScrapeWidget, QWidget):
                         self._scraper.scrape_entity(
                             entity, 
                             esw,
-                            user_active_in_last_days=scraping_settings["user_active_in_last_days"],
+                            exclude_yourself=scraping_settings["exclude_yourself"],
                             exclude_admins=scraping_settings["exclude_admins"],
                             exclude_bots=scraping_settings["exclude_bots"],
                             exclude_deleted_users=scraping_settings["exclude_deleted_users"],
                             exclude_restricted_users=scraping_settings["exclude_restricted_users"],
                             exclude_scam_flagged_users=scraping_settings["exclude_scam_flagged_users"],
-                            exclude_fake_flagged_users=scraping_settings["exclude_fake_flagged_users"]
+                            exclude_fake_flagged_users=scraping_settings["exclude_fake_flagged_users"],
+                            exclude_users_in_contacts=scraping_settings["exclude_users_in_contacts"],
+                            exclude_users_with_hidden_last_seen_online=scraping_settings["exclude_users_with_hidden_last_seen_online"],
+                            user_active_in_last_days=scraping_settings["user_active_in_last_days"]
                         )
                     )
 
