@@ -45,7 +45,7 @@ class Scraper:
         try:
             users = await self._get_users_from_entity(entity)
             if users is None:
-                esw.set_status_fail("Cannot scrape users. Reason: group/chat admin privileges are required.")
+                esw.set_status_fail("Cannot scrape users. Reason: group/chat/channel admin privileges are required.")
                 return
 
             users_data = self._extract_users_data(users)
