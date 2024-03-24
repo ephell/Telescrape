@@ -15,6 +15,8 @@ from telethon.tl.types import (
     ChannelParticipantsAdmins,
     Chat,
     User,
+    UserStatusEmpty,
+    UserStatusLastMonth,
     UserStatusLastWeek,
     UserStatusOffline,
     UserStatusOnline,
@@ -24,7 +26,7 @@ from telethon.tl.types import (
 
 class Scraper:
 
-    def __init__(self, client: "Client", active_in_last_days: int = 30):
+    def __init__(self, client: "Client", active_in_last_days: int = 0):
         self._active_in_last_days = active_in_last_days
         self._client = client
         self.scraped_data_dir_path = os.path.join(os.getcwd(), "scraped_data_dir")
@@ -56,31 +58,52 @@ class Scraper:
         try:
             admins = []
             async for participant in self._client.iter_participants(entity, filter=ChannelParticipantsAdmins):
-                if isinstance(participant, User):
-                    admins.append(participant)
+                admins.append(participant)
 
             all_users = []
             async for participant in self._client.iter_participants(entity):
                 if (
-                    isinstance(participant, User) 
-                    and not participant.bot 
+                    not participant.bot 
                     and not participant.is_self
                     and not participant.deleted
                     and not participant.restricted
                     and not participant.scam
                     and not participant.fake
                 ):
-                    if (
-                        isinstance(participant.status, UserStatusOnline)
-                        or isinstance(participant.status, UserStatusRecently)
-                        or isinstance(participant.status, UserStatusLastWeek)
-                    ):
+                    if self._active_in_last_days <= 0:
                         all_users.append(participant)
-                    elif isinstance(participant.status, UserStatusOffline):
-                        last_online = participant.status.was_online.replace(tzinfo=timezone.utc)
-                        day_offset = datetime.now(timezone.utc) - timedelta(days=self._active_in_last_days)
-                        if last_online >= day_offset:
-                            all_users.append(participant)
+                    else:
+                        if isinstance(participant.status, UserStatusEmpty):
+                            continue
+
+                        if hasattr(participant.status, "was_online"):
+                            last_online = participant.status.was_online.replace(tzinfo=timezone.utc)
+                            day_offset = datetime.now(timezone.utc) - timedelta(days=self._active_in_last_days)
+
+                        if self._active_in_last_days <= 1:
+                            if (
+                                isinstance(participant.status, UserStatusOnline)
+                                or isinstance(participant.status, UserStatusRecently)
+                                or (isinstance(participant.status, UserStatusOffline) and last_online >= day_offset)
+                            ):
+                                all_users.append(participant)
+                        elif self._active_in_last_days <= 7:
+                            if (
+                                isinstance(participant.status, UserStatusOnline)
+                                or isinstance(participant.status, UserStatusRecently)
+                                or isinstance(participant.status, UserStatusLastWeek)
+                                or (isinstance(participant.status, UserStatusOffline) and last_online >= day_offset)
+                            ):
+                                all_users.append(participant)
+                        else:
+                            if (
+                                isinstance(participant.status, UserStatusOnline)
+                                or isinstance(participant.status, UserStatusRecently)
+                                or isinstance(participant.status, UserStatusLastWeek)
+                                or isinstance(participant.status, UserStatusLastMonth)
+                                or (isinstance(participant.status, UserStatusOffline) and last_online >= day_offset)
+                            ):
+                                all_users.append(participant)
 
         except ChatAdminRequiredError:
             return None
@@ -113,7 +136,7 @@ class Scraper:
             users_data.append({
                 "id": user.id,
                 "access_hash": user.access_hash,
-                "first_last_name": name,
+                "full_name": name,
                 "username": username,
                 "phone": phone
             })
