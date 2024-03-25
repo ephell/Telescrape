@@ -53,7 +53,7 @@ class Scraper:
             exclude_fake_flagged_users: bool,
             exclude_users_in_contacts: bool,
             exclude_users_with_hidden_last_seen_online: bool,
-            user_active_in_last_days: int = 0 # 0 = regardless of activity.
+            user_active_in_last_days: int = 0 # 0 = last online time doesn't matter.
         ):
         try:
             users = await self._get_users_from_entity(
@@ -91,7 +91,7 @@ class Scraper:
             exclude_fake_flagged_users: bool,
             exclude_users_in_contacts: bool,
             exclude_users_with_hidden_last_seen_online: bool,
-            user_active_in_last_days: int = 0 # 0 = regardless of activity.
+            user_active_in_last_days: int = 0 # 0 = last online time doesn't matter.
         ) -> List[User]:
         try:
             all_participants = [p async for p in self._client.iter_participants(entity)]
@@ -117,35 +117,29 @@ class Scraper:
             ):
                 continue
 
-            if user_active_in_last_days <= 0:
-                if not exclude_users_with_hidden_last_seen_online:
+            if isinstance(participant.status, UserStatusOffline):
+                if user_active_in_last_days <= 0: 
                     all_users.append(participant)
                 else:
-                    if isinstance(participant.status, (UserStatusEmpty, type(None))):
-                        continue
-                    else:
-                        all_users.append(participant)
-            else:
-                if not exclude_users_with_hidden_last_seen_online:
-                    if isinstance(participant.status, (UserStatusEmpty, type(None))):
-                        all_users.append(participant)
-                        continue
-
-                if isinstance(participant.status, UserStatusOffline):
                     last_online = participant.status.was_online.replace(tzinfo=timezone.utc)
                     day_offset = datetime.now(timezone.utc) - timedelta(days=user_active_in_last_days)
                     if last_online >= day_offset:
                         all_users.append(participant)
-                else:
-                    activity_statuses = [UserStatusOnline, UserStatusRecently]
-                    if user_active_in_last_days >= 2:
-                        activity_statuses.append(UserStatusLastWeek)
-                    if user_active_in_last_days >= 6:
-                        activity_statuses.append(UserStatusLastMonth)
+            else:
+                statuses = [UserStatusOnline, UserStatusRecently]
+                if not exclude_users_with_hidden_last_seen_online:
+                    statuses.extend([UserStatusEmpty, type(None)])
 
-                    for activity_status in activity_statuses:
-                        if isinstance(participant.status, activity_status):
-                            all_users.append(participant)
+                if user_active_in_last_days <= 0:
+                    statuses.extend([UserStatusLastWeek, UserStatusLastMonth])
+                else:
+                    if user_active_in_last_days >= 2:
+                        statuses.append(UserStatusLastWeek)
+                    if user_active_in_last_days >= 6:
+                        statuses.append(UserStatusLastMonth)
+
+                if any(isinstance(participant.status, status) for status in statuses):
+                    all_users.append(participant)
 
         return all_users
 
