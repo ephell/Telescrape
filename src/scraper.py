@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING, Dict, List
 
 if TYPE_CHECKING:
     from src.client import Client
-    from src.gui.main_window.central_widget.scrape_widget.entity_status_widget.entity_status_widget import EntityStatusWidget
+    from src.gui.main_window.central_widget.scrape_widget.scroll_area_widget.progress_container_widget.progress_widget import ProgressWidget
 
 from datetime import datetime, timedelta, timezone
 
@@ -43,7 +43,7 @@ class Scraper:
     async def scrape_entity(
             self, 
             entity: Channel | Chat, 
-            esw: "EntityStatusWidget",
+            progress_widget: "ProgressWidget",
             exclude_yourself: bool,
             exclude_admins: bool,
             exclude_bots: bool,
@@ -70,14 +70,14 @@ class Scraper:
                 user_active_in_last_days=user_active_in_last_days
             )
             if users is None:
-                esw.set_status_fail("Cannot scrape users. Reason: group/chat/channel admin privileges are required.")
+                progress_widget.set_status_fail("Cannot scrape users. Reason: group/chat/channel admin privileges are required.")
                 return
 
             users_data = self._extract_users_data(users)
             self._write_users_data_to_csv(users_data, entity.title)
-            esw.set_status_success(f"Finished scraping. Total users scraped: {len(users)}.")
+            progress_widget.set_status_success(f"Finished scraping. Total users scraped: {len(users)}.")
         except Exception as e:
-            esw.set_status_fail(f"An unhandled exception occured: {e}.")
+            progress_widget.set_status_fail(f"An unhandled exception occured: {e}.")
 
     async def _get_users_from_entity(
             self, 

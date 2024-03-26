@@ -15,15 +15,16 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QLayout,
-    QPushButton, QScrollArea, QSizePolicy, QVBoxLayout,
-    QWidget)
+from PySide6.QtWidgets import (QApplication, QHBoxLayout, QPushButton, QScrollArea,
+    QSizePolicy, QVBoxLayout, QWidget)
+
+from src.gui.main_window.central_widget.scrape_widget.scroll_area_widget.scroll_area_widget import ScrollAreaWidget
 
 class Ui_ScrapeWidget(object):
     def setupUi(self, ScrapeWidget):
         if not ScrapeWidget.objectName():
             ScrapeWidget.setObjectName(u"ScrapeWidget")
-        ScrapeWidget.resize(685, 327)
+        ScrapeWidget.resize(687, 327)
         sizePolicy = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -31,29 +32,13 @@ class Ui_ScrapeWidget(object):
         ScrapeWidget.setSizePolicy(sizePolicy)
         self.verticalLayout = QVBoxLayout(ScrapeWidget)
         self.verticalLayout.setObjectName(u"verticalLayout")
-        self.counter_label = QLabel(ScrapeWidget)
-        self.counter_label.setObjectName(u"counter_label")
-        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
-        sizePolicy1.setHorizontalStretch(0)
-        sizePolicy1.setVerticalStretch(0)
-        sizePolicy1.setHeightForWidth(self.counter_label.sizePolicy().hasHeightForWidth())
-        self.counter_label.setSizePolicy(sizePolicy1)
-        font = QFont()
-        font.setPointSize(11)
-        self.counter_label.setFont(font)
-
-        self.verticalLayout.addWidget(self.counter_label, 0, Qt.AlignHCenter)
-
         self.scroll_area = QScrollArea(ScrapeWidget)
         self.scroll_area.setObjectName(u"scroll_area")
         self.scroll_area.setWidgetResizable(True)
-        self.scroll_area_widget_contents = QWidget()
-        self.scroll_area_widget_contents.setObjectName(u"scroll_area_widget_contents")
-        self.scroll_area_widget_contents.setGeometry(QRect(0, 0, 665, 249))
-        self.verticalLayout_2 = QVBoxLayout(self.scroll_area_widget_contents)
-        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
-        self.verticalLayout_2.setSizeConstraint(QLayout.SetDefaultConstraint)
-        self.scroll_area.setWidget(self.scroll_area_widget_contents)
+        self.scroll_area_widget = ScrollAreaWidget()
+        self.scroll_area_widget.setObjectName(u"scroll_area_widget")
+        self.scroll_area_widget.setGeometry(QRect(0, 0, 667, 275))
+        self.scroll_area.setWidget(self.scroll_area_widget)
 
         self.verticalLayout.addWidget(self.scroll_area)
 
@@ -99,7 +84,7 @@ class Ui_ScrapeWidget(object):
 
         self.verticalLayout.addLayout(self.horizontalLayout)
 
-        self.verticalLayout.setStretch(1, 1)
+        self.verticalLayout.setStretch(0, 1)
 
         self.retranslateUi(ScrapeWidget)
 
@@ -108,7 +93,6 @@ class Ui_ScrapeWidget(object):
 
     def retranslateUi(self, ScrapeWidget):
         ScrapeWidget.setWindowTitle(QCoreApplication.translate("ScrapeWidget", u"Form", None))
-        self.counter_label.setText(QCoreApplication.translate("ScrapeWidget", u"Selected: 0/0", None))
         self.get_groups_button.setText(QCoreApplication.translate("ScrapeWidget", u"Get Groups", None))
         self.select_all_button.setText(QCoreApplication.translate("ScrapeWidget", u"Select All", None))
         self.unselect_all_button.setText(QCoreApplication.translate("ScrapeWidget", u"Unselect All", None))

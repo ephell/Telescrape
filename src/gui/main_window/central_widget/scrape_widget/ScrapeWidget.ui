@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>685</width>
+    <width>687</width>
     <height>327</height>
    </rect>
   </property>
@@ -19,44 +19,21 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,1,0">
-   <item alignment="Qt::AlignHCenter">
-    <widget class="QLabel" name="counter_label">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>11</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>Selected: 0/0</string>
-     </property>
-    </widget>
-   </item>
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="1,0">
    <item>
     <widget class="QScrollArea" name="scroll_area">
      <property name="widgetResizable">
       <bool>true</bool>
      </property>
-     <widget class="QWidget" name="scroll_area_widget_contents">
+     <widget class="ScrollAreaWidget" name="scroll_area_widget">
       <property name="geometry">
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>665</width>
-        <height>249</height>
+        <width>667</width>
+        <height>275</height>
        </rect>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
-       <property name="sizeConstraint">
-        <enum>QLayout::SetDefaultConstraint</enum>
-       </property>
-      </layout>
      </widget>
     </widget>
    </item>
@@ -127,6 +104,14 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ScrollAreaWidget</class>
+   <extends>QWidget</extends>
+   <header>src.gui.main_window.central_widget.scrape_widget.scroll_area_widget.scroll_area_widget</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

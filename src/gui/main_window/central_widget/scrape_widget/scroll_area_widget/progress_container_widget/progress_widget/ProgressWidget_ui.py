@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'EntityStatusWidget.ui'
+## Form generated from reading UI file 'ProgressWidget.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.6.2
 ##
@@ -18,21 +18,22 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QFrame, QHBoxLayout, QLabel,
     QSizePolicy, QWidget)
 
-from src.gui.main_window.central_widget.scrape_widget.entity_status_widget.elidable_label import ElidableLabel
+from src.gui.main_window.central_widget.scrape_widget.scroll_area_widget.progress_container_widget.progress_widget.elidable_label import ElidableLabel
 
-class Ui_EntityStatusWidget(object):
-    def setupUi(self, EntityStatusWidget):
-        if not EntityStatusWidget.objectName():
-            EntityStatusWidget.setObjectName(u"EntityStatusWidget")
-        EntityStatusWidget.resize(648, 35)
+class Ui_ProgressWidget(object):
+    def setupUi(self, ProgressWidget):
+        if not ProgressWidget.objectName():
+            ProgressWidget.setObjectName(u"ProgressWidget")
+        ProgressWidget.resize(648, 17)
         sizePolicy = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(EntityStatusWidget.sizePolicy().hasHeightForWidth())
-        EntityStatusWidget.setSizePolicy(sizePolicy)
-        self.horizontalLayout = QHBoxLayout(EntityStatusWidget)
+        sizePolicy.setHeightForWidth(ProgressWidget.sizePolicy().hasHeightForWidth())
+        ProgressWidget.setSizePolicy(sizePolicy)
+        self.horizontalLayout = QHBoxLayout(ProgressWidget)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.status_image_label = QLabel(EntityStatusWidget)
+        self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
+        self.status_image_label = QLabel(ProgressWidget)
         self.status_image_label.setObjectName(u"status_image_label")
         sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Preferred)
         sizePolicy1.setHorizontalStretch(0)
@@ -43,36 +44,36 @@ class Ui_EntityStatusWidget(object):
 
         self.horizontalLayout.addWidget(self.status_image_label)
 
-        self.line = QFrame(EntityStatusWidget)
+        self.line = QFrame(ProgressWidget)
         self.line.setObjectName(u"line")
         self.line.setFrameShape(QFrame.VLine)
         self.line.setFrameShadow(QFrame.Sunken)
 
         self.horizontalLayout.addWidget(self.line)
 
-        self.entity_title_label = ElidableLabel(EntityStatusWidget)
-        self.entity_title_label.setObjectName(u"entity_title_label")
+        self.selection_title_label = ElidableLabel(ProgressWidget)
+        self.selection_title_label.setObjectName(u"selection_title_label")
         sizePolicy2 = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Preferred)
         sizePolicy2.setHorizontalStretch(0)
         sizePolicy2.setVerticalStretch(0)
-        sizePolicy2.setHeightForWidth(self.entity_title_label.sizePolicy().hasHeightForWidth())
-        self.entity_title_label.setSizePolicy(sizePolicy2)
-        self.entity_title_label.setMinimumSize(QSize(275, 0))
-        self.entity_title_label.setMaximumSize(QSize(250, 16777215))
+        sizePolicy2.setHeightForWidth(self.selection_title_label.sizePolicy().hasHeightForWidth())
+        self.selection_title_label.setSizePolicy(sizePolicy2)
+        self.selection_title_label.setMinimumSize(QSize(275, 0))
+        self.selection_title_label.setMaximumSize(QSize(250, 16777215))
         font = QFont()
         font.setPointSize(10)
-        self.entity_title_label.setFont(font)
+        self.selection_title_label.setFont(font)
 
-        self.horizontalLayout.addWidget(self.entity_title_label)
+        self.horizontalLayout.addWidget(self.selection_title_label)
 
-        self.line_2 = QFrame(EntityStatusWidget)
+        self.line_2 = QFrame(ProgressWidget)
         self.line_2.setObjectName(u"line_2")
         self.line_2.setFrameShape(QFrame.VLine)
         self.line_2.setFrameShadow(QFrame.Sunken)
 
         self.horizontalLayout.addWidget(self.line_2)
 
-        self.status_message_label = ElidableLabel(EntityStatusWidget)
+        self.status_message_label = ElidableLabel(ProgressWidget)
         self.status_message_label.setObjectName(u"status_message_label")
         sizePolicy2.setHeightForWidth(self.status_message_label.sizePolicy().hasHeightForWidth())
         self.status_message_label.setSizePolicy(sizePolicy2)
@@ -83,15 +84,15 @@ class Ui_EntityStatusWidget(object):
         self.horizontalLayout.addWidget(self.status_message_label)
 
 
-        self.retranslateUi(EntityStatusWidget)
+        self.retranslateUi(ProgressWidget)
 
-        QMetaObject.connectSlotsByName(EntityStatusWidget)
+        QMetaObject.connectSlotsByName(ProgressWidget)
     # setupUi
 
-    def retranslateUi(self, EntityStatusWidget):
-        EntityStatusWidget.setWindowTitle(QCoreApplication.translate("EntityStatusWidget", u"Form", None))
-        self.status_image_label.setText(QCoreApplication.translate("EntityStatusWidget", u"Status Image", None))
-        self.entity_title_label.setText(QCoreApplication.translate("EntityStatusWidget", u"Entity Title Label", None))
-        self.status_message_label.setText(QCoreApplication.translate("EntityStatusWidget", u"Status Message Label", None))
+    def retranslateUi(self, ProgressWidget):
+        ProgressWidget.setWindowTitle(QCoreApplication.translate("ProgressWidget", u"Form", None))
+        self.status_image_label.setText(QCoreApplication.translate("ProgressWidget", u"Status Image", None))
+        self.selection_title_label.setText(QCoreApplication.translate("ProgressWidget", u"Entity Title Label", None))
+        self.status_message_label.setText(QCoreApplication.translate("ProgressWidget", u"Status Message Label", None))
     # retranslateUi
 
