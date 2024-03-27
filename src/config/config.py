@@ -1,14 +1,29 @@
+import os
 from configparser import ConfigParser
 
 
 class Config:
 
     class Section:
-        SCRAPE_SETTINGS = "SCRAPE_SETTINGS"
+
         LOGIN_DETAILS = "LOGIN_DETAILS"
+        SCRAPE_SETTINGS = "SCRAPE_SETTINGS"
 
     file_path = "src/config/config.ini" 
     parser = ConfigParser()
+
+    # Create file.
+    if not os.path.exists(file_path):
+        with open(file_path, "w") as file:
+            pass
+
+    # Create sections.
+    sections_to_add = [Section.LOGIN_DETAILS, Section.SCRAPE_SETTINGS]
+    for section in sections_to_add:
+        if not parser.has_section(section):
+            parser.add_section(section)
+    with open(file_path, "w") as file:
+        parser.write(file)
 
     @classmethod
     def write_option_to_section(cls, section: str, option: str, value: str):
