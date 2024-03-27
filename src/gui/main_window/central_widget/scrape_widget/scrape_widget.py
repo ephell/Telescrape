@@ -11,7 +11,7 @@ if TYPE_CHECKING:
 from PySide6.QtCore import Signal, Slot
 from PySide6.QtWidgets import QWidget
 
-from src.gui.main_window.central_widget.scrape_widget.scrape_settings_widget.scrape_settings_widget import ScrapeSettingsWidget
+from src.gui.main_window.central_widget.scrape_widget.scrape_settings_widget import ScrapeSettingsWidget
 from src.gui.main_window.central_widget.scrape_widget.ScrapeWidget_ui import Ui_ScrapeWidget
 from src.scraper import Scraper
 
