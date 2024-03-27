@@ -2,14 +2,11 @@ import asyncio
 import os
 import platform
 import subprocess
-from typing import TYPE_CHECKING, Optional, Union
+from typing import TYPE_CHECKING, Optional
 
 if TYPE_CHECKING:
-    from telethon.tl.types import Channel, Chat
-
     from src.client import Client
     from src.gui.main_window.central_widget.central_widget import CentralWidget
-    Entity = Union[Channel, Chat]
 
 from PySide6.QtCore import Signal, Slot
 from PySide6.QtWidgets import QWidget
