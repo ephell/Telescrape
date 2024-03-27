@@ -96,8 +96,8 @@ class ScrollAreaWidget(QStackedWidget):
         self._scrape_widget.scrape_button.setEnabled(False)
         self._scrape_widget.select_all_button.setEnabled(False)
         self._scrape_widget.unselect_all_button.setEnabled(False)
-        self._selection_container_widget.delete_all_widgets_from_container_frame_layout()
-        self._progress_container_widget.delete_all_widgets_from_container_frame_layout()
+        self._selection_container_widget.on_logout_signal()
+        self._progress_container_widget.on_logout_signal()
 
     @Slot()
     def _on_finished_adding_check_boxes_signal(self) -> None:
