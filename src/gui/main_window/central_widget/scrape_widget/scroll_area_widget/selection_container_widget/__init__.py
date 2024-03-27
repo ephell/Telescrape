@@ -35,7 +35,7 @@ class SelectionContainerWidget(Ui_SelectionContainerWidget, QWidget):
         self._update_counter_label()
 
     async def on_get_groups_button_clicked(self) -> None:
-        self.delete_all_widgets_from_container_frame_layout()
+        self._delete_all_widgets_from_container_frame_layout()
         self._all_selection_widgets = []
         self._total_checked_check_boxes = 0
         self._update_counter_label() # Reset.
@@ -47,7 +47,16 @@ class SelectionContainerWidget(Ui_SelectionContainerWidget, QWidget):
 
         self.finished_adding_check_boxes_signal.emit()
 
-    def delete_all_widgets_from_container_frame_layout(self) -> None:
+    def on_logout_signal(self) -> None:
+        self._delete_all_widgets_from_container_frame_layout()
+        self._all_selection_widgets = []
+        self._total_checked_check_boxes = 0
+        self._update_counter_label()
+
+    def get_all_selection_widgets(self):
+        return self._all_selection_widgets
+
+    def _delete_all_widgets_from_container_frame_layout(self) -> None:
         while self.selection_widget_container_frame.layout().count():
             child = self.selection_widget_container_frame.layout().takeAt(0)
             if child.widget():
@@ -55,9 +64,6 @@ class SelectionContainerWidget(Ui_SelectionContainerWidget, QWidget):
         # Shrink (redo) the layout after widgets have been deleted.
         self.selection_widget_container_frame.layout().invalidate()
         self.selection_widget_container_frame.layout().activate()
-
-    def get_all_selection_widgets(self):
-        return self._all_selection_widgets
 
     def _add_selection_widget(self, number: int, entity: "Entity") -> None:
         selection = SelectionWidget(number, entity, self)

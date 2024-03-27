@@ -31,7 +31,7 @@ class ProgressContainerWidget(Ui_ProgressContainerWidget, QWidget):
 
     async def on_scrape_button_clicked(self) -> None:
         self._scroll_area_widget.show_progress_widget()
-        self.delete_all_widgets_from_container_frame_layout()
+        self._delete_all_widgets_from_container_frame_layout()
         self._total_completed_scraping_tasks = 0
         self._total_successful_scraping_tasks = 0
         self._total_failed_scraping_tasks = 0
@@ -69,7 +69,15 @@ class ProgressContainerWidget(Ui_ProgressContainerWidget, QWidget):
         await asyncio.gather(*self._all_scraping_tasks)
         self.finished_all_scraping_tasks_signal.emit()
 
-    def delete_all_widgets_from_container_frame_layout(self) -> None:
+    def on_logout_signal(self) -> None:
+        self._delete_all_widgets_from_container_frame_layout()
+        self._all_scraping_tasks = []
+        self._total_completed_scraping_tasks = 0
+        self._total_successful_scraping_tasks = 0
+        self._total_failed_scraping_tasks = 0
+        self._update_counter_label()
+
+    def _delete_all_widgets_from_container_frame_layout(self) -> None:
         while self.progress_widget_container_frame.layout().count():
             child = self.progress_widget_container_frame.layout().takeAt(0)
             if child.widget():
