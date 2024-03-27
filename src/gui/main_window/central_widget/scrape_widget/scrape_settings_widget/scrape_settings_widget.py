@@ -12,6 +12,7 @@ class ScrapeSettingsWidget(Ui_ScrapeSettingsWidget, QWidget):
         super().__init__(parent)
         self.setupUi(self)
         self.setWindowTitle("Telescrape - Scrape Settings")
+        self.setFocusPolicy(Qt.ClickFocus)
         self.setFocus()
         self.setWindowFlags(Qt.Dialog)
         self.setFixedSize(self.size())

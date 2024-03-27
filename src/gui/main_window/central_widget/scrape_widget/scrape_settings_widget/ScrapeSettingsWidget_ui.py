@@ -261,6 +261,19 @@ class Ui_ScrapeSettingsWidget(object):
 
         self.verticalLayout_5.addWidget(self.closing_frame)
 
+        QWidget.setTabOrder(self.yourself_check_box, self.admins_check_box)
+        QWidget.setTabOrder(self.admins_check_box, self.bots_check_box)
+        QWidget.setTabOrder(self.bots_check_box, self.deleted_users_check_box)
+        QWidget.setTabOrder(self.deleted_users_check_box, self.restricted_users_check_box)
+        QWidget.setTabOrder(self.restricted_users_check_box, self.scam_flagged_users_check_box)
+        QWidget.setTabOrder(self.scam_flagged_users_check_box, self.fake_flagged_users_check_box)
+        QWidget.setTabOrder(self.fake_flagged_users_check_box, self.users_in_contacts_check_box)
+        QWidget.setTabOrder(self.users_in_contacts_check_box, self.users_with_hidden_last_seen_online_check_box)
+        QWidget.setTabOrder(self.users_with_hidden_last_seen_online_check_box, self.last_active_days_spin_box)
+        QWidget.setTabOrder(self.last_active_days_spin_box, self.data_dir_path_line_edit)
+        QWidget.setTabOrder(self.data_dir_path_line_edit, self.browse_button)
+        QWidget.setTabOrder(self.browse_button, self.close_button)
+        QWidget.setTabOrder(self.close_button, self.reset_to_default_button)
 
         self.retranslateUi(ScrapeSettingsWidget)
 

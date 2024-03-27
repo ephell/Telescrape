@@ -484,6 +484,22 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>yourself_check_box</tabstop>
+  <tabstop>admins_check_box</tabstop>
+  <tabstop>bots_check_box</tabstop>
+  <tabstop>deleted_users_check_box</tabstop>
+  <tabstop>restricted_users_check_box</tabstop>
+  <tabstop>scam_flagged_users_check_box</tabstop>
+  <tabstop>fake_flagged_users_check_box</tabstop>
+  <tabstop>users_in_contacts_check_box</tabstop>
+  <tabstop>users_with_hidden_last_seen_online_check_box</tabstop>
+  <tabstop>last_active_days_spin_box</tabstop>
+  <tabstop>data_dir_path_line_edit</tabstop>
+  <tabstop>browse_button</tabstop>
+  <tabstop>close_button</tabstop>
+  <tabstop>reset_to_default_button</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
