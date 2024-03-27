@@ -92,7 +92,7 @@ class Ui_ProgressWidget(object):
     def retranslateUi(self, ProgressWidget):
         ProgressWidget.setWindowTitle(QCoreApplication.translate("ProgressWidget", u"Form", None))
         self.status_image_label.setText(QCoreApplication.translate("ProgressWidget", u"Status Image", None))
-        self.selection_title_label.setText(QCoreApplication.translate("ProgressWidget", u"Entity Title Label", None))
+        self.selection_title_label.setText(QCoreApplication.translate("ProgressWidget", u"Selection Title Label", None))
         self.status_message_label.setText(QCoreApplication.translate("ProgressWidget", u"Status Message Label", None))
     # retranslateUi
 

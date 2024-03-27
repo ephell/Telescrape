@@ -84,7 +84,7 @@
       </font>
      </property>
      <property name="text">
-      <string>Entity Title Label</string>
+      <string>Selection Title Label</string>
      </property>
     </widget>
    </item>
