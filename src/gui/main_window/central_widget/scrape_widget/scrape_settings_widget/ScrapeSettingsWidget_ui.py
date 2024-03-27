@@ -58,7 +58,7 @@ class Ui_ScrapeSettingsWidget(object):
         font1 = QFont()
         font1.setPointSize(10)
         self.yourself_check_box.setFont(font1)
-        self.yourself_check_box.setChecked(True)
+        self.yourself_check_box.setChecked(False)
 
         self.horizontalLayout_3.addWidget(self.yourself_check_box)
 
@@ -78,7 +78,7 @@ class Ui_ScrapeSettingsWidget(object):
         self.admins_check_box.setObjectName(u"admins_check_box")
         self.admins_check_box.setMaximumSize(QSize(190, 16777215))
         self.admins_check_box.setFont(font1)
-        self.admins_check_box.setChecked(True)
+        self.admins_check_box.setChecked(False)
 
         self.horizontalLayout_4.addWidget(self.admins_check_box)
 
@@ -205,6 +205,7 @@ class Ui_ScrapeSettingsWidget(object):
         self.data_dir_path_line_edit.setObjectName(u"data_dir_path_line_edit")
         self.data_dir_path_line_edit.setMinimumSize(QSize(393, 0))
         self.data_dir_path_line_edit.setFont(font1)
+        self.data_dir_path_line_edit.setReadOnly(True)
 
         self.horizontalLayout_8.addWidget(self.data_dir_path_line_edit)
 
