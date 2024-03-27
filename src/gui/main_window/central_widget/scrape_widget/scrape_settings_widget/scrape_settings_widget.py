@@ -1,9 +1,12 @@
-from PySide6.QtCore import Qt, Slot
-from PySide6.QtWidgets import QWidget
+import os
 
-from src.gui.main_window.central_widget.scrape_widget.scrape_settings_widget.ScrapeSettingsWidget_ui import (
-    Ui_ScrapeSettingsWidget
-)
+if __name__ == "__main__":
+    __package__ = os.path.relpath(os.path.dirname(os.path.abspath(__file__))).replace(os.path.sep, ".")
+
+from PySide6.QtCore import Qt, Slot
+from PySide6.QtWidgets import QFileDialog, QWidget
+
+from .ScrapeSettingsWidget_ui import Ui_ScrapeSettingsWidget
 
 
 class ScrapeSettingsWidget(Ui_ScrapeSettingsWidget, QWidget):
@@ -16,10 +19,15 @@ class ScrapeSettingsWidget(Ui_ScrapeSettingsWidget, QWidget):
         self.setFocus()
         self.setWindowFlags(Qt.Dialog)
         self.setFixedSize(self.size())
+        self._data_dir_path = os.path.join(os.getcwd(), "scraped_data_dir")
+        self.data_dir_path_line_edit.setText(self._data_dir_path)
+        self.data_dir_path_line_edit.setCursorPosition(0)
+        # General.
         self._default_settings = self.get_settings()
         # Signals and slots.
         self.close_button.clicked.connect(self._on_close_button_clicked)
         self.reset_to_default_button.clicked.connect(self._on_reset_to_default_button_clicked)
+        self.browse_button.clicked.connect(self._on_browse_button_clicked)
 
     def show(self):
         super().show()
@@ -36,7 +44,8 @@ class ScrapeSettingsWidget(Ui_ScrapeSettingsWidget, QWidget):
             "exclude_scam_flagged_users": self.scam_flagged_users_check_box.isChecked(),
             "exclude_fake_flagged_users": self.fake_flagged_users_check_box.isChecked(),
             "exclude_users_in_contacts": self.users_in_contacts_check_box.isChecked(),
-            "exclude_users_with_hidden_last_seen_online": self.users_with_hidden_last_seen_online_check_box.isChecked()
+            "exclude_users_with_hidden_last_seen_online": self.users_with_hidden_last_seen_online_check_box.isChecked(),
+            "data_dir_path": self.data_dir_path_line_edit.text()
         }
 
     @Slot()
@@ -55,6 +64,14 @@ class ScrapeSettingsWidget(Ui_ScrapeSettingsWidget, QWidget):
         self.fake_flagged_users_check_box.setChecked(self._default_settings["exclude_fake_flagged_users"])
         self.users_in_contacts_check_box.setChecked(self._default_settings["exclude_users_in_contacts"])
         self.users_with_hidden_last_seen_online_check_box.setChecked(self._default_settings["exclude_users_with_hidden_last_seen_online"])
+        self.data_dir_path_line_edit.setText(self._default_settings["data_dir_path"])
+
+    @Slot()
+    def _on_browse_button_clicked(self):
+        dir_path = QFileDialog.getExistingDirectory(self, "Select Directory", "", QFileDialog.ShowDirsOnly)
+        if dir_path:
+            self.data_dir_path_line_edit.setText(dir_path)
+            self.data_dir_path_line_edit.setCursorPosition(0)
 
 
 if __name__ == "__main__":
