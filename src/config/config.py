@@ -3,6 +3,10 @@ from configparser import ConfigParser
 
 class Config:
 
+    class Section:
+        SCRAPE_SETTINGS = "SCRAPE_SETTINGS"
+        LOGIN_DETAILS = "LOGIN_DETAILS"
+
     file_path = "src/config/config.ini" 
     parser = ConfigParser()
 
@@ -16,8 +20,17 @@ class Config:
     @classmethod
     def get_all_options_from_section(cls, section: str):
        cls.parser.read(cls.file_path)
-       return cls.parser.options(section)
+       return dict(cls.parser.items(section))
+
+    @classmethod
+    def delete_all_options_from_section(cls, section: str):
+       cls.parser.read(cls.file_path)
+       options = cls.parser.options(section)
+       for option in options:
+           cls.parser.remove_option(section, option)
+       with open(cls.file_path, "w") as file:
+           cls.parser.write(file)
 
 
 if __name__ == "__main__":
-    Config.get_all_options_from_section("LOGIN_DETAILS")
+    print(Config.get_all_options_from_section(Config.Section.SCRAPE_SETTINGS))
