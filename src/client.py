@@ -10,6 +10,7 @@ if TYPE_CHECKING:
 from telethon import TelegramClient
 from telethon.errors.rpcerrorlist import (
     FloodWaitError,
+    PasswordHashInvalidError,
     PhoneCodeEmptyError,
     PhoneCodeExpiredError,
     PhoneCodeHashEmptyError,
@@ -27,13 +28,14 @@ class Client(TelegramClient):
         phone_number: int, 
         api_id: str, 
         api_hash: str,
+        password: str = "",
         main_window: Optional["MainWindow"] = None
     ):
         self._username = username
         self._phone_number = phone_number
         self._api_id = api_id
         self._api_hash = api_hash
-        self._password = None # ToDo: add support. This is 2FA.
+        self._password = password
         self._main_window = main_window
         session_files_dir_path = "session_files"
         if not os.path.exists(session_files_dir_path):
@@ -118,6 +120,9 @@ class Client(TelegramClient):
                         PhoneCodeInvalidError
                     ):
                         await login_overlay.open_error_message_box("Invalid login code.")
+                    except (ValueError, PasswordHashInvalidError):
+                        login_overlay.set_status_fail("Invalid password.")
+                        return None
                 else:
                     login_overlay.set_status_fail("Login cancelled.")
                     return None
@@ -133,14 +138,14 @@ if __name__ == "__main__":
     import asyncio
 
     from client import Client
-    from scraper import Scraper
 
     async def main():
         client = Client(
-            "Raska Good",
+            "Raska ",
             37060751782,
             "14112344",
             "90d2a30e6a391fee8c99f38476d4bf46",
+            "test"
         )
         await client.login()
         await asyncio.sleep(0.5)
