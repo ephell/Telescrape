@@ -50,6 +50,7 @@ class ProgressContainerWidget(Ui_ProgressContainerWidget, QWidget):
                 self._scroll_area_widget.get_scraper().scrape_entity(
                     entity=selection.entity,
                     progress_widget=progress_widget,
+                    save_data_to_dir_path=scraping_settings["data_dir_path"],
                     exclude_yourself=scraping_settings["exclude_yourself"],
                     exclude_admins=scraping_settings["exclude_admins"],
                     exclude_bots=scraping_settings["exclude_bots"],
