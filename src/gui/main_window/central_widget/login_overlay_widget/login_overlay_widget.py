@@ -13,7 +13,7 @@ from PySide6.QtCore import QByteArray, QSize, Signal
 from PySide6.QtGui import QMovie, QPixmap
 from PySide6.QtWidgets import QMessageBox, QWidget
 
-from .login_code_dialog.login_code_dialog import LoginCodeInputDialog
+from .login_code_dialog import LoginCodeInputDialog
 from .LoginOverlayWidget_ui import Ui_LoginOverlayWidget
 
 
