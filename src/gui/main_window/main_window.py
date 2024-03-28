@@ -1,9 +1,9 @@
 from typing import TYPE_CHECKING, Optional
 
 if TYPE_CHECKING:
-    from src.gui.main_window.central_widget.base_widget.base_widget import BaseWidget
-    from src.gui.main_window.central_widget.overlay_widget.overlay_widget import OverlayWidget
-    from src.gui.main_window.central_widget.scrape_widget.scrape_widget import ScrapeWidget
+    from src.gui.main_window.central_widget.login_widget import LoginWidget
+    from src.gui.main_window.central_widget.login_overlay_widget import LoginOverlayWidget
+    from src.gui.main_window.central_widget.scrape_widget import ScrapeWidget
     from src.client import Client
 
 from PySide6.QtCore import QSize, Qt, Slot
@@ -26,23 +26,22 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(self._central_widget)
         self._set_resizable(False)
         self._client: "Client" = None
-        self._base_widget = self.get_base_widget()
-        self._overlay_widget = self.get_overlay_widget()
+        self._login_widget = self.get_login_widget()
+        self._login_overlay_widget = self.get_login_overlay_widget()
         self._scrape_widget = self.get_scrape_widget()
         # Signals and slots.
-        self._base_widget.login_button.client_login_finished_signal.connect(self._on_client_login_finished_signal)
-        self._base_widget.login_button.client_login_finished_signal.connect(
-            self._scrape_widget.o_n_client_login_finished_signal
+        self._login_widget.login_button.client_login_finished_signal.connect(self._on_client_login_finished_signal)
+        self._login_widget.login_button.client_login_finished_signal.connect(
+            self._scrape_widget.on_client_login_finished_signal
         )
-        self._overlay_widget.login_successful_signal.connect(self._on_login_successful_signal)
+        self._login_overlay_widget.login_successful_signal.connect(self._on_login_successful_signal)
         self._scrape_widget.logout_signal.connect(self._on_logout_signal)
 
+    def get_login_widget(self) -> "LoginWidget":
+        return self._central_widget.login_widget
 
-    def get_base_widget(self) -> "BaseWidget":
-        return self._central_widget.base_widget
-
-    def get_overlay_widget(self) -> "OverlayWidget":
-        return self._central_widget.overlay_widget
+    def get_login_overlay_widget(self) -> "LoginOverlayWidget":
+        return self._central_widget.login_overlay_widget
 
     def get_scrape_widget(self) -> "ScrapeWidget":
         return self._central_widget.scrape_widget
@@ -71,8 +70,8 @@ class MainWindow(QMainWindow):
 
     @Slot()
     def _on_login_successful_signal(self):
-        self._base_widget.set_hidden(True)
-        self._overlay_widget.set_hidden(True)
+        self._login_widget.set_hidden(True)
+        self._login_overlay_widget.set_hidden(True)
         self._scrape_widget.set_hidden(False)
         self._set_resizable(True)
         self.resize(self._central_widget.get_scrape_widget_container_original_size())
@@ -83,6 +82,6 @@ class MainWindow(QMainWindow):
         if not self._client.is_connected():
             print("Logged out successfully!")
         self._scrape_widget.set_hidden(True)
-        self._base_widget.set_hidden(False)
-        self.resize(self._central_widget.get_base_widget_container_original_size())
+        self._login_widget.set_hidden(False)
+        self.resize(self._central_widget.get_login_widget_container_original_size())
         self._set_resizable(False)

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'OverlayWidget.ui'
+## Form generated from reading UI file 'LoginOverlayWidget.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.6.2
 ##
@@ -18,17 +18,17 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QPushButton,
     QSizePolicy, QVBoxLayout, QWidget)
 
-class Ui_OverlayWidget(object):
-    def setupUi(self, OverlayWidget):
-        if not OverlayWidget.objectName():
-            OverlayWidget.setObjectName(u"OverlayWidget")
-        OverlayWidget.resize(253, 218)
-        self.verticalLayout_4 = QVBoxLayout(OverlayWidget)
+class Ui_LoginOverlayWidget(object):
+    def setupUi(self, LoginOverlayWidget):
+        if not LoginOverlayWidget.objectName():
+            LoginOverlayWidget.setObjectName(u"LoginOverlayWidget")
+        LoginOverlayWidget.resize(253, 218)
+        self.verticalLayout_4 = QVBoxLayout(LoginOverlayWidget)
         self.verticalLayout_4.setSpacing(6)
         self.verticalLayout_4.setObjectName(u"verticalLayout_4")
         self.verticalLayout_2 = QVBoxLayout()
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
-        self.status_message_label = QLabel(OverlayWidget)
+        self.status_message_label = QLabel(LoginOverlayWidget)
         self.status_message_label.setObjectName(u"status_message_label")
         font = QFont()
         font.setPointSize(14)
@@ -45,7 +45,7 @@ class Ui_OverlayWidget(object):
 
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.continue_button = QPushButton(OverlayWidget)
+        self.continue_button = QPushButton(LoginOverlayWidget)
         self.continue_button.setObjectName(u"continue_button")
         sizePolicy = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -60,7 +60,7 @@ class Ui_OverlayWidget(object):
 
         self.verticalLayout = QVBoxLayout()
         self.verticalLayout.setObjectName(u"verticalLayout")
-        self.status_image_label = QLabel(OverlayWidget)
+        self.status_image_label = QLabel(LoginOverlayWidget)
         self.status_image_label.setObjectName(u"status_image_label")
 
         self.verticalLayout.addWidget(self.status_image_label, 0, Qt.AlignHCenter|Qt.AlignBottom)
@@ -72,15 +72,15 @@ class Ui_OverlayWidget(object):
         self.verticalLayout_4.setStretch(1, 2)
         self.verticalLayout_4.setStretch(2, 1)
 
-        self.retranslateUi(OverlayWidget)
+        self.retranslateUi(LoginOverlayWidget)
 
-        QMetaObject.connectSlotsByName(OverlayWidget)
+        QMetaObject.connectSlotsByName(LoginOverlayWidget)
     # setupUi
 
-    def retranslateUi(self, OverlayWidget):
-        OverlayWidget.setWindowTitle(QCoreApplication.translate("OverlayWidget", u"Form", None))
-        self.status_message_label.setText(QCoreApplication.translate("OverlayWidget", u"Message label", None))
-        self.continue_button.setText(QCoreApplication.translate("OverlayWidget", u"Continue", None))
-        self.status_image_label.setText(QCoreApplication.translate("OverlayWidget", u"Image label", None))
+    def retranslateUi(self, LoginOverlayWidget):
+        LoginOverlayWidget.setWindowTitle(QCoreApplication.translate("LoginOverlayWidget", u"Form", None))
+        self.status_message_label.setText(QCoreApplication.translate("LoginOverlayWidget", u"Message label", None))
+        self.continue_button.setText(QCoreApplication.translate("LoginOverlayWidget", u"Continue", None))
+        self.status_image_label.setText(QCoreApplication.translate("LoginOverlayWidget", u"Image label", None))
     # retranslateUi
 

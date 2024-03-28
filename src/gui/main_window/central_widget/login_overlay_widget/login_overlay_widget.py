@@ -1,5 +1,9 @@
-import asyncio
 import os
+
+if __name__ == "__main__":
+    __package__ = os.path.relpath(os.path.dirname(os.path.abspath(__file__))).replace(os.path.sep, ".")
+
+import asyncio
 from typing import TYPE_CHECKING, Optional
 
 if TYPE_CHECKING:
@@ -9,11 +13,11 @@ from PySide6.QtCore import QByteArray, QSize, Signal
 from PySide6.QtGui import QMovie, QPixmap
 from PySide6.QtWidgets import QMessageBox, QWidget
 
-from src.gui.main_window.central_widget.overlay_widget.login_code_dialog.login_code_dialog import LoginCodeInputDialog
-from src.gui.main_window.central_widget.overlay_widget.OverlayWidget_ui import Ui_OverlayWidget
+from .login_code_dialog.login_code_dialog import LoginCodeInputDialog
+from .LoginOverlayWidget_ui import Ui_LoginOverlayWidget
 
 
-class OverlayWidget(Ui_OverlayWidget, QWidget):
+class LoginOverlayWidget(Ui_LoginOverlayWidget, QWidget):
     """Displayed during sign-in by overlaying the `login_widget` in `CentralWidget`."""
 
     login_successful_signal = Signal()
@@ -33,7 +37,7 @@ class OverlayWidget(Ui_OverlayWidget, QWidget):
 
     def set_hidden(self, value: bool):
         if self._central_widget is not None:
-            self._central_widget.set_overlay_widget_hidden(value)
+            self._central_widget.set_login_overlay_widget_hidden(value)
 
     def set_status_loading(self, message: str):
         self.status_message_label.setText(message)
@@ -80,7 +84,7 @@ if __name__ == "__main__":
 
     app = QApplication(sys.argv)
     mw = QMainWindow()
-    cw = OverlayWidget(mw)
+    cw = LoginOverlayWidget(mw)
     cw.set_status_loading("Loading ... ")
     mw.setCentralWidget(cw)
     mw.show()

@@ -1,6 +1,6 @@
 from PySide6.QtWidgets import QDialog
 
-from src.gui.main_window.central_widget.overlay_widget.login_code_dialog.LoginCodeDialog_ui import Ui_LoginCodeDialog
+from src.gui.main_window.central_widget.login_overlay_widget.login_code_dialog.LoginCodeDialog_ui import Ui_LoginCodeDialog
 
 
 class LoginCodeInputDialog(QDialog, Ui_LoginCodeDialog):
