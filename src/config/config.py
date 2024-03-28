@@ -10,14 +10,13 @@ class Config:
         SCRAPE_SETTINGS = "SCRAPE_SETTINGS"
 
     file_path = "src/config/config.ini" 
-    parser = ConfigParser()
-
-    # Create file.
     if not os.path.exists(file_path):
         with open(file_path, "w") as file:
             pass
 
-    # Create sections.
+    parser = ConfigParser()
+    parser.read(file_path)
+
     sections_to_add = [Section.LOGIN_DETAILS, Section.SCRAPE_SETTINGS]
     for section in sections_to_add:
         if not parser.has_section(section):
