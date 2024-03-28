@@ -3,7 +3,7 @@ import traceback
 from typing import TYPE_CHECKING, Optional, Self
 
 if TYPE_CHECKING:
-    from src.gui.main_window.main_window import MainWindow
+    from src.gui.main_window import MainWindow
     from src.gui.main_window.central_widget.login_overlay_widget import LoginOverlayWidget
 
 from telethon import TelegramClient

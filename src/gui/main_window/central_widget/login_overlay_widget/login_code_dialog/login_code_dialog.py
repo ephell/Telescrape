@@ -18,7 +18,7 @@ class LoginCodeInputDialog(QDialog, Ui_LoginCodeDialog):
 if __name__ == "__main__":
     import sys
 
-    from src.gui.application.application import Application
+    from src.gui.application import Application
     app = Application(sys.argv)
     cd = LoginCodeInputDialog() 
     cd.show()

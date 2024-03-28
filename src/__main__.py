@@ -3,8 +3,8 @@ import sys
 
 from qasync import QEventLoop
 
-from src.gui.application.application import Application
-from src.gui.main_window.main_window import MainWindow
+from src.gui.application import Application
+from src.gui.main_window import MainWindow
 
 
 def main():
