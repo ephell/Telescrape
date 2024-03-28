@@ -1,3 +1,8 @@
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from src.gui.main_window.central_widget.login_widget import LoginWidget
+
 from PySide6.QtCore import Signal
 from PySide6.QtWidgets import QMessageBox, QPushButton
 from qasync import asyncSlot
@@ -24,8 +29,9 @@ class LoginButton(QPushButton):
         self.client_login_finished_signal.emit(login_result)
 
     def _get_login_info(self):
-        bw = self.window().get_login_widget()
-        phone_number = bw.line_edit_phone_number.text()
+        login_widget: "LoginWidget" = self.window().get_login_widget()
+        login_details = login_widget.get_current_login_details()
+        phone_number = login_details["phone_number"]
         try:
             phone_number = int(phone_number)
         except ValueError:
@@ -37,8 +43,8 @@ class LoginButton(QPushButton):
             return None
         else:
             return (
-                bw.line_edit_username.text(),
+                login_details["username"],
                 phone_number,
-                bw.line_edit_api_id.text(),
-                bw.line_edit_api_hash.text()
+                login_details["api_id"],
+                login_details["api_hash"]
             )
