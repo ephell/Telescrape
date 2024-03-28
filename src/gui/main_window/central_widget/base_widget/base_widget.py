@@ -1,3 +1,7 @@
+if __name__ == "__main__":
+    import os
+    __package__ = os.path.relpath(os.path.dirname(os.path.abspath(__file__))).replace(os.path.sep, ".")
+
 from typing import TYPE_CHECKING, Optional
 
 if TYPE_CHECKING:
@@ -5,7 +9,7 @@ if TYPE_CHECKING:
 
 from PySide6.QtWidgets import QWidget
 
-from src.gui.main_window.central_widget.base_widget.BaseWidget_ui import Ui_BaseWidget
+from .BaseWidget_ui import Ui_BaseWidget
 
 
 class BaseWidget(Ui_BaseWidget, QWidget):
