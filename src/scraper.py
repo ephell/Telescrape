@@ -28,9 +28,6 @@ class Scraper:
 
     def __init__(self, client: "Client"):
         self._client = client
-        self.scraped_data_dir_path = os.path.join(os.getcwd(), "scraped_data_dir")
-        if not os.path.exists(self.scraped_data_dir_path):
-            os.mkdir(self.scraped_data_dir_path)
 
     async def get_scrapable_entities(self) -> List[Channel | Chat]:
         entities = []
@@ -44,6 +41,7 @@ class Scraper:
             self, 
             entity: Channel | Chat, 
             progress_widget: "ProgressWidget",
+            save_data_to_dir_path: str,
             exclude_yourself: bool,
             exclude_admins: bool,
             exclude_bots: bool,
@@ -74,7 +72,7 @@ class Scraper:
                 return
 
             users_data = self._extract_users_data(users)
-            self._write_users_data_to_csv(users_data, entity.title)
+            self._write_users_data_to_csv(users_data, entity.title, save_data_to_dir_path)
             progress_widget.set_status_success(f"Finished scraping. Total users scraped: {len(users)}.")
         except Exception as e:
             progress_widget.set_status_fail(f"An unhandled exception occured: {e}.")
@@ -175,14 +173,22 @@ class Scraper:
             })
         return users_data
 
-    def _write_users_data_to_csv(self, users_data: List[Dict], scraped_entity_title: str):
+    def _write_users_data_to_csv(
+            self, 
+            users_data: List[Dict], 
+            scraped_entity_title: str,
+            save_data_to_dir_path: str
+        ):
         if len(users_data) <= 0:
             return
+
+        if not os.path.exists(save_data_to_dir_path):
+            os.makedirs(save_data_to_dir_path)
         
         title_no_illegal_chars = re.sub(r'[<>:"/\\|?*]', '_', scraped_entity_title)
-        file_path = os.path.join(self.scraped_data_dir_path, title_no_illegal_chars + ".csv")
+        full_file_path = os.path.join(save_data_to_dir_path, title_no_illegal_chars + ".csv")
         with open(
-            file=file_path,
+            file=full_file_path,
             mode="w", 
             newline="", 
             encoding="utf-8"
