@@ -14,7 +14,7 @@ from src.gui.main_window.central_widget.overlay_widget.OverlayWidget_ui import U
 
 
 class OverlayWidget(Ui_OverlayWidget, QWidget):
-    """Displayed during sign-in by overlaying the `base_widget` in `CentralWidget`."""
+    """Displayed during sign-in by overlaying the `login_widget` in `CentralWidget`."""
 
     login_successful_signal = Signal()
 

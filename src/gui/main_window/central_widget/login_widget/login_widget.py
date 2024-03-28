@@ -13,10 +13,9 @@ from PySide6.QtWidgets import QWidget
 
 from src.config import Config
 
-from .BaseWidget_ui import Ui_BaseWidget
+from .LoginWidget_ui import Ui_LoginWidget
 
-
-class BaseWidget(Ui_BaseWidget, QWidget):
+class LoginWidget(Ui_LoginWidget, QWidget):
 
     def __init__(self, central_widget: Optional["CentralWidget"] = None):
         super().__init__(central_widget)
@@ -27,7 +26,7 @@ class BaseWidget(Ui_BaseWidget, QWidget):
 
     def set_hidden(self, value: bool):
         if self._central_widget is not None:
-            self._central_widget.set_base_widget_hidden(value)
+            self._central_widget.set_login_widget_hidden(value)
 
     def get_current_login_details(self) -> Dict[str, str]:
         return {
@@ -90,7 +89,7 @@ if __name__ == "__main__":
 
     app = QApplication(sys.argv)
     mw = QMainWindow()
-    cw = BaseWidget(mw)
+    cw = LoginWidget(mw)
     mw.setCentralWidget(cw)
     mw.show()
     app.exec()

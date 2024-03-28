@@ -24,7 +24,7 @@ class LoginButton(QPushButton):
         self.client_login_finished_signal.emit(login_result)
 
     def _get_login_info(self):
-        bw = self.window().get_base_widget()
+        bw = self.window().get_login_widget()
         phone_number = bw.line_edit_phone_number.text()
         try:
             phone_number = int(phone_number)
