@@ -19,7 +19,6 @@ from src.scraper import Scraper
 class ScrapeWidget(Ui_ScrapeWidget, QWidget):
 
     logout_signal = Signal()
-    get_groups_button_clicked_signal = Signal()
 
     def __init__(self, central_widget: Optional["CentralWidget"] = None):
         super().__init__(central_widget)
@@ -59,14 +58,15 @@ class ScrapeWidget(Ui_ScrapeWidget, QWidget):
 
     @Slot()    
     def _on_open_data_dir_button_clicked(self):
-        if self._scraper is not None:
-            system = platform.system()
-            if system == "Windows":
-                os.startfile(self._scraper.scraped_data_dir_path)
-            elif system == "Darwin":
-                subprocess.Popen(["open", self._scraper.scraped_data_dir_path])
-            else:
-                subprocess.Popen(["xdg-open", self._scraper.scraped_data_dir_path])
+        data_dir_path = self._scrape_settings_widget.get_current_settings()["data_dir_path"]
+        print(data_dir_path)
+        system = platform.system()
+        if system == "Windows":
+            os.startfile(data_dir_path)
+        elif system == "Darwin":
+            subprocess.Popen(["open", data_dir_path])
+        else:
+            subprocess.Popen(["xdg-open", data_dir_path])
 
     @Slot()
     def _on_open_scrape_settings_button_clicked(self):
