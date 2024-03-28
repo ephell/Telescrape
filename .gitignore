@@ -4,6 +4,7 @@ venv/
 __pycache__/
 *.session
 *.session-journal
+session_files/
 scraped_data_dir/
 *.csv
 src/config/config.ini

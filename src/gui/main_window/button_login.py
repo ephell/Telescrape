@@ -31,7 +31,7 @@ class LoginButton(QPushButton):
     def _get_login_info(self):
         login_widget: "LoginWidget" = self.window().get_login_widget()
         login_details = login_widget.get_current_login_details()
-        phone_number = login_details["phone_number"]
+        phone_number = login_details["phone_number"].replace(" ", "")
         try:
             phone_number = int(phone_number)
         except ValueError:
