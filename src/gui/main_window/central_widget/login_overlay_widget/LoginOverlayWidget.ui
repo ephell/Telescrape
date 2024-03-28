@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>OverlayWidget</class>
- <widget class="QWidget" name="OverlayWidget">
+ <class>LoginOverlayWidget</class>
+ <widget class="QWidget" name="LoginOverlayWidget">
   <property name="geometry">
    <rect>
     <x>0</x>

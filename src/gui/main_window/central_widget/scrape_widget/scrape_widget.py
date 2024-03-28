@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING, Optional
 
 if TYPE_CHECKING:
     from src.client import Client
-    from src.gui.main_window.central_widget.central_widget import CentralWidget
+    from src.gui.main_window.central_widget import CentralWidget
 
 from PySide6.QtCore import Signal, Slot
 from PySide6.QtWidgets import QWidget

@@ -5,7 +5,7 @@ if __name__ == "__main__":
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from src.gui.main_window.central_widget.scrape_widget.scrape_widget import ScrapeWidget
+    from src.gui.main_window.central_widget.scrape_widget import ScrapeWidget
     from src.scraper import Scraper
 
 from PySide6.QtCore import Slot

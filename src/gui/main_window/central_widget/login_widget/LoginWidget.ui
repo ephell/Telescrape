@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>BaseWidget</class>
- <widget class="QWidget" name="BaseWidget">
+ <class>LoginWidget</class>
+ <widget class="QWidget" name="LoginWidget">
   <property name="geometry">
    <rect>
     <x>0</x>

@@ -3,8 +3,8 @@ import traceback
 from typing import TYPE_CHECKING, Optional, Self
 
 if TYPE_CHECKING:
-    from src.gui.main_window.main_window import MainWindow
-    from src.gui.main_window.central_widget.overlay_widget.overlay_widget import OverlayWidget
+    from src.gui.main_window import MainWindow
+    from src.gui.main_window.central_widget.login_overlay_widget import LoginOverlayWidget
 
 from telethon import TelegramClient
 from telethon.errors.rpcerrorlist import (
@@ -60,7 +60,7 @@ class Client(TelegramClient):
     async def _login_via_gui(self):
         print("Signing in via GUI ... ")
 
-        login_overlay: OverlayWidget = self._main_window.get_overlay_widget()
+        login_overlay: LoginOverlayWidget = self._main_window.get_login_overlay_widget()
         login_overlay.set_status_loading(f"Signing in as: '{self._username}' ... ")
         login_overlay.set_hidden(False)
 

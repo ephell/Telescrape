@@ -6,17 +6,16 @@ from typing import TYPE_CHECKING, Dict, Optional
 
 if TYPE_CHECKING:
     from PySide6.QtWidgets import QLineEdit
-    from src.gui.main_window.central_widget.central_widget import CentralWidget
+    from src.gui.main_window.central_widget import CentralWidget
 
 from PySide6.QtCore import Slot
 from PySide6.QtWidgets import QWidget
 
 from src.config import Config
 
-from .BaseWidget_ui import Ui_BaseWidget
+from .LoginWidget_ui import Ui_LoginWidget
 
-
-class BaseWidget(Ui_BaseWidget, QWidget):
+class LoginWidget(Ui_LoginWidget, QWidget):
 
     def __init__(self, central_widget: Optional["CentralWidget"] = None):
         super().__init__(central_widget)
@@ -27,7 +26,7 @@ class BaseWidget(Ui_BaseWidget, QWidget):
 
     def set_hidden(self, value: bool):
         if self._central_widget is not None:
-            self._central_widget.set_base_widget_hidden(value)
+            self._central_widget.set_login_widget_hidden(value)
 
     def get_current_login_details(self) -> Dict[str, str]:
         return {
@@ -90,7 +89,7 @@ if __name__ == "__main__":
 
     app = QApplication(sys.argv)
     mw = QMainWindow()
-    cw = BaseWidget(mw)
+    cw = LoginWidget(mw)
     mw.setCentralWidget(cw)
     mw.show()
     app.exec()

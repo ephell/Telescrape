@@ -1,6 +1,6 @@
 from PySide6.QtWidgets import QDialog
 
-from src.gui.main_window.central_widget.overlay_widget.login_code_dialog.LoginCodeDialog_ui import Ui_LoginCodeDialog
+from src.gui.main_window.central_widget.login_overlay_widget.login_code_dialog.LoginCodeDialog_ui import Ui_LoginCodeDialog
 
 
 class LoginCodeInputDialog(QDialog, Ui_LoginCodeDialog):
@@ -18,7 +18,7 @@ class LoginCodeInputDialog(QDialog, Ui_LoginCodeDialog):
 if __name__ == "__main__":
     import sys
 
-    from src.gui.application.application import Application
+    from src.gui.application import Application
     app = Application(sys.argv)
     cd = LoginCodeInputDialog() 
     cd.show()
