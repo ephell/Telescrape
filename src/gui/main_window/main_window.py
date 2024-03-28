@@ -10,7 +10,7 @@ from PySide6.QtCore import QSize, Qt, Slot
 from PySide6.QtWidgets import QApplication, QMainWindow
 from qasync import asyncClose, asyncSlot
 
-from src.gui.main_window.central_widget.central_widget import CentralWidget
+from src.gui.main_window.central_widget import CentralWidget
 
 
 class MainWindow(QMainWindow):

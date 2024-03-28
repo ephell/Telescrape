@@ -2,8 +2,8 @@ from PySide6.QtCore import Qt
 from PySide6.QtGui import QColor, QPalette
 from PySide6.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget
 
-from src.gui.main_window.central_widget.login_widget import LoginWidget
 from src.gui.main_window.central_widget.login_overlay_widget import LoginOverlayWidget
+from src.gui.main_window.central_widget.login_widget import LoginWidget
 from src.gui.main_window.central_widget.scrape_widget import ScrapeWidget
 
 

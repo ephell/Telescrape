@@ -7,7 +7,7 @@ import asyncio
 from typing import TYPE_CHECKING, Optional
 
 if TYPE_CHECKING:
-    from src.gui.main_window.central_widget.central_widget import CentralWidget
+    from src.gui.main_window.central_widget import CentralWidget
 
 from PySide6.QtCore import QByteArray, QSize, Signal
 from PySide6.QtGui import QMovie, QPixmap

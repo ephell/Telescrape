@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING, Dict, Optional
 
 if TYPE_CHECKING:
     from PySide6.QtWidgets import QLineEdit
-    from src.gui.main_window.central_widget.central_widget import CentralWidget
+    from src.gui.main_window.central_widget import CentralWidget
 
 from PySide6.QtCore import Slot
 from PySide6.QtWidgets import QWidget
