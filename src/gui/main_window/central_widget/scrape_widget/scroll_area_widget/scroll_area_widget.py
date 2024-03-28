@@ -48,7 +48,7 @@ class ScrollAreaWidget(QStackedWidget):
         self._scrape_widget = scrape_widget
 
     def get_scrape_settings(self):
-        return self._scrape_widget.get_scrape_settings_widget().get_settings()
+        return self._scrape_widget.get_scrape_settings_widget().get_current_settings()
 
     def get_all_selection_widgets(self):
         return self._selection_container_widget.get_all_selection_widgets()
