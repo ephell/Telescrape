@@ -1,4 +1,5 @@
 import asyncio
+import os
 import traceback
 from typing import TYPE_CHECKING, Optional, Self
 
@@ -34,7 +35,10 @@ class Client(TelegramClient):
         self._api_hash = api_hash
         self._password = None # ToDo: add support. This is 2FA.
         self._main_window = main_window
-        super().__init__(self._username, self._api_id, self._api_hash)
+        session_files_dir_path = "session_files"
+        if not os.path.exists(session_files_dir_path):
+            os.makedirs(session_files_dir_path)
+        super().__init__(f"{session_files_dir_path}/{self._username}", self._api_id, self._api_hash)
 
     async def login(self) -> Self | None:
         if self._main_window is None:
@@ -139,9 +143,7 @@ if __name__ == "__main__":
             "90d2a30e6a391fee8c99f38476d4bf46",
         )
         await client.login()
-        # await asyncio.sleep(1)
-        # scraper = Scraper(client)
-        # await scraper.scrape()
+        await asyncio.sleep(0.5)
         await client.logout()
 
     asyncio.run(main())
