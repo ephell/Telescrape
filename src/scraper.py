@@ -1,6 +1,7 @@
 import csv
 import os
 import re
+import traceback
 from typing import TYPE_CHECKING, Dict, List
 
 if TYPE_CHECKING:
@@ -68,7 +69,9 @@ class Scraper:
                 user_active_in_last_days=user_active_in_last_days
             )
             if users is None:
-                progress_widget.set_status_fail("Cannot scrape users. Reason: group/chat/channel admin privileges are required.")
+                progress_widget.set_status_fail(
+                    "Cannot scrape users. Reason: group/chat/channel admin privileges are required."
+                )
                 return
 
             users_data = self._extract_users_data(users)
@@ -76,6 +79,7 @@ class Scraper:
             progress_widget.set_status_success(f"Finished scraping. Total users scraped: {len(users)}.")
         except Exception as e:
             progress_widget.set_status_fail(f"An unhandled exception occured: {e}.")
+            traceback.print_exc()
 
     async def _get_users_from_entity(
             self, 
@@ -179,21 +183,23 @@ class Scraper:
             scraped_entity_title: str,
             save_data_to_dir_path: str
         ):
-        if len(users_data) <= 0:
-            return
-
         if not os.path.exists(save_data_to_dir_path):
             os.makedirs(save_data_to_dir_path)
         
         title_no_illegal_chars = re.sub(r'[<>:"/\\|?*]', '_', scraped_entity_title)
         full_file_path = os.path.join(save_data_to_dir_path, title_no_illegal_chars + ".csv")
+
         with open(
             file=full_file_path,
             mode="w", 
             newline="", 
             encoding="utf-8"
         ) as file:
-            writer = csv.writer(file)
-            writer.writerow(users_data[0].keys())
-            for user in users_data:
-                writer.writerow(user.values())
+            if users_data:
+                writer = csv.writer(file)
+                writer.writerow(users_data[0].keys())
+                for user in users_data:
+                    writer.writerow(user.values())
+            else:
+                writer = csv.writer(file)
+                writer.writerow(["id", "access_hash", "full_name", "username", "phone"])
