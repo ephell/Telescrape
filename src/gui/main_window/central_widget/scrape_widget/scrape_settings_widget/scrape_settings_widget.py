@@ -72,9 +72,9 @@ class ScrapeSettingsWidget(Ui_ScrapeSettingsWidget, QWidget):
     def _set_widget_value(self, widget: Union[QSpinBox, QCheckBox, QLineEdit], value):
         if isinstance(widget, QSpinBox):
             if isinstance(value, int):
-                self.last_active_days_spin_box.setValue(value)
+                widget.setValue(value)
             elif isinstance(value, str) and value.isdigit():
-                self.last_active_days_spin_box.setValue(int(value))
+                widget.setValue(int(value))
             else:
                 raise _SetWidgetValueException(
                     f"Invalid type of value for '{widget}'. " 
@@ -103,7 +103,7 @@ class ScrapeSettingsWidget(Ui_ScrapeSettingsWidget, QWidget):
         else:
             raise TypeError(f"Widget of type '{widget}' not supported!")
 
-    def _write_settings_to_config(self, settings: Dict):
+    def _write_settings_to_config(self, settings: Dict[str, str]):
         Config.delete_all_options_from_section(Config.Section.SCRAPE_SETTINGS)
         for setting, value in settings.items():
             Config.write_option_to_section(Config.Section.SCRAPE_SETTINGS, setting, str(value))
@@ -187,7 +187,7 @@ class ScrapeSettingsWidget(Ui_ScrapeSettingsWidget, QWidget):
     def _get_setting_name_to_setting_property_map(
             self, 
             setting_property: str
-        ) -> Dict[str, Union[int, str, bool, Signal]]:
+        ) -> Dict[str, Union[int, str, bool, QWidget, Signal]]:
         settings = {}
         for setting_name, setting_properties in self._get_settings_info_map().items():
             for property_name, property_value in setting_properties.items():
