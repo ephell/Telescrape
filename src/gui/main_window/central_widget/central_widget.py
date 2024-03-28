@@ -4,7 +4,7 @@ from PySide6.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget
 
 from src.gui.main_window.central_widget.base_widget.base_widget import BaseWidget
 from src.gui.main_window.central_widget.overlay_widget.overlay_widget import OverlayWidget
-from src.gui.main_window.central_widget.scrape_widget.scrape_widget import ScrapeWidget
+from src.gui.main_window.central_widget.scrape_widget import ScrapeWidget
 
 
 class CentralWidget(QWidget):
