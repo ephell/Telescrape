@@ -16,7 +16,8 @@ from telethon.errors.rpcerrorlist import (
     PhoneCodeHashEmptyError,
     PhoneCodeInvalidError,
     PhoneNumberBannedError,
-    PhoneNumberInvalidError
+    PhoneNumberInvalidError,
+    SessionPasswordNeededError
 )
 
 
@@ -109,10 +110,6 @@ class Client(TelegramClient):
                             code, 
                             phone_code_hash=code_request.phone_code_hash
                         )
-                        if await self.get_me() is not None:
-                            login_overlay.set_status_success("Logged in successfully!")
-                            return self
-                        return None
                     except (
                         PhoneCodeEmptyError,
                         PhoneCodeExpiredError,
@@ -120,9 +117,21 @@ class Client(TelegramClient):
                         PhoneCodeInvalidError
                     ):
                         await login_overlay.open_error_message_box("Invalid login code.")
-                    except (ValueError, PasswordHashInvalidError):
-                        login_overlay.set_status_fail("Invalid password.")
-                        return None
+                        continue
+                    except SessionPasswordNeededError: # 2FA enabled.
+                        try:
+                            await self.sign_in(
+                                self._phone_number, 
+                                password=self._password
+                            )
+                        except (ValueError, PasswordHashInvalidError, SessionPasswordNeededError):
+                            login_overlay.set_status_fail("Invalid 2FA password.")
+                            return None
+
+                    if await self.get_me() is not None:
+                        login_overlay.set_status_success("Logged in successfully!")
+                        return self
+                    return None
                 else:
                     login_overlay.set_status_fail("Login cancelled.")
                     return None
@@ -141,7 +150,7 @@ if __name__ == "__main__":
 
     async def main():
         client = Client(
-            "Raska ",
+            "Raska Good",
             37060751782,
             "14112344",
             "90d2a30e6a391fee8c99f38476d4bf46",
