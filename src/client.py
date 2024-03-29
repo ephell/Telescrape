@@ -93,10 +93,22 @@ class Client(TelegramClient):
                 login_overlay.set_status_fail("Provided phone number is banned.")
                 return None
             except FloodWaitError as e:
-                login_overlay.set_status_fail(
-                    "Too many login attempts. "
-                    f"Try again in {e.seconds // 60} minutes and {e.seconds % 60} seconds."
-                )
+                total_seconds = e.seconds
+                if total_seconds < 3600: # Less than 60 minutes.
+                    minutes = total_seconds // 60
+                    seconds = total_seconds % 60
+                    login_overlay.set_status_fail(
+                        "Too many login attempts. "
+                        f"Try again in {minutes} minutes and {seconds} seconds."
+                    )
+                else: # 60 minutes or more.
+                    hours = total_seconds // 3600
+                    minutes = (total_seconds % 3600) // 60
+                    seconds = total_seconds % 60
+                    login_overlay.set_status_fail(
+                        "Too many login attempts. "
+                        f"Try again in {hours} hours, {minutes} minutes, and {seconds} seconds."
+                    )
                 return None
 
             while True:
