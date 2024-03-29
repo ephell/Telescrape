@@ -48,12 +48,24 @@ class LoginOverlayWidget(Ui_LoginOverlayWidget, QWidget):
     def set_status_success(self, message: str):
         self.status_message_label.setText(message)
         self.status_image_label.setPixmap(self._SUCCESS_IMAGE)
+        try:
+            self.continue_button.clicked.disconnect(self._continue_button_on_click_login_fail)
+        except RuntimeError: 
+            # Raised when there's no such slot connected. Only happens 
+            # until the first time 'set_status_fail' is called.
+            pass
         self.continue_button.clicked.connect(self._continue_button_on_click_login_success)
         self.continue_button.setHidden(False)
 
     def set_status_fail(self, message: str):
         self.status_message_label.setText(message)
         self.status_image_label.setPixmap(self._FAIL_IMAGE)
+        try:
+            self.continue_button.clicked.disconnect(self._continue_button_on_click_login_success)
+        except RuntimeError:
+            # Raised when there's no such slot connected. Only happens 
+            # until the first time 'set_status_success' is called.
+            pass
         self.continue_button.clicked.connect(self._continue_button_on_click_login_fail)
         self.continue_button.setHidden(False)
 
