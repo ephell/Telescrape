@@ -58,15 +58,12 @@ class Client(TelegramClient):
 
     async def _login_via_terminal(self):
         print("Signing in via terminal ... ")
-        print(f"Signing in as: {self._username} ... ")
         await self.start(self._phone_number, self._password)
         if await self.get_me() is not None:
             return self
         return None
 
     async def _login_via_gui(self):
-        print("Signing in via GUI ... ")
-
         login_overlay: LoginOverlayWidget = self._main_window.get_login_overlay_widget()
         login_overlay.set_status_loading(f"Signing in as: '{self._username}' ... ")
         login_overlay.set_hidden(False)
@@ -76,7 +73,6 @@ class Client(TelegramClient):
                 await self.connect()
 
             if await self.is_user_authorized():
-                print("Logged in successfullly!")
                 login_overlay.set_status_success("Logged in successfully!")
                 return self
 
@@ -84,7 +80,7 @@ class Client(TelegramClient):
                 login_overlay.set_status_loading(
                     f"'{self._username}' is not authorized. Sending the login code request ... "
                 )
-                code_request = await self.send_code_request(self._phone_number)
+                await self.send_code_request(self._phone_number)
                 login_overlay.set_status_loading("Waiting for login code ... ")
             except PhoneNumberInvalidError:
                 login_overlay.set_status_fail("Provided phone number is invalid.")
@@ -111,17 +107,19 @@ class Client(TelegramClient):
                     )
                 return None
 
-            while True:
+            two_step_detected = False
+            for _ in range(5):
                 code = await login_overlay.open_login_code_input_dialog_and_get_input()
                 if code == "":
                     await login_overlay.open_error_message_box("Login code field cannot be empty.")
                 elif code is not None:
                     try:
-                        await self.sign_in(
-                            self._phone_number, 
-                            code, 
-                            phone_code_hash=code_request.phone_code_hash
-                        )
+                        # Raises SessionPasswordNeededError if 2FA enabled
+                        await self.sign_in(self._phone_number, code=code)
+                        break
+                    except SessionPasswordNeededError:
+                        two_step_detected = True
+                        break
                     except (
                         PhoneCodeEmptyError,
                         PhoneCodeExpiredError,
@@ -129,28 +127,38 @@ class Client(TelegramClient):
                         PhoneCodeInvalidError
                     ):
                         await login_overlay.open_error_message_box("Invalid login code.")
-                        continue
-                    except SessionPasswordNeededError: # 2FA enabled.
-                        try:
-                            await self.sign_in(
-                                self._phone_number, 
-                                password=self._password
-                            )
-                        except (ValueError, PasswordHashInvalidError, SessionPasswordNeededError):
-                            login_overlay.set_status_fail("Invalid 2FA password.")
-                            return None
-
-                    if await self.get_me() is not None:
-                        login_overlay.set_status_success("Logged in successfully!")
-                        return self
-                    return None
                 else:
                     login_overlay.set_status_fail("Login cancelled.")
                     return None
+            else:
+                login_overlay.set_status_fail(f"Too many consecutive failed attempts.")
+                return None
 
-        except Exception as e:
+            if two_step_detected:
+                login_overlay.set_status_loading("Waiting for 2FA password ... ")
+                for _ in range(5):
+                    password = await login_overlay.open_login_code_input_dialog_and_get_input()
+                    if password == "":
+                        await login_overlay.open_error_message_box("Password field cannot be empty.")
+                    elif password is not None:
+                        try:
+                            await self.sign_in(phone=self._phone_number, password=password)
+                            break
+                        except PasswordHashInvalidError:
+                            await login_overlay.open_error_message_box("Invalid 2FA password.")
+                    else:
+                        login_overlay.set_status_fail("Login cancelled.")
+                        return None
+                else:
+                    login_overlay.set_status_fail("Too many consecutive failed attempts.")
+                    return None
+
+            login_overlay.set_status_success("Logged in successfully!")
+            return self
+
+        except Exception:
             login_overlay.set_status_fail("An unhandled exception occured while logging in.")
-            print(f"An unhandled error occured in '{self.login.__name__}': {e}.")
+            print(f"An unhandled exception occured in '{self.login.__name__}': {e}.")
             traceback.print_exc()
             return None
 
