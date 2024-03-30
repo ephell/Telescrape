@@ -29,14 +29,12 @@ class Client(TelegramClient):
         phone_number: int, 
         api_id: str, 
         api_hash: str,
-        password: str = "",
         main_window: Optional["MainWindow"] = None
     ):
         self._username = username
         self._phone_number = phone_number
         self._api_id = api_id
         self._api_hash = api_hash
-        self._password = password
         self._main_window = main_window
         session_files_dir_path = "session_files"
         if not os.path.exists(session_files_dir_path):
@@ -58,7 +56,7 @@ class Client(TelegramClient):
 
     async def _login_via_terminal(self):
         print("Signing in via terminal ... ")
-        await self.start(self._phone_number, self._password)
+        await self.start(self._phone_number)
         if await self.get_me() is not None:
             return self
         return None

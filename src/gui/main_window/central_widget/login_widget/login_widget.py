@@ -52,8 +52,7 @@ class LoginWidget(Ui_LoginWidget, QWidget):
             "username": self.line_edit_username,
             "phone_number": self.line_edit_phone_number,
             "api_id": self.line_edit_api_id,
-            "api_hash": self.line_edit_api_hash,
-            "password": self.line_edit_password
+            "api_hash": self.line_edit_api_hash
         }
 
     def _reset_config_login_details(self):

@@ -46,6 +46,5 @@ class LoginButton(QPushButton):
                 login_details["username"],
                 phone_number,
                 login_details["api_id"],
-                login_details["api_hash"],
-                login_details["password"]
+                login_details["api_hash"]
             )

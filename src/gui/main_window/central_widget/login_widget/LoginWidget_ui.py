@@ -24,7 +24,7 @@ class Ui_LoginWidget(object):
     def setupUi(self, LoginWidget):
         if not LoginWidget.objectName():
             LoginWidget.setObjectName(u"LoginWidget")
-        LoginWidget.resize(289, 245)
+        LoginWidget.resize(289, 215)
         self.verticalLayout_2 = QVBoxLayout(LoginWidget)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
         self.verticalLayout_3 = QVBoxLayout()
@@ -120,24 +120,6 @@ class Ui_LoginWidget(object):
 
         self.verticalLayout.addLayout(self.horizontalLayout_4)
 
-        self.horizontalLayout_6 = QHBoxLayout()
-        self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
-        self.label_6 = QLabel(LoginWidget)
-        self.label_6.setObjectName(u"label_6")
-        sizePolicy.setHeightForWidth(self.label_6.sizePolicy().hasHeightForWidth())
-        self.label_6.setSizePolicy(sizePolicy)
-        self.label_6.setFont(font1)
-
-        self.horizontalLayout_6.addWidget(self.label_6)
-
-        self.line_edit_password = QLineEdit(LoginWidget)
-        self.line_edit_password.setObjectName(u"line_edit_password")
-
-        self.horizontalLayout_6.addWidget(self.line_edit_password)
-
-
-        self.verticalLayout.addLayout(self.horizontalLayout_6)
-
 
         self.verticalLayout_2.addLayout(self.verticalLayout)
 
@@ -177,7 +159,6 @@ class Ui_LoginWidget(object):
         self.label_2.setText(QCoreApplication.translate("LoginWidget", u"Phone Number", None))
         self.label_3.setText(QCoreApplication.translate("LoginWidget", u"API ID", None))
         self.label_4.setText(QCoreApplication.translate("LoginWidget", u"API HASH", None))
-        self.label_6.setText(QCoreApplication.translate("LoginWidget", u"2FA Password", None))
         self.login_button.setText(QCoreApplication.translate("LoginWidget", u"Login", None))
     # retranslateUi
 
