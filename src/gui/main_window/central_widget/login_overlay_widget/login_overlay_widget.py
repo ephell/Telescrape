@@ -79,12 +79,35 @@ class LoginOverlayWidget(Ui_LoginOverlayWidget, QWidget):
     async def open_error_message_box(self, text: str):
         QMessageBox(QMessageBox.Critical, "Error", text, parent=self).show()
 
-    async def open_input_dialog_and_get_input(self):
+    async def open_login_code_input_dialog(self):
         future = asyncio.Future()
-        self.dialog = InputDialog(self)
-        self.dialog.buttonBox.accepted.connect(lambda: future.set_result(self.dialog.lineEdit.text()))
-        self.dialog.buttonBox.rejected.connect(lambda: future.set_result(None))
-        self.dialog.show()
+        self.login_code_dialog = InputDialog(self)
+        self.login_code_dialog.setWindowTitle("Login Code")
+        self.login_code_dialog.label.setText(
+            "A login code has been sent to you by Telegram via the app. "
+            "Please enter the code below:"
+        )
+        self.login_code_dialog.buttonBox.accepted.connect(
+            lambda: future.set_result(self.login_code_dialog.lineEdit.text())
+        )
+        self.login_code_dialog.buttonBox.rejected.connect(lambda: future.set_result(None))
+        self.login_code_dialog.show()
+        await future
+        return future.result()
+
+    async def open_password_input_dialog(self):
+        future = asyncio.Future()
+        self.two_step_dialog = InputDialog(self)
+        self.two_step_dialog.setWindowTitle("2FA Password")
+        self.two_step_dialog.label.setText(
+            "Two-step verification is enabled on this account. "
+            "Please enter the password below:"
+        )
+        self.two_step_dialog.buttonBox.accepted.connect(
+            lambda: future.set_result(self.two_step_dialog.lineEdit.text())
+        )
+        self.two_step_dialog.buttonBox.rejected.connect(lambda: future.set_result(None))
+        self.two_step_dialog.show()
         await future
         return future.result()
 
