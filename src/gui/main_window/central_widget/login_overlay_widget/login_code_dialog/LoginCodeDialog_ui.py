@@ -77,6 +77,6 @@ class Ui_LoginCodeDialog(object):
 
     def retranslateUi(self, LoginCodeDialog):
         LoginCodeDialog.setWindowTitle(QCoreApplication.translate("LoginCodeDialog", u"Dialog", None))
-        self.label.setText(QCoreApplication.translate("LoginCodeDialog", u"A login code has been sent to you by Telegram via the app or SMS. Please enter the code below:", None))
+        self.label.setText(QCoreApplication.translate("LoginCodeDialog", u"A login code has been sent to you by Telegram via the app. Please enter the code below:", None))
     # retranslateUi
 

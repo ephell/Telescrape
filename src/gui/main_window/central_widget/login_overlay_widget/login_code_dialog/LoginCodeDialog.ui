@@ -40,7 +40,7 @@
       </font>
      </property>
      <property name="text">
-      <string>A login code has been sent to you by Telegram via the app or SMS. Please enter the code below:</string>
+      <string>A login code has been sent to you by Telegram via the app. Please enter the code below:</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
