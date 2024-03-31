@@ -13,7 +13,7 @@ from PySide6.QtCore import QByteArray, QSize, Signal
 from PySide6.QtGui import QMovie, QPixmap
 from PySide6.QtWidgets import QMessageBox, QWidget
 
-from .login_code_dialog import LoginCodeInputDialog
+from .input_dialog import InputDialog
 from .LoginOverlayWidget_ui import Ui_LoginOverlayWidget
 
 
@@ -48,12 +48,24 @@ class LoginOverlayWidget(Ui_LoginOverlayWidget, QWidget):
     def set_status_success(self, message: str):
         self.status_message_label.setText(message)
         self.status_image_label.setPixmap(self._SUCCESS_IMAGE)
+        try:
+            self.continue_button.clicked.disconnect(self._continue_button_on_click_login_fail)
+        except RuntimeError: 
+            # Raised when there's no such slot connected. Only happens 
+            # until the first time 'set_status_fail' is called.
+            pass
         self.continue_button.clicked.connect(self._continue_button_on_click_login_success)
         self.continue_button.setHidden(False)
 
     def set_status_fail(self, message: str):
         self.status_message_label.setText(message)
         self.status_image_label.setPixmap(self._FAIL_IMAGE)
+        try:
+            self.continue_button.clicked.disconnect(self._continue_button_on_click_login_success)
+        except RuntimeError:
+            # Raised when there's no such slot connected. Only happens 
+            # until the first time 'set_status_success' is called.
+            pass
         self.continue_button.clicked.connect(self._continue_button_on_click_login_fail)
         self.continue_button.setHidden(False)
 
@@ -67,12 +79,35 @@ class LoginOverlayWidget(Ui_LoginOverlayWidget, QWidget):
     async def open_error_message_box(self, text: str):
         QMessageBox(QMessageBox.Critical, "Error", text, parent=self).show()
 
-    async def open_login_code_input_dialog_and_get_input(self):
+    async def open_login_code_input_dialog(self):
         future = asyncio.Future()
-        self.dialog = LoginCodeInputDialog(self)
-        self.dialog.buttonBox.accepted.connect(lambda: future.set_result(self.dialog.lineEdit.text()))
-        self.dialog.buttonBox.rejected.connect(lambda: future.set_result(None))
-        self.dialog.show()
+        self.login_code_dialog = InputDialog(self)
+        self.login_code_dialog.setWindowTitle("Login Code")
+        self.login_code_dialog.label.setText(
+            "A login code has been sent to you by Telegram via the app. "
+            "Please enter the code below:"
+        )
+        self.login_code_dialog.buttonBox.accepted.connect(
+            lambda: future.set_result(self.login_code_dialog.lineEdit.text())
+        )
+        self.login_code_dialog.buttonBox.rejected.connect(lambda: future.set_result(None))
+        self.login_code_dialog.show()
+        await future
+        return future.result()
+
+    async def open_password_input_dialog(self):
+        future = asyncio.Future()
+        self.two_step_dialog = InputDialog(self)
+        self.two_step_dialog.setWindowTitle("2FA Password")
+        self.two_step_dialog.label.setText(
+            "Two-step verification is enabled on this account. "
+            "Please enter the password below:"
+        )
+        self.two_step_dialog.buttonBox.accepted.connect(
+            lambda: future.set_result(self.two_step_dialog.lineEdit.text())
+        )
+        self.two_step_dialog.buttonBox.rejected.connect(lambda: future.set_result(None))
+        self.two_step_dialog.show()
         await future
         return future.result()
 

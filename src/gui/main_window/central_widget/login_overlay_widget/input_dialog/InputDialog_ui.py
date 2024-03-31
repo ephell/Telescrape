@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'LoginCodeDialog.ui'
+## Form generated from reading UI file 'InputDialog.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.6.2
 ##
@@ -19,21 +19,21 @@ from PySide6.QtWidgets import (QAbstractButton, QApplication, QDialog, QDialogBu
     QLabel, QLineEdit, QSizePolicy, QVBoxLayout,
     QWidget)
 
-class Ui_LoginCodeDialog(object):
-    def setupUi(self, LoginCodeDialog):
-        if not LoginCodeDialog.objectName():
-            LoginCodeDialog.setObjectName(u"LoginCodeDialog")
-        LoginCodeDialog.resize(259, 150)
+class Ui_InputDialog(object):
+    def setupUi(self, InputDialog):
+        if not InputDialog.objectName():
+            InputDialog.setObjectName(u"InputDialog")
+        InputDialog.resize(259, 150)
         sizePolicy = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Minimum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(LoginCodeDialog.sizePolicy().hasHeightForWidth())
-        LoginCodeDialog.setSizePolicy(sizePolicy)
-        LoginCodeDialog.setMinimumSize(QSize(259, 150))
-        LoginCodeDialog.setMaximumSize(QSize(259, 150))
-        self.verticalLayout = QVBoxLayout(LoginCodeDialog)
+        sizePolicy.setHeightForWidth(InputDialog.sizePolicy().hasHeightForWidth())
+        InputDialog.setSizePolicy(sizePolicy)
+        InputDialog.setMinimumSize(QSize(259, 150))
+        InputDialog.setMaximumSize(QSize(259, 150))
+        self.verticalLayout = QVBoxLayout(InputDialog)
         self.verticalLayout.setObjectName(u"verticalLayout")
-        self.label = QLabel(LoginCodeDialog)
+        self.label = QLabel(InputDialog)
         self.label.setObjectName(u"label")
         font = QFont()
         font.setPointSize(11)
@@ -45,7 +45,7 @@ class Ui_LoginCodeDialog(object):
 
         self.verticalLayout_2 = QVBoxLayout()
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
-        self.lineEdit = QLineEdit(LoginCodeDialog)
+        self.lineEdit = QLineEdit(InputDialog)
         self.lineEdit.setObjectName(u"lineEdit")
         sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
         sizePolicy1.setHorizontalStretch(0)
@@ -57,7 +57,7 @@ class Ui_LoginCodeDialog(object):
 
         self.verticalLayout_2.addWidget(self.lineEdit, 0, Qt.AlignHCenter)
 
-        self.buttonBox = QDialogButtonBox(LoginCodeDialog)
+        self.buttonBox = QDialogButtonBox(InputDialog)
         self.buttonBox.setObjectName(u"buttonBox")
         self.buttonBox.setOrientation(Qt.Horizontal)
         self.buttonBox.setStandardButtons(QDialogButtonBox.Cancel|QDialogButtonBox.Ok)
@@ -68,15 +68,15 @@ class Ui_LoginCodeDialog(object):
         self.verticalLayout.addLayout(self.verticalLayout_2)
 
 
-        self.retranslateUi(LoginCodeDialog)
-        self.buttonBox.accepted.connect(LoginCodeDialog.accept)
-        self.buttonBox.rejected.connect(LoginCodeDialog.reject)
+        self.retranslateUi(InputDialog)
+        self.buttonBox.accepted.connect(InputDialog.accept)
+        self.buttonBox.rejected.connect(InputDialog.reject)
 
-        QMetaObject.connectSlotsByName(LoginCodeDialog)
+        QMetaObject.connectSlotsByName(InputDialog)
     # setupUi
 
-    def retranslateUi(self, LoginCodeDialog):
-        LoginCodeDialog.setWindowTitle(QCoreApplication.translate("LoginCodeDialog", u"Dialog", None))
-        self.label.setText(QCoreApplication.translate("LoginCodeDialog", u"A login code has been sent to you by Telegram via the app or SMS. Please enter the code below:", None))
+    def retranslateUi(self, InputDialog):
+        InputDialog.setWindowTitle(QCoreApplication.translate("InputDialog", u"Dialog", None))
+        self.label.setText(QCoreApplication.translate("InputDialog", u"A login code has been sent to you by Telegram via the app. Please enter the code below:", None))
     # retranslateUi
 

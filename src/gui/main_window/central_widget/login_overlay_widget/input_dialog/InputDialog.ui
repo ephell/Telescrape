@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>LoginCodeDialog</class>
- <widget class="QDialog" name="LoginCodeDialog">
+ <class>InputDialog</class>
+ <widget class="QDialog" name="InputDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -40,7 +40,7 @@
       </font>
      </property>
      <property name="text">
-      <string>A login code has been sent to you by Telegram via the app or SMS. Please enter the code below:</string>
+      <string>A login code has been sent to you by Telegram via the app. Please enter the code below:</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -89,7 +89,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>LoginCodeDialog</receiver>
+   <receiver>InputDialog</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -105,7 +105,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>LoginCodeDialog</receiver>
+   <receiver>InputDialog</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

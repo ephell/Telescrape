@@ -24,7 +24,7 @@ class Ui_LoginWidget(object):
     def setupUi(self, LoginWidget):
         if not LoginWidget.objectName():
             LoginWidget.setObjectName(u"LoginWidget")
-        LoginWidget.resize(285, 220)
+        LoginWidget.resize(289, 215)
         self.verticalLayout_2 = QVBoxLayout(LoginWidget)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
         self.verticalLayout_3 = QVBoxLayout()
