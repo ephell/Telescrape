@@ -107,7 +107,7 @@ class Client(TelegramClient):
 
             two_step_detected = False
             for _ in range(5):
-                code = await login_overlay.open_login_code_input_dialog_and_get_input()
+                code = await login_overlay.open_input_dialog_and_get_input()
                 if code == "":
                     await login_overlay.open_error_message_box("Login code field cannot be empty.")
                 elif code is not None:
@@ -135,7 +135,7 @@ class Client(TelegramClient):
             if two_step_detected:
                 login_overlay.set_status_loading("Waiting for 2FA password ... ")
                 for _ in range(5):
-                    password = await login_overlay.open_login_code_input_dialog_and_get_input()
+                    password = await login_overlay.open_input_dialog_and_get_input()
                     if password == "":
                         await login_overlay.open_error_message_box("Password field cannot be empty.")
                     elif password is not None:

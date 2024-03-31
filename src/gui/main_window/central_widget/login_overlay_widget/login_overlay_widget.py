@@ -13,7 +13,7 @@ from PySide6.QtCore import QByteArray, QSize, Signal
 from PySide6.QtGui import QMovie, QPixmap
 from PySide6.QtWidgets import QMessageBox, QWidget
 
-from .login_code_dialog import LoginCodeInputDialog
+from .input_dialog import InputDialog
 from .LoginOverlayWidget_ui import Ui_LoginOverlayWidget
 
 
@@ -79,9 +79,9 @@ class LoginOverlayWidget(Ui_LoginOverlayWidget, QWidget):
     async def open_error_message_box(self, text: str):
         QMessageBox(QMessageBox.Critical, "Error", text, parent=self).show()
 
-    async def open_login_code_input_dialog_and_get_input(self):
+    async def open_input_dialog_and_get_input(self):
         future = asyncio.Future()
-        self.dialog = LoginCodeInputDialog(self)
+        self.dialog = InputDialog(self)
         self.dialog.buttonBox.accepted.connect(lambda: future.set_result(self.dialog.lineEdit.text()))
         self.dialog.buttonBox.rejected.connect(lambda: future.set_result(None))
         self.dialog.show()
