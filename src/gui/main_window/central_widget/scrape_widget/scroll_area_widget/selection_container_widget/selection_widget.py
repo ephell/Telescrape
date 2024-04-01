@@ -27,7 +27,7 @@ class SelectionWidget(QWidget):
         label.setSizePolicy(QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Preferred))
         label.setMinimumSize(QSize(30, 0))
         label.setAlignment(Qt.AlignCenter)
-        label.setText(f"[{str(number + 1)}]")
+        label.setText(f"{str(number + 1)}.")
         font = QFont()
         font.setPointSize(10)
         label.setFont(font)
