@@ -53,8 +53,14 @@
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
+       <property name="styleSheet">
+        <string notr="true">#continue_button {
+	background-color: transparent;
+	border: 0px;
+}</string>
+       </property>
        <property name="text">
-        <string>Continue</string>
+        <string>Click here to continue.</string>
        </property>
       </widget>
      </item>

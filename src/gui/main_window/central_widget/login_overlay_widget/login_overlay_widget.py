@@ -115,12 +115,15 @@ class LoginOverlayWidget(Ui_LoginOverlayWidget, QWidget):
 if __name__ == "__main__":
     import sys
 
-    from PySide6.QtWidgets import QApplication, QMainWindow
+    from PySide6.QtWidgets import QMainWindow
 
-    app = QApplication(sys.argv)
+    from src.gui.application import Application
+
+    app = Application(sys.argv)
     mw = QMainWindow()
     cw = LoginOverlayWidget(mw)
-    cw.set_status_loading("Loading ... ")
+    # cw.set_status_loading("Loading ... ")
+    cw.set_status_success("Success!")
     mw.setCentralWidget(cw)
     mw.show()
     app.exec()
