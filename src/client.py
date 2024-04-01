@@ -25,13 +25,11 @@ class Client(TelegramClient):
 
     def __init__(
         self, 
-        username: str, 
         phone_number: int, 
         api_id: str, 
         api_hash: str,
         main_window: Optional["MainWindow"] = None
     ):
-        self._username = username
         self._phone_number = phone_number
         self._api_id = api_id
         self._api_hash = api_hash
@@ -39,7 +37,7 @@ class Client(TelegramClient):
         session_files_dir_path = "session_files"
         if not os.path.exists(session_files_dir_path):
             os.makedirs(session_files_dir_path)
-        super().__init__(f"{session_files_dir_path}/{self._username}", self._api_id, self._api_hash)
+        super().__init__(f"{session_files_dir_path}/{self._phone_number}", self._api_id, self._api_hash)
 
     async def login(self) -> Self | None:
         if self._main_window is None:
@@ -55,7 +53,7 @@ class Client(TelegramClient):
         await self.disconnect()
 
     async def _login_via_terminal(self):
-        print("Signing in via terminal ... ")
+        print("Logging in via terminal ... ")
         await self.start(self._phone_number)
         if await self.get_me() is not None:
             return self
@@ -63,7 +61,7 @@ class Client(TelegramClient):
 
     async def _login_via_gui(self):
         login_overlay: LoginOverlayWidget = self._main_window.get_login_overlay_widget()
-        login_overlay.set_status_loading(f"Signing in as: '{self._username}' ... ")
+        login_overlay.set_status_loading("Logging in ... ")
         login_overlay.set_hidden(False)
 
         try:
@@ -75,9 +73,7 @@ class Client(TelegramClient):
                 return self
 
             try:
-                login_overlay.set_status_loading(
-                    f"'{self._username}' is not authorized. Sending the login code request ... "
-                )
+                login_overlay.set_status_loading("Sending a login code request ... ")
                 await self.send_code_request(self._phone_number)
                 login_overlay.set_status_loading("Waiting for login code ... ")
             except PhoneNumberInvalidError:
@@ -168,7 +164,6 @@ if __name__ == "__main__":
 
     async def main():
         client = Client(
-            "Raska Good",
             37060751782,
             "14112344",
             "90d2a30e6a391fee8c99f38476d4bf46",

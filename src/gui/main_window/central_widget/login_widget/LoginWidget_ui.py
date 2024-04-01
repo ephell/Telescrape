@@ -24,7 +24,7 @@ class Ui_LoginWidget(object):
     def setupUi(self, LoginWidget):
         if not LoginWidget.objectName():
             LoginWidget.setObjectName(u"LoginWidget")
-        LoginWidget.resize(289, 215)
+        LoginWidget.resize(289, 185)
         self.verticalLayout_2 = QVBoxLayout(LoginWidget)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
         self.verticalLayout_3 = QVBoxLayout()
@@ -43,35 +43,17 @@ class Ui_LoginWidget(object):
 
         self.verticalLayout = QVBoxLayout()
         self.verticalLayout.setObjectName(u"verticalLayout")
-        self.horizontalLayout = QHBoxLayout()
-        self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.label = QLabel(LoginWidget)
-        self.label.setObjectName(u"label")
-        sizePolicy = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.label.sizePolicy().hasHeightForWidth())
-        self.label.setSizePolicy(sizePolicy)
-        font1 = QFont()
-        font1.setPointSize(13)
-        self.label.setFont(font1)
-
-        self.horizontalLayout.addWidget(self.label)
-
-        self.line_edit_username = QLineEdit(LoginWidget)
-        self.line_edit_username.setObjectName(u"line_edit_username")
-
-        self.horizontalLayout.addWidget(self.line_edit_username)
-
-
-        self.verticalLayout.addLayout(self.horizontalLayout)
-
         self.horizontalLayout_2 = QHBoxLayout()
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
         self.label_2 = QLabel(LoginWidget)
         self.label_2.setObjectName(u"label_2")
+        sizePolicy = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.label_2.sizePolicy().hasHeightForWidth())
         self.label_2.setSizePolicy(sizePolicy)
+        font1 = QFont()
+        font1.setPointSize(13)
         self.label_2.setFont(font1)
 
         self.horizontalLayout_2.addWidget(self.label_2)
@@ -155,7 +137,6 @@ class Ui_LoginWidget(object):
     def retranslateUi(self, LoginWidget):
         LoginWidget.setWindowTitle(QCoreApplication.translate("LoginWidget", u"Form", None))
         self.label_5.setText(QCoreApplication.translate("LoginWidget", u"Telescrape", None))
-        self.label.setText(QCoreApplication.translate("LoginWidget", u"Username", None))
         self.label_2.setText(QCoreApplication.translate("LoginWidget", u"Phone Number", None))
         self.label_3.setText(QCoreApplication.translate("LoginWidget", u"API ID", None))
         self.label_4.setText(QCoreApplication.translate("LoginWidget", u"API HASH", None))
