@@ -15,13 +15,13 @@ from src.config import Config
 
 from .LoginWidget_ui import Ui_LoginWidget
 
+
 class LoginWidget(Ui_LoginWidget, QWidget):
 
     def __init__(self, central_widget: Optional["CentralWidget"] = None):
         super().__init__(central_widget)
         self._central_widget = central_widget
         self.setupUi(self)
-        self.setFocus()
         self._initialize_login_details()
 
     def set_hidden(self, value: bool):

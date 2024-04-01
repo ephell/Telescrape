@@ -21,6 +21,8 @@ class CentralWidget(QWidget):
         if main_window is not None:
             main_window.resize(self.size())
 
+        self.setFocus()
+
     def resizeEvent(self, event):
         super().resizeEvent(event)
         self._login_widget_container.resize(self.size())

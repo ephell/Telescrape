@@ -18,7 +18,6 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Telescrape")
-        self.setFocus()
         self.setFocusPolicy(Qt.ClickFocus) # Make all widgets lose focus when clicking on the main window.
         self.setWindowFlags(Qt.Dialog)
         self._central_widget = CentralWidget(self)
