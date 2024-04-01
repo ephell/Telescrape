@@ -43,7 +43,6 @@ class LoginButton(QPushButton):
             return None
         else:
             return (
-                login_details["username"],
                 phone_number,
                 login_details["api_id"],
                 login_details["api_hash"]

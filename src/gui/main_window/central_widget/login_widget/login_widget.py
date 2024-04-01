@@ -49,7 +49,6 @@ class LoginWidget(Ui_LoginWidget, QWidget):
 
     def _get_login_details_names_and_line_edits(self) -> Dict[str, "QLineEdit"]:
         return {
-            "username": self.line_edit_username,
             "phone_number": self.line_edit_phone_number,
             "api_id": self.line_edit_api_id,
             "api_hash": self.line_edit_api_hash
