@@ -70,13 +70,13 @@ class Scraper:
             )
             if users is None:
                 progress_widget.set_status_fail(
-                    "Cannot scrape users. Reason: group/chat/channel admin privileges are required."
+                    "Failure! Reason: group/chat/channel admin privileges are required."
                 )
                 return
 
             users_data = self._extract_users_data(users)
             self._write_users_data_to_csv(users_data, entity.title, save_data_to_dir_path)
-            progress_widget.set_status_success(f"Finished scraping. Total users scraped: {len(users)}.")
+            progress_widget.set_status_success(f"Success! Total users scraped: {len(users)}.")
         except Exception as e:
             progress_widget.set_status_fail(f"An unhandled exception occured: {e}.")
             traceback.print_exc()
