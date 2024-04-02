@@ -61,6 +61,9 @@ class ScrollAreaWidget(QStackedWidget):
 
     @asyncSlot()
     async def on_get_groups_button_clicked(self) -> None:
+        # Readd the container widget removed (hidden) in
+        # 'on_scrape_button_clicked'.
+        self.addWidget(self._selection_container_widget)
         self._scrape_widget.get_groups_button.setEnabled(False)
         self._scrape_widget.select_all_button.setEnabled(False)
         self._scrape_widget.unselect_all_button.setEnabled(False)
@@ -74,6 +77,12 @@ class ScrollAreaWidget(QStackedWidget):
 
     @asyncSlot()
     async def on_scrape_button_clicked(self) -> None:
+        # Remove (hide) the widget to ensure the scrollbar displays with
+        # the correct size when 'ProgressContainerWidget' is shown.
+        # Without this, the scroll area will be unnecessarily large,
+        # stretched to the size of 'SelectionContainerWidget', leading
+        # to excessive vertical scrolling capability.
+        self.removeWidget(self._selection_container_widget)
         self._scrape_widget.get_groups_button.setEnabled(False)
         self._scrape_widget.select_all_button.setEnabled(False)
         self._scrape_widget.unselect_all_button.setEnabled(False)
@@ -93,6 +102,9 @@ class ScrollAreaWidget(QStackedWidget):
 
     @Slot()
     def on_logout_signal(self):
+        # Readd (unhide) the container so that setCurrentWidget() can
+        # be called on it during the next login.
+        self.addWidget(self._selection_container_widget)
         self._scrape_widget.scrape_button.setEnabled(False)
         self._scrape_widget.select_all_button.setEnabled(False)
         self._scrape_widget.unselect_all_button.setEnabled(False)
