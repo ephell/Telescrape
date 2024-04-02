@@ -10,7 +10,7 @@ class Application(QApplication):
 
     def __init__(self, argv):
         super().__init__(argv)
-        self.setWindowIcon(QIcon("src/gui/application/TS.png"))
+        self.setWindowIcon(QIcon("src/gui/application/logo.ico"))
         self.setStyle("Fusion")
         self.setPalette(self._get_default_palette(self))
         if platform.system() == "Windows":
