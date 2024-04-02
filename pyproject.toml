@@ -1,10 +1,14 @@
 [tool.poetry]
-name = "telescrape"
-version = "0.1.0"
+name = "Telescrape"
+version = "1.0.0"
 description = ""
 authors = ["ephell <dremaitiserikas@yahoo.com>"]
+license = "MIT"
 readme = "README.md"
+homepage = "https://github.com/ephell/Telescrape"
+repository = "https://github.com/ephell/Telescrape"
 packages = [{include = "src"}]
+include = ["README.md", "LICENSE"]
 
 [tool.poetry.dependencies]
 python = ">=3.12,<3.13"
