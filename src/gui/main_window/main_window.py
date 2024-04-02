@@ -78,8 +78,6 @@ class MainWindow(QMainWindow):
     @asyncSlot()
     async def _on_logout_signal(self):
         await self._client.logout()
-        if not self._client.is_connected():
-            print("Logged out successfully!")
         self._scrape_widget.set_hidden(True)
         self._login_widget.set_hidden(False)
         self.resize(self._central_widget.get_login_widget_container_original_size())
