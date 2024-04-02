@@ -68,7 +68,7 @@ class CentralWidget(QWidget):
         # Set background color.
         style = QApplication.style()
         palette = style.standardPalette()
-        palette.setColor(QPalette.ColorRole.Window, QColor(40, 40, 40, 225))
+        palette.setColor(QPalette.ColorRole.Window, QColor(40, 40, 40, 240))
         self._login_overlay_widget_container.setPalette(palette)
         return login_overlay_widget
 
