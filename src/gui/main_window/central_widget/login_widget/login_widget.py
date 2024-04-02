@@ -68,6 +68,7 @@ class LoginWidget(Ui_LoginWidget, QWidget):
             for login_n, line_edit in self._get_login_details_names_and_line_edits().items():
                 if config_n == login_n:
                     line_edit.setText(config_v)
+                    line_edit.setCursorPosition(0)
 
     def _connect_line_edits_update_signals(self):
         for _, line_edit in self._get_login_details_names_and_line_edits().items():
