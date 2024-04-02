@@ -31,9 +31,9 @@ class LoginOverlayWidget(Ui_LoginOverlayWidget, QWidget):
         self.status_image_label.setScaledContents(True)
         
         module_dir_path = os.path.dirname(os.path.abspath(__file__))
-        self._SUCCESS_IMAGE = QPixmap(os.path.join(module_dir_path, "status_success.png"))
-        self._FAIL_IMAGE = QPixmap(os.path.join(module_dir_path, "status_fail.png"))
-        self._LOADING_GIF = QMovie(os.path.join(module_dir_path, "loader.gif"), QByteArray(), self)
+        self._success_image = QPixmap(os.path.join(module_dir_path, "status_success.png"))
+        self._fail_image = QPixmap(os.path.join(module_dir_path, "status_fail.png"))
+        self._loading_gif = QMovie(os.path.join(module_dir_path, "loader.gif"), QByteArray(), self)
 
     def set_hidden(self, value: bool):
         if self._central_widget is not None:
@@ -41,13 +41,13 @@ class LoginOverlayWidget(Ui_LoginOverlayWidget, QWidget):
 
     def set_status_loading(self, message: str):
         self.status_message_label.setText(message)
-        self.status_image_label.setMovie(self._LOADING_GIF)
+        self.status_image_label.setMovie(self._loading_gif)
         self.continue_button.setHidden(True)
-        self._LOADING_GIF.start()
+        self._loading_gif.start()
 
     def set_status_success(self, message: str):
         self.status_message_label.setText(message)
-        self.status_image_label.setPixmap(self._SUCCESS_IMAGE)
+        self.status_image_label.setPixmap(self._success_image)
         try:
             self.continue_button.clicked.disconnect(self._continue_button_on_click_login_fail)
         except RuntimeError: 
@@ -59,7 +59,7 @@ class LoginOverlayWidget(Ui_LoginOverlayWidget, QWidget):
 
     def set_status_fail(self, message: str):
         self.status_message_label.setText(message)
-        self.status_image_label.setPixmap(self._FAIL_IMAGE)
+        self.status_image_label.setPixmap(self._fail_image)
         try:
             self.continue_button.clicked.disconnect(self._continue_button_on_click_login_success)
         except RuntimeError:
@@ -115,12 +115,15 @@ class LoginOverlayWidget(Ui_LoginOverlayWidget, QWidget):
 if __name__ == "__main__":
     import sys
 
-    from PySide6.QtWidgets import QApplication, QMainWindow
+    from PySide6.QtWidgets import QMainWindow
 
-    app = QApplication(sys.argv)
+    from src.gui.application import Application
+
+    app = Application(sys.argv)
     mw = QMainWindow()
     cw = LoginOverlayWidget(mw)
-    cw.set_status_loading("Loading ... ")
+    # cw.set_status_loading("Loading ... ")
+    cw.set_status_success("Success!")
     mw.setCentralWidget(cw)
     mw.show()
     app.exec()

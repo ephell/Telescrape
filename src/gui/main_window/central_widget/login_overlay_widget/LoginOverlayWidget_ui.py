@@ -31,7 +31,7 @@ class Ui_LoginOverlayWidget(object):
         self.status_message_label = QLabel(LoginOverlayWidget)
         self.status_message_label.setObjectName(u"status_message_label")
         font = QFont()
-        font.setPointSize(14)
+        font.setPointSize(15)
         font.setBold(False)
         self.status_message_label.setFont(font)
         self.status_message_label.setTextFormat(Qt.PlainText)
@@ -52,6 +52,14 @@ class Ui_LoginOverlayWidget(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.continue_button.sizePolicy().hasHeightForWidth())
         self.continue_button.setSizePolicy(sizePolicy)
+        font1 = QFont()
+        font1.setPointSize(12)
+        font1.setItalic(True)
+        self.continue_button.setFont(font1)
+        self.continue_button.setStyleSheet(u"#continue_button {\n"
+"	background-color: transparent;\n"
+"	border: 0px;\n"
+"}")
 
         self.horizontalLayout.addWidget(self.continue_button, 0, Qt.AlignHCenter|Qt.AlignTop)
 
@@ -80,7 +88,7 @@ class Ui_LoginOverlayWidget(object):
     def retranslateUi(self, LoginOverlayWidget):
         LoginOverlayWidget.setWindowTitle(QCoreApplication.translate("LoginOverlayWidget", u"Form", None))
         self.status_message_label.setText(QCoreApplication.translate("LoginOverlayWidget", u"Message label", None))
-        self.continue_button.setText(QCoreApplication.translate("LoginOverlayWidget", u"Continue", None))
+        self.continue_button.setText(QCoreApplication.translate("LoginOverlayWidget", u"Click here to continue", None))
         self.status_image_label.setText(QCoreApplication.translate("LoginOverlayWidget", u"Image label", None))
     # retranslateUi
 

@@ -24,7 +24,12 @@ class Ui_LoginWidget(object):
     def setupUi(self, LoginWidget):
         if not LoginWidget.objectName():
             LoginWidget.setObjectName(u"LoginWidget")
-        LoginWidget.resize(289, 185)
+        LoginWidget.resize(291, 206)
+        LoginWidget.setStyleSheet(u"QLineEdit {\n"
+"	border-radius: 10px;\n"
+"	padding-left: 10px;\n"
+"	padding-right: 10px;\n"
+"}")
         self.verticalLayout_2 = QVBoxLayout(LoginWidget)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
         self.verticalLayout_3 = QVBoxLayout()
@@ -35,11 +40,16 @@ class Ui_LoginWidget(object):
         font.setPointSize(23)
         font.setBold(True)
         self.label_5.setFont(font)
+        self.label_5.setStyleSheet(u"")
 
         self.verticalLayout_3.addWidget(self.label_5, 0, Qt.AlignHCenter)
 
 
         self.verticalLayout_2.addLayout(self.verticalLayout_3)
+
+        self.verticalSpacer_2 = QSpacerItem(20, 45, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+
+        self.verticalLayout_2.addItem(self.verticalSpacer_2)
 
         self.verticalLayout = QVBoxLayout()
         self.verticalLayout.setObjectName(u"verticalLayout")
@@ -60,6 +70,15 @@ class Ui_LoginWidget(object):
 
         self.line_edit_phone_number = QLineEdit(LoginWidget)
         self.line_edit_phone_number.setObjectName(u"line_edit_phone_number")
+        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+        sizePolicy1.setHorizontalStretch(0)
+        sizePolicy1.setVerticalStretch(0)
+        sizePolicy1.setHeightForWidth(self.line_edit_phone_number.sizePolicy().hasHeightForWidth())
+        self.line_edit_phone_number.setSizePolicy(sizePolicy1)
+        font2 = QFont()
+        font2.setPointSize(10)
+        self.line_edit_phone_number.setFont(font2)
+        self.line_edit_phone_number.setAlignment(Qt.AlignCenter)
 
         self.horizontalLayout_2.addWidget(self.line_edit_phone_number)
 
@@ -78,6 +97,10 @@ class Ui_LoginWidget(object):
 
         self.line_edit_api_id = QLineEdit(LoginWidget)
         self.line_edit_api_id.setObjectName(u"line_edit_api_id")
+        sizePolicy1.setHeightForWidth(self.line_edit_api_id.sizePolicy().hasHeightForWidth())
+        self.line_edit_api_id.setSizePolicy(sizePolicy1)
+        self.line_edit_api_id.setFont(font2)
+        self.line_edit_api_id.setAlignment(Qt.AlignCenter)
 
         self.horizontalLayout_3.addWidget(self.line_edit_api_id)
 
@@ -96,6 +119,10 @@ class Ui_LoginWidget(object):
 
         self.line_edit_api_hash = QLineEdit(LoginWidget)
         self.line_edit_api_hash.setObjectName(u"line_edit_api_hash")
+        sizePolicy1.setHeightForWidth(self.line_edit_api_hash.sizePolicy().hasHeightForWidth())
+        self.line_edit_api_hash.setSizePolicy(sizePolicy1)
+        self.line_edit_api_hash.setFont(font2)
+        self.line_edit_api_hash.setAlignment(Qt.AlignCenter)
 
         self.horizontalLayout_4.addWidget(self.line_edit_api_hash)
 
@@ -105,6 +132,10 @@ class Ui_LoginWidget(object):
 
         self.verticalLayout_2.addLayout(self.verticalLayout)
 
+        self.verticalSpacer = QSpacerItem(20, 45, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+
+        self.verticalLayout_2.addItem(self.verticalSpacer)
+
         self.horizontalLayout_5 = QHBoxLayout()
         self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
         self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
@@ -113,13 +144,11 @@ class Ui_LoginWidget(object):
 
         self.login_button = LoginButton(LoginWidget)
         self.login_button.setObjectName(u"login_button")
-        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
-        sizePolicy1.setHorizontalStretch(0)
-        sizePolicy1.setVerticalStretch(0)
         sizePolicy1.setHeightForWidth(self.login_button.sizePolicy().hasHeightForWidth())
         self.login_button.setSizePolicy(sizePolicy1)
+        self.login_button.setStyleSheet(u"")
 
-        self.horizontalLayout_5.addWidget(self.login_button, 0, Qt.AlignHCenter)
+        self.horizontalLayout_5.addWidget(self.login_button)
 
         self.horizontalSpacer_2 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 

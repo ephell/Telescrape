@@ -15,13 +15,13 @@ from src.config import Config
 
 from .LoginWidget_ui import Ui_LoginWidget
 
+
 class LoginWidget(Ui_LoginWidget, QWidget):
 
     def __init__(self, central_widget: Optional["CentralWidget"] = None):
         super().__init__(central_widget)
         self._central_widget = central_widget
         self.setupUi(self)
-        self.setFocus()
         self._initialize_login_details()
 
     def set_hidden(self, value: bool):
@@ -68,6 +68,7 @@ class LoginWidget(Ui_LoginWidget, QWidget):
             for login_n, line_edit in self._get_login_details_names_and_line_edits().items():
                 if config_n == login_n:
                     line_edit.setText(config_v)
+                    line_edit.setCursorPosition(0)
 
     def _connect_line_edits_update_signals(self):
         for _, line_edit in self._get_login_details_names_and_line_edits().items():

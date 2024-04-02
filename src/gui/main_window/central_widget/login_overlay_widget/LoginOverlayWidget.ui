@@ -23,7 +23,7 @@
       <widget class="QLabel" name="status_message_label">
        <property name="font">
         <font>
-         <pointsize>14</pointsize>
+         <pointsize>15</pointsize>
          <bold>false</bold>
         </font>
        </property>
@@ -53,8 +53,20 @@
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+         <italic>true</italic>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">#continue_button {
+	background-color: transparent;
+	border: 0px;
+}</string>
+       </property>
        <property name="text">
-        <string>Continue</string>
+        <string>Click here to continue</string>
        </property>
       </widget>
      </item>

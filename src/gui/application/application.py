@@ -1,16 +1,28 @@
+import ctypes
+import platform
+
 from PySide6.QtCore import Qt
-from PySide6.QtGui import QColor, QPalette
+from PySide6.QtGui import QColor, QIcon, QPalette
 from PySide6.QtWidgets import QApplication
 
 
 class Application(QApplication):
 
-    STYLE = "Fusion"
-
     def __init__(self, argv):
         super().__init__(argv)
-        self.setStyle(self.STYLE)
+        self.setWindowIcon(QIcon("src/gui/application/TS.png"))
+        self.setStyle("Fusion")
         self.setPalette(self._get_default_palette(self))
+        if platform.system() == "Windows":
+            self._set_app_id()
+
+    def _set_app_id(self):
+        """
+        Set AppUserModelID so that the app icon is displayed in the taskbar.
+        
+        https://stackoverflow.com/questions/1551605/how-to-set-applications-taskbar-icon-in-windows-7/1552105#1552105
+        """
+        ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID("Telescrape.Application")
 
     def _get_default_palette(self, application: QApplication):
         palette = application.palette()

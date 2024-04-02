@@ -18,7 +18,6 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Telescrape")
-        self.setFocus()
         self.setFocusPolicy(Qt.ClickFocus) # Make all widgets lose focus when clicking on the main window.
         self.setWindowFlags(Qt.Dialog)
         self._central_widget = CentralWidget(self)
@@ -79,8 +78,6 @@ class MainWindow(QMainWindow):
     @asyncSlot()
     async def _on_logout_signal(self):
         await self._client.logout()
-        if not self._client.is_connected():
-            print("Logged out successfully!")
         self._scrape_widget.set_hidden(True)
         self._login_widget.set_hidden(False)
         self.resize(self._central_widget.get_login_widget_container_original_size())

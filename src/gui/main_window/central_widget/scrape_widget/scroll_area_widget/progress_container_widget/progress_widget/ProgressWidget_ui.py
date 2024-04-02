@@ -24,7 +24,7 @@ class Ui_ProgressWidget(object):
     def setupUi(self, ProgressWidget):
         if not ProgressWidget.objectName():
             ProgressWidget.setObjectName(u"ProgressWidget")
-        ProgressWidget.resize(648, 17)
+        ProgressWidget.resize(780, 17)
         sizePolicy = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -58,7 +58,7 @@ class Ui_ProgressWidget(object):
         sizePolicy2.setVerticalStretch(0)
         sizePolicy2.setHeightForWidth(self.selection_title_label.sizePolicy().hasHeightForWidth())
         self.selection_title_label.setSizePolicy(sizePolicy2)
-        self.selection_title_label.setMinimumSize(QSize(275, 0))
+        self.selection_title_label.setMinimumSize(QSize(300, 0))
         self.selection_title_label.setMaximumSize(QSize(250, 16777215))
         font = QFont()
         font.setPointSize(10)
@@ -77,7 +77,7 @@ class Ui_ProgressWidget(object):
         self.status_message_label.setObjectName(u"status_message_label")
         sizePolicy2.setHeightForWidth(self.status_message_label.sizePolicy().hasHeightForWidth())
         self.status_message_label.setSizePolicy(sizePolicy2)
-        self.status_message_label.setMinimumSize(QSize(275, 0))
+        self.status_message_label.setMinimumSize(QSize(400, 0))
         self.status_message_label.setMaximumSize(QSize(250, 16777215))
         self.status_message_label.setFont(font)
 

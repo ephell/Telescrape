@@ -24,7 +24,7 @@ class Ui_ScrapeWidget(object):
     def setupUi(self, ScrapeWidget):
         if not ScrapeWidget.objectName():
             ScrapeWidget.setObjectName(u"ScrapeWidget")
-        ScrapeWidget.resize(687, 327)
+        ScrapeWidget.resize(818, 327)
         sizePolicy = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -37,7 +37,7 @@ class Ui_ScrapeWidget(object):
         self.scroll_area.setWidgetResizable(True)
         self.scroll_area_widget = ScrollAreaWidget()
         self.scroll_area_widget.setObjectName(u"scroll_area_widget")
-        self.scroll_area_widget.setGeometry(QRect(0, 0, 667, 275))
+        self.scroll_area_widget.setGeometry(QRect(0, 0, 798, 275))
         self.scroll_area.setWidget(self.scroll_area_widget)
 
         self.verticalLayout.addWidget(self.scroll_area)
