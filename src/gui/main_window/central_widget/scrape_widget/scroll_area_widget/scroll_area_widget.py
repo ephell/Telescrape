@@ -65,6 +65,7 @@ class ScrollAreaWidget(QStackedWidget):
         # 'on_scrape_button_clicked'.
         if not self._is_widget_added(self._selection_container_widget):
             self.addWidget(self._selection_container_widget)
+            self.setCurrentWidget(self._selection_container_widget)
         self._scrape_widget.get_groups_button.setEnabled(False)
         self._scrape_widget.select_all_button.setEnabled(False)
         self._scrape_widget.unselect_all_button.setEnabled(False)
