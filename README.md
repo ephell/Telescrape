@@ -2,7 +2,7 @@
     <img src="https://i.imgur.com/FIHv9aS.png" alt="ClipIt-Banner">
 </p>
 
-#  Telescrape 
+# Telescrape 
 Telescrape is a tool designed to extract member information from public Telegram groups and channels.
 
 ## Features
@@ -17,6 +17,7 @@ Telescrape is a tool designed to extract member information from public Telegram
 - Only up to 10.000 members per group or channel.
 
 ## Demo
+[![Demo-Video](https://i.imgur.com/BVHzphx.png)](https://www.youtube.com/watch?v=QZ8_nA9eztI "Demo-Video")
 
 ## Installation
 - Download and install **Python 3.12**.
