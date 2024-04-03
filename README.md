@@ -33,7 +33,7 @@ Telescrape is a tool designed to extract member information from public Telegram
 ## How to get the API ID & API Hash?
 1. [Login to your Telegram account](https://my.telegram.org/auth) with the phone number you're going to be using.
 2. Click **API development tools**.
-3. Fill the **App title** and **Short name** fields. The other ones can be left blank.
+3. Fill in the **App title** and **Short name** fields with any values you prefer. The remaining fields can be left blank.
 4. Click **Create application**.
 5. **App configuration** page will open where you will find your API ID and API Hash.
 
