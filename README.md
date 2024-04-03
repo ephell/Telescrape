@@ -1,3 +1,5 @@
+![GitHub last commit](https://img.shields.io/github/last-commit/ephell/Telescrape)
+
 <p align="center">
     <img src="https://i.imgur.com/FIHv9aS.png" alt="ClipIt-Banner">
 </p>
