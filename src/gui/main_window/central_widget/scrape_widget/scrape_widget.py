@@ -59,7 +59,6 @@ class ScrapeWidget(Ui_ScrapeWidget, QWidget):
     @Slot()    
     def _on_open_data_dir_button_clicked(self):
         data_dir_path = self._scrape_settings_widget.get_current_settings()["data_dir_path"]
-        print(data_dir_path)
         system = platform.system()
         if system == "Windows":
             os.startfile(data_dir_path)
